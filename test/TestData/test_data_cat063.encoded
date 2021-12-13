@@ -1,0 +1,38 @@
+to get the hex from bin file call "hexdump -C <input_file> "
+// Note this message is fully fabricated and has no indent to reflect plausible values
+
+CAT 10 Message raw 3f 001e fff0 0a7b 55 400f08 0a0b 04 1010 32749f50 00fe ff100172 11cf 0060
+
+CAT 1 Byte, value 3f = 63 decimal
+LEN 2 Byte, value  001e = 30 decimal
+
+FSPEC, fff0 => all Items present, except the SP and RE item 
+
+063/010 Data Source Identifier, 0a7b  
+=> SAC a = 10 dec, SIC 7b = 123 decimal
+
+063/015 Service Identification, 55 = 85 dec
+
+063/030 Time of Message, 400f08 = 4198152 dec / 128 = 32798.0625 seconds = 9.110572917 hours
+
+063/050 Sensor Identifier, 0a0b
+=> SAC a = 10 dec, SIC b = 11 dec
+
+063/060 Sensor Configuration and Status, 04
+=> COM 0, PSR 0, SSR 0, MDS 0, ADS 1, MLT 0 FX 0
+
+063/070 Time Stamping Bias, 1010 = 4112 dec 
+
+063/080 SSR Range Gain Bias, 32749f50
+=> SRG 3274 = 12916 dec * 10**-5 = 0.12916
+=> SRB 9f50 = -24752 / 128 = -193.375
+
+063/081 SSR Azimuth Bias, 00fe = 254 dec * 0.0055 = 1.397 deg
+
+063/090 PSR Range Gain Bias, ff10 0172
+=> PRG ff10 = -240 * 10**-5 = -0.0024
+=> PRB 0172 = 370 dec / 128 = 2.890625
+
+063/081 PSR Azimuth Bias, 11cf = 4559 dec * 0.0055 = 25.0745 deg
+
+063/092 PSR Elevation Bias, 0060 = 96 dec * 0.0055 = 0.528

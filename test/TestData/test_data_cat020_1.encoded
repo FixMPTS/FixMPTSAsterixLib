@@ -1,0 +1,77 @@
+to get the hex from bin file call "hexdump -C <input_file> "
+// Note this message is fully fabricated and has no indent to reflect plausible values
+
+
+CAT 20 Message raw 14 0055 ffffcff8 6266 4122 628022 ffc3e470009d4ed5 fffda9000558 0176 50 2046 01940024 0550 08840aa4 4e13e2 8010c235c70000 1520 1528 3000 80000200640001 040a020305 012020200000020242 20e3 10101000330780 1e 4a 0498
+
+CAT 1 Byte, value 14 = 20 decimal
+LEN 2 Byte, value  005d = 93 decimal
+
+FSPEC ffffcff8, Items present, all except 020/300, 020/310, 020/RE, 020/SP
+
+020/010 Data Source Identifier 6266
+=> SAC 62 = 98 dec, SIC 66 = 102 decimal
+
+020/020 Target Report Descriptor, 4122
+=> SSR 0, MS 1, HF 0, VDL4 0, UAT 0, DME 0, OT 0, FX 1
+=> RAB 0, SPI 0, CH 1, GBS 0, CRT 0, SIM 0, TST 1, 
+
+020/140 Time of Day, 628022 = 6455330 dec / 128s = 50432.265625 s = 14.008962674 hours
+
+020/041 Position in WGS 84, ffc3e470 009d4ed5
+=> LAT ffc3e470 = -21.131601334 deg, LNG 009d4ed5 = 10309333 dec = 55.30357182 deg
+
+020/042 Cartesian Position, fffba7 000558
+=> x fffda9 = -599 dec / 2 = 299.5 km, Y 558 = 1368 dec = 684 km
+
+020/161 Track Number, 0176 = 374 dec
+
+020/170 Track Status, 50
+=> CNF 0, TRE 1, CST 0, CDM 2, MAH 0, STH 0, 
+
+020/070 Mode 3A Code, 2046
+=> V 0, G 0, L 1, CODE 46 = 70 dec
+
+020/202 Calculated Track Velocity Cartesian 0194 0024
+=> VX 194 = 404 dec * 0,25 = 101 m/s, VY 24 = 36 dec * 0.25 = 9 m/s
+
+020/090 Flight Level Binary, 0550
+=> V 0, G 0, CODE 550 = 1360 / 4 = 340 FL
+
+020/100 Mode C Code, 0884 0aa4
+=> V 0, G 0, CODE 884 = 2180 dec, QX aa4 = 2724 dec
+
+020/220 Target Address, 4e13e2 = 5116898 dec
+
+020/245 Target Identification, 8010C235C70000
+=> STI 2, ID = 10C235C70000 = DLH510
+
+020/110 Measured Height, 1520 = 5408 dec /6.25 ft = 33800ft
+
+020/105 Geometric Height WGS 84, 1528 = 5416 dec / 6.25ft = 33850ft
+
+020/210 Calculated Acceleration 30 00
+=> AX 30 = 48 dec * 0.25 = 12 m/s, AY 0
+
+020/500 Position Accuracy, 80 0002 0064 0001
+=> DOP 1, SDP 0, SDH 0
+=> DOPX 2 * 0.25 = 0.5 dec, DOPY 64 = 100 dec * 0.25 = 25, OPXY 1 = 0.25 dec
+
+020/400 Contributing Devices, 04 0a 02 03 05
+=> REP 4, T.1 a, T.2 2, T.3 3, T.4 5
+
+020/250 Mode S MB Data, 01 20202000000202 42
+=> REP 1, DATA 20202000000202 = 9.042521066×10¹⁵ dec, BDS1 4, BDS2 2
+
+020/230 ACAS Capability, 20e3
+=> COM 1, STAT 0, MSSC 1, ARC 1, AIC 1, B1A 0, B1B 3
+
+020/260 ACAS Resolution Advisory, 10101000330780 = 4.521260536×10¹⁵ dec
+
+020/030 Warning Error Condition, 0f => Code 15 dec
+
+020/055 Mode 1 Code 4a
+=> V 0, G 1, L 0, CODE 10
+
+020/050 Mode 2 Code, 0498
+=> V 0, G 0, L 0, CODE 498 = 1176 dec

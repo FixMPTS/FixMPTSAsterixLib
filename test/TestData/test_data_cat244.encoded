@@ -1,0 +1,70 @@
+to get the hex from bin file call "hexdump -C <input_file> "
+// Note this message is fully fabricated and has no indent to reflect plausible values
+
+CAT 244 Message raw f4 004d ffffffc0 cf83 300fc0 0e65d145dc32f8f3 19a0 0640 06ec 06d6 96c1 9999 fe20 fe11 078e00060002 f4 010066077d1cdc98ad1c6010 0668 5298b2 9166 4c1072db1820 41333433 05 01 2064 80
+
+CAT 1 Byte, value f4 = 244 decimal
+LEN 2 Byte, value  004d = 77 decimal
+
+FSPEC, ffffffc0 => all Items present, except the SP and RE item
+
+244/010 Trajectory Identifier, cf83 = 53123 dec  
+
+244/020 Time of Day, 300fc0 = 3149760 dec / 128 = 24607.5 seconds = 6.835416667 hours
+
+244/030 Position WGS84, 0e65d145 dc32f8f3
+=> LAT 0e65d145 = 241553733 dec * LSB = 10.123400004 deg
+=> LNG dc32f8f3= -600639245dec * LSB = -25.172499879 deg
+
+244/040 Geometric Altitude, 19a0 = 6560 dec * 6.25 = 41000 feet
+
+244/045 Flight Level, 0640 = 1600 dec / 4 = 400 FL
+
+244/050 Ground Speed, 06ec = 1772 dec * 0.22 = 389.84 kt
+
+244/055 Air Speed, 06d6
+=> IM 0, SPEED 06d6 = 1750 dec * 0.22 = 385 kt
+
+244/060 Course, 96c1 = 38593 dec * LSB = 211.997680664 deg
+
+244/065 Magnetic Heading, 9999 = 39321 dec * LSB = 215.996704102 deg
+
+244/070 Geometric Vertical Rate, fe20 = -480 dec * 6.26 = -3000 ft/min
+
+244/075 Barometric Vertical Rate, fe11 = - 495 dec * LSB = -3093.75 ft/min
+
+244/080 Ground Acceleration, 078e 0006 0002
+=> Along 078e = 1934 dec * LSB = 23.208 kt/s
+=> Across 0006 = 6 dec * LSB = 0.072 kt/s
+=> Vertical 0002 = 2 dec * LSB = 0.024 kt/s
+
+244/095 Rate of Turn,f4 = -12 dec / 8 = -1.5 deg/s
+
+244/100 Projected Profile, 01 0066 077d1c dc98ad 1c60 10
+=> REP 1, ALT 0066 = 102 dec * 1/10 = 10,20 ft
+=> LAT 077d1c = 490780 dec * LSB = 10.530996323 deg
+=> LNG dc98ad = -2320219 dec * LSB = -49.786498547 deg
+=> TTA 0, TTG 1c60 = 7264 dec * 0.125 = 908 seconds
+=> TCA 0, NC 0, TCN 10 = 16 dec 
+
+244/115 Selecte Flight Level, 
+=> V 0, FL 0668 = 1640 dec / 4 = 410 FL
+
+244/120 Aircraft Address, 5298b2 = 5413042 dec
+
+244/130 Mode 3A Code, 9166
+=> V 1, Code 166 = 358 dec
+
+244/140 Target Identification, 4c1072db1820 = SAA261
+
+244/150 Aircraft Type, 41333433 = A343
+
+244/160 ADS-B Emitter Category, 05 = Heavy
+
+244/170 Target Status, 01
+
+244/180 Accuracy, 2064
+=> NACp 2, NIC 3, B 0, SIL 1
+
+244/190 Link Status, 80 = ES1090 operatinal
+

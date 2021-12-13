@@ -1,0 +1,97 @@
+<?xml version="1.0"?>
+<project name="Unit Test Asterix" default="all">
+
+	<property file="../build.properties" />
+	<import file="../build-def.xml" />
+
+	<!-- Definitions of the default target all -->
+	<target name="all" depends="asterixtest.binary">
+		<echo message="Running the Asterix related unit test cases" />
+		<exec executable="pwd" dir="test" failonerror="true"/>
+		<exec executable="/bin/sh" dir="test" failonerror="true">
+			<arg value="./start_asterix_test.sh" />
+		</exec>
+	</target>
+
+	<target name="asterixtest.objects">
+		<echo message="Building the Asterix Unit Test objects" />
+
+		<for param="cppfile">
+			<path>
+				<fileset dir="test" includes="*.cpp" excludes="TestAsterixMain.cpp" />
+			</path>
+			<sequential>
+				<echo message="Compiling @{cppfile}" />
+				<cc outtype="static" subsystem="console" objdir="${objects.dir}" rebuild="true" debug="false">
+					<compiler refid="compileunittest" />
+					<includepath>
+			         <path location="." />
+			         <path location="test" />
+			         <path location="include" />
+			         <path location="include/if" />
+			         <path location="Converter/include" />
+			      </includepath>
+					<fileset file="@{cppfile}" />
+				</cc>
+			</sequential>
+		</for>
+	</target>
+
+	<target name="asterixtest.binary" depends="asterixtest.objects">
+		<echo message="Building the Asterix Unit Test Binary" />
+		<cc outtype="executable" subsystem="console" objdir="${objects.dir}" rebuild="true" debug="true" 
+		link="executable" outfile="test/testAsterix">
+
+			<compiler refid="compileunittest" />
+			<includepath>
+            <path location="test" />
+            <path location="include" />
+            <path location="include/if" />
+            <path location="Converter/include" />
+         </includepath>
+			<fileset dir="${objects.dir}">
+				<include name="ReportRecordType.o" />
+				<include name="TestAsterixCAT62Encoding.o" />
+				<include name="TestAsterixCAT01Decoding.o" />
+				<include name="TestAsterixCAT02Decoding.o" />
+				<include name="TestAsterixCAT10Decoding.o" />
+				<include name="TestAsterixCAT11Decoding.o" />
+				<include name="TestAsterixCAT19Decoding.o" />
+				<include name="TestAsterixCAT20Decoding.o" />
+				<include name="TestAsterixCAT21Decoding.o" />
+				<include name="TestAsterixCAT23Decoding.o" />
+				<include name="TestAsterixCAT25Decoding.o" />
+				<include name="TestAsterixCAT32Decoding.o" />
+				<include name="TestAsterixCAT34Decoding.o" />
+				<include name="TestAsterixCAT48Decoding.o" />
+				<include name="TestAsterixCAT61Decoding.o" />
+				<include name="TestAsterixCAT63Decoding.o" />
+				<include name="TestAsterixCAT65Decoding.o" />
+				<include name="TestAsterixCAT204Decoding.o" />
+				<include name="TestAsterixCAT244Decoding.o" />
+				<include name="Exceptions.o" />
+				<include name="MathExceptions.o" />
+				<include name="NetworkCompat.o" />
+			</fileset>
+			<fileset dir="test">
+				<include name="TestAsterixMain.cpp" />
+			</fileset>
+			<linker extends="linkunittestmpi">
+				<linkerarg value="-L../${lib.dir}" />
+				<linkerarg value="-lasterix" />
+			</linker>
+		</cc>
+	</target>
+
+	<!-- Definition of the clean targets -->
+	<target name="clean" description="Delete all object files and the binary">
+		<delete verbose="yes">
+			<!-- Remove the ant history in order to start from scratch at next build -->
+			<fileset dir="." includes="history.xml" />
+			<fileset dir="${objects.dir}/" includes="*.o" />
+			<fileset dir="." includes="testAsterix*" />
+		</delete>
+	</target>
+
+</project>
+

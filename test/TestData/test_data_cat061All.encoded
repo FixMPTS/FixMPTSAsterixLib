@@ -1,0 +1,90 @@
+to get the hex from bin file call "hexdump -C <input_file> "
+// Note this message is fully fabricated and has no indent to reflect plausible values
+
+CAT 61 Message raw 3d 00af ffffff80 2137 15 82 65 4011c0 0d 02 80 05008b109c00176004008afb91001872d8008b563900193f03008bb349001836fa008ba2f900177201 ffd8 0960 0105 ffc0027e54000103e0c3970a34f17dc362021c50f8cb7ca0501378c70c60014e0001454453420145444453044237373242373438413338384133343601020abe00e080 ffedf5c4 4aa19000ff 2105812d6600  276001e00432680a  0111d6 010de6 c96b10 000c d140003c80028001c6
+
+CAT 1 Byte, value 3d = 61 decimal
+LEN 2 Byte, value  00af = 175 decimal
+
+FSPEC, ffffff80 => Items present: but RE and SE are present
+
+061/010 SDPS Identification 2137
+=> SAC 21 = 33 dec, SIC 37 = 55 dec
+
+061/000 Message Type, 15
+=> FAM 1, NATURE 5
+
+061/012 User Identification, 82 = 130 dec
+
+061/015 Service Identification, 65 = 101 dec
+
+061/020 Time of Message, 4011c0 = 4198848 dec / 128 = 32803.5 seconds = 9.112083333 hours
+
+061/030 Batch Number, 0d = 13 dec
+
+061/045 Aplication Version Number, 02
+
+061/050 Defaul Geographical Volume, 80
+=> DGA 1
+
+061/060 Geographical Area, 05 008b109c 00176004 008afb91 001872d8 008b5639 00193f03 008bb349 001836fa 008ba2f9 00177201
+=> REP 5, LAT.0 8b109c = 9113756 dec * LSB = 48.889997005, LNG.0 176004 = 1531908 dec * LSB = 8.217794895
+LAT.1 8afb91 = 9108369 dec * LSB = 48.861098886, LNG.1 1872d8 = 1602056 dec * LSB = 8.594098091
+LAT.2 8b5639 = 9131577 dec * LSB = 48.985596299, LNG.2 193f03 = 1654531 dec * LSB = 8.875595927
+LAT.3 8bb349 = 9155401 dec * LSB = 49.113398194, LNG.3 1836fa = 1586938 dec * LSB = 8.512998819
+LAT.4 8ba2f9 = 9151225 dec * LSB = 49.090996385, LNG.4 177201 = 1536513 dec * LSB = 8.24249804
+
+061/070 Lower Limit, ffd8 = -400 dec / 4 = -10 FL
+
+061/080 Upper Limit, 0960 = 2400 dec / 4 = 600FL
+
+061/100 Connection Related Report, 0105
+=> REP 1, CODE 5
+
+061/130 Track Selector, ffc0 027e540001 03e0c3970a34f17dc362 021c50f8cb7ca0501378c70c60 014e00 0145445342 0145444453 0442373732423734384133383841333436 01020a be00e080
+=> Sub FSPEC ffc0 (All items present)
+=> Track Number REP 02, NB.0 7e54 = 32340 dec, NB.1 0001
+=> Aircraft Addr, REP 3 AA.0 e0c397 = 14730135 dec, AA.1 0a34f1 = 668913 dec, AA.2 7dc362 = 8242018 dec
+=> ACID REP 2, ID.0 1c50f8cb7ca0 = GEC8272, ID.1 501378c70c60 = TAM8101
+=> Code Fam REP 1, WC 4 CODE e00 = 3584 dec = 7000 oct
+=> Dep Airport REP 1 AP 45445342  = EDSB
+=> Dest Airport REP 1, AP 45444453 = EDDS
+=> AC Type REP 4 AT.0 42373732 = B772, AT.1 42373438 = B748, AT.2 41333838 = A388, AT.3 41333436 = A346
+=> Control Pos REP 1, CENT 2, POS 10
+=> Track CAT be00e080, SIM 2, CSR = PSR = SSR = MDS = ADS = 1, VALT 0, FPC 0, CNF 0, SPI 0, GAT 0, IFR 1, VFR 1, CFR 1, RVSM 0, FRI 0, ME 0, MI 1
+
+061/210 Item Selector, ffedf5c4 = 4293784773 dec
+
+061/220 Cyclical Update Characteristics, 4aa19000ff
+SD 1, SP 10, BP 10, UP 400, ED 0, MF ff = 255 (no limit)
+
+061/230 Radar Synchronization Characteristics, 2105812d6600
+=> MSAC 21 = 33, MSIC 5, NOP 1, FX 1, BSAC 2d = 45, BIC 66 = 102, FX 0 
+
+061/240 Triggering Criteria, 2760 01e0 04 32 68 0a
+=> Sub FSPEC 2760
+=> RCT, 01e0 = 480 dec * 6.25 = 3000 ft/min
+=> TAT, 4 = 4 dec * 0.703 = 2.812 deg
+=> GST, 32 = 50 dec
+=> AT, 68 = 104 dec / 4 = 26 
+=> FK, a = 10 dec / 8 = 1.25
+
+061/330 Service Related Report, 01 11d6
+=> REP 1, CODE.0 11d6 = 4566 dec
+ 
+061/350 Sensor Selector, 01 0d e6
+=> REP 1, SAC.0d = 13 dec, SIC.0 e6 = 230 dec
+
+061/360 Sensor Item Selector, c96b10 = 13200144 dec
+
+061/370 Sensor Periodidcal Characteristics, 000c = 12 dec
+
+061/380 Aperiodical Characte  ristics, d140 003c 80 0280 01c6
+=> SUBFSPEC d140
+=> RP 003c = 60 dec
+=> DP 80
+=> SRB 0280 = 640 dec / 128 = 5 NM
+=> PAB 01c6 = 454 dec * 0.0055 = 2.497
+
+
+

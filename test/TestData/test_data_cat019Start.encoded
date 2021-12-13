@@ -1,0 +1,36 @@
+to get the hex from bin file call "hexdump -C <input_file> "
+// Note this message is fully fabricated and has no indent to reflect plausible values
+
+
+CAT 19 Message raw 13 001f ffe0 62fa 01 1026de 08 f0 02022c0324 cdc4 0203040fffc70320 0398 36
+
+CAT 1 Byte, value 13 = 19 decimal
+LEN 2 Byte, value  001f = 31 decimal
+
+FSPEC, ffe0 => all Items present, 
+
+019/010 Data Source Identifier 62fa
+=> SAC 62 = 98 dec, SIC fa = 250 decimal
+
+019/000 Message Type, 01 Start of update cycle
+
+019/140 Time of Day, 1026de = 1058526 dec / 128 = 8269.734375 = 2.297 hours
+
+019/550 System Status, 08
+=> NOGO 00, OVL 0, TSV 0, TTF 1
+
+019/551 Tracking Processor Detailed Status, f0 => TP 1 and TP2 exec and good
+
+019/552 Remote Sensor Detailed Status, 02 02 2c 03 24
+=> REP 2, RSi.1 = 02, RST.1 = 02, STAT.1 = 12
+=> RSi.2 = 03, RST.2 = 02, STAT.2 = 4
+
+019/553 Reference Transponder Detailed Status, cd c4
+=> RT1 = 3, RT2 = 3, RT3 = 3, RT4 = 1
+
+019/600 Position of MLT Reference Point, 0203040f ffc70320
+=< LAT 0203040f = 33752079 dec = 5.65813316 , LNG = ffc70320 = -3734752 dec = -0.626086593
+
+019/610 Height of MLT Reference System, 0398 = 920 dec * 0.25 = 230 metera
+
+019/620 WGS84 Undulation 36 = 54 dec

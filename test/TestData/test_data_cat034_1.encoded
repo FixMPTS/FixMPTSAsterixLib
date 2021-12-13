@@ -1,0 +1,25 @@
+to get the hex from bin file call "hexdump -C <input_file> "
+
+CAT 34 Message raw 22 0010 f6 190e 02 3a692b 40 884040 8000
+
+CAT 1 Byte, value 22 = 34 decimal
+LEN 2 Byte, value 0010 = 16 decimal
+
+FSPEC f6 = 11110110 => items present are 034/010, 034/000, 034/030, 034/020, 034/050, 034/060
+
+034/010 SAC/SIC, 190e
+=> SAC 19 = 25 decimal, SIC 0e = 14 decimal
+
+034/000 Message Type, 02 = 2 decimal = Sector crossing message =
+> item that must be present 034/010, 034/000, 034/030, 034/020
+
+034/030 Time of Day, 3a692b = 3828011/128 seconds = 29906.3359375 seconds = 8.307315538 hours
+
+034/020 Sector Number, 40 = 64 decimal, resolution 360/2^8 = 90 deg
+
+034/050 System Configuration and Status, sub fspec 88 = 10001000 => COM and SSR are present
+034/050#COM 40 = NOGO 0, RDPC 1 (RDPC 2 in use), RDPR 0, OVLR 0, OVLX 0, MSC 0, TSV 0
+034/050#SSR 40 = ANT 0, Channel 10 (B only), OVL 0, MSC 0, 
+
+034/060 System Processing Mode, subfpsec 80 => COM present
+034/060 00 = REDR = 0, REDX = 0

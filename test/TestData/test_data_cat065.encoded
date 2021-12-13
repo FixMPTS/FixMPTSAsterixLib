@@ -1,0 +1,30 @@
+to get the hex from bin file call "hexdump -C <input_file> "
+// Note this message is fully fabricated and has no indent to reflect plausible values
+
+CAT 65 Message raw 41 0019 ff04 7864 01 ff 013f34 37 06 06 0cc010ee599103587b6e 4441
+
+CAT 1 Byte, value 41 = 65 decimal
+LEN 2 Byte, value  001b = 27 decimal
+
+FSPEC, ff04 => all Items present, except the SP item
+
+065/010 Data Source Identifier, 7864  
+=> SAC 78 = 120 dec, SIC 64 = 100 decimal
+
+065/000 Message Type, 01
+
+065/015 Service Identification, ff = 255 dec
+
+065/030 Time of Message, 013f34 = 81716dec / 128 = 638.40625 seconds = 10.640104167 minutes
+
+065/020 Batch Number, 37 = 55 dec
+
+065/040 SDPS Configuration and Status, 06
+=> NOGO 0, OVL 0, TSV 0, PSS 1, STTN 1
+
+065/050 Service Status Report, 06
+
+065/RE Reserved Expansion Field 0c c0 10ee599103587b6e 4441
+=> LEN 0c SUBFSPEC c0
+=> SRP 10ee599103587b6e, LAT 10ee5991 = 284055953 dec * LSB = 47.618589867, LNG 03587b6e = 56130414 dec * LSB = 9.409593903
+=> ARL 4441 = 17473 dec

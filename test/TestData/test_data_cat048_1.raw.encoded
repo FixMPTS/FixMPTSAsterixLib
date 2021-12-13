@@ -1,0 +1,48 @@
+30 0030 fdf702 19c9 356d4d a0 c5aff1e0 0200 0528 (FX) 3c660c 10c236d41820 01c0780031bc000040 0deb 07b9582e 4100 20f5
+
+
+30 = CAT = 48
+00030 = LEN = 48
+fdf702 = FSPEC = 11111101 11110111 00000010 
+==> Items present: I048/010, I048/140, I048/020, I048/040, I048/070, I048/090, FX, I048/220, I048/240, I048/250, I048/161, I048/200, I048/170, FX, I048/230
+
+19c9 = I048/010 == SAC 25, SIC 201
+
+I048/140 Time of Day = 356d4d = 3501389/128 = 27354.6015625 seconds = 7,59 hours
+
+I048/020 Target Report Descriptor = a0 = 10100000
+==> Single Mode S Roll Call
+
+I048/040 Measured Position Polar = c5aff1e0 
+==> RHO = c5af = 50607/256 = 197.68NM
+==? THETA = f1a0 = 61857*0,0055 = 340,208 deg
+
+I048/070 Mode 3A Code Octal = 0200
+==> V = 0, G = 0, L = 0 (No M3A extracted), Spare Bit = 0, Code = 512
+
+I048/090 Flight Level Binary = 0528 = 00000101 00101000
+==> G = 0, V = 0, FL = 1320*0.25 = 330
+
+I048/220 Aircraft Address 3c660c = 3958284
+
+I048/240 Aircraft Identification = 10c236d41820
+==> Character 1 = 001100 = X, Character 2 = 011000 = X, Character 3 = 000110 = X
+==> Character 4 = 001111 = X, Character 5 = 0 = X
+==> XXXXXX
+
+I048/250 Mode S MB Data 01c0780031bc000040
+==> REP = 01 = 1, BDS2 = 0, BDS1 = 4, DATA = 5.417513776×10¹⁶
+
+I048/161 Track Number = 0deb = 3563
+
+I048/200 Calculated Track Velocity Polar = 07b9582e
+==> Groundspeed = 07b9 = 1977*0.22 = 434.94 kt, Heading = 582e = 22574*0.0055 = 124.157 deg
+
+I048/170 Track Status = 4100 = 0 10 0 0 00 1 00000000
+==> CNF = 0 = Confirmed Track, RAD = 10 = SSR/Mode S Track, DOU = 0 = Heigh confidence
+==> MAN = 0 Nol Manoeuvre, CDM = 0 = Maintaining
+
+
+I048/230 Communications / ACAS = 20f5 = 001 000 0 0 1 1 1 1 0101
+==> COM 001 = Com A and Com B, STAT = 000 = No Alert and no SPI AC airborne, SI = 0, Spare = 0
+==> MSCC = 1, ARC = 1, AIC = 1, B1A = 1, B2B = 0101 = 5 

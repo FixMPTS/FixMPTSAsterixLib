@@ -1,0 +1,135 @@
+to get the hex from bin file call "hexdump -C <input_file> "
+// Note this message is fully fabricated and has no indent to reflect plausible values
+
+
+CAT 21 Message raw 15 011a fbf57fffffbf04 6303 018102 0104 05 19c10f 10dab1cd0388cef3 0a00e7 0777 017c 12a687 4005038 0014a0 01d4 0a 0594 00e6 052c 4e38 4c 100a 11c6 07474eee 0018 010060 200804080204 0f A0003cffe2 e528 2320 c0c001010640222222072ea61e0002060016 14 5c 23 014040101020208224 e2000160001021 04 eb858180800afa17050c038702 0898092424507d42
+
+CAT 1 Byte, value 15 = 21 decimal
+LEN 2 Byte, value 011a = 282 decimal
+
+FSPEC fbf57fffffbf04 = 7.092014926×10¹⁶ decimal => items present are 021/010, 021/040, 021/161, 021/015, 021/71, 021/131, 021/072, 
+021/150, 021/151, 021/080, 021/074, 021/140, 021.090, 021/210, 021/070, 021/230, 021/145, 021/152, 021/200, 021/155, 021/157,
+021/160, 021/165, 021/077, 021/170, 021/020, 021/220, 021/146, 021/148, 021/110, 021/016, 021/008, 021/132, 021/250, 021/260, 
+021/400, 021/295, 021/RE
+
+021/010 SAC/SIC, 6303
+=> SAC 62 = 98 decimal, SIC 03 = 3 decimal
+
+021/040 Target REport Descriptor 018102
+00000001 10000001 00000010
+=> ATP 0, ARC 0, RC 0, RAB 0, FX 1, DCR 1, GBS 0, SIM 0, TST 0, SAA 0, CL 0, 
+FX 1, LLC 0, IPC 0, NOGO 0, CPR 0, LDPJ 0, RCF 1, FX 0
+
+021/161 Track Number 0104
+=> 260 decimal
+
+021/015 Service Identification 05 => 5 decimal
+
+021/071 Time of Applicability of Position 19c10f
+=> 1687823 decimal / 128 = 13186.1171875 seconds = 3.66281033 hours
+
+021/131 High-Resolution Position in WGS-84 Co-ordinates 10dab1cd 0388cef3
+Lat 282767821 decimal * (180.0 / 2**30) = 47.402649913 deg
+Lng 59297523 decimal * (180.0/2**30) = 9.940521922 deg
+
+021/072 Time of Applicability for Velocity 0a00e7
+=> 655591 decimal / 128 = 5121.8046875 seconds = 1.422723524 hours
+
+021/150 Air Speed 0777
+=> IM 0 (IAS), Speed 1911 decimal = 0.116638184 NM/s = 419.897460938 kt
+
+021/151 True Airspeed 017c
+=> RE 0, Speed 380 kt decimal
+
+021/080 Target Address 12a687 => 1222279 decimal 
+
+021/074 Time of Message Reception of Position–High Precision 04005038
+=> FSI 00, Time 67129400 decimal / 2**30 = 0.062519126 seconds
+
+021/140 Geometric Height 0014a0
+=> 5280 decimal * 6.25 = 33000 ft
+
+021/090 Quality Indicators 01d4
+=> NUCr 0, NUCp = 0, FX 1, NICB 1, SIL, 02, NAC 0A = 10 decimal
+
+021/210 MOPS Version 0a
+=> VNS 0, VN 1, LTI 2
+
+021/070 Mode 3A Code 0594 = 1428 decimal
+
+021/230 Roll Angle 00e6 = 230 decimal = 2.3 deg
+
+021/145 Flight Level, 052c = 1324 decimal = 331 FL
+
+021/152 Magnetic Heading, 4e38 = 20024 decimal = 109.995117188 deg
+
+021/200 Target Status, 4c
+=> ICF 0, LNAV 1, ME 0, PS 3, SS 0
+
+021/155 Barometric Vertical Rate, 100a
+=> RE 0, RATE 100a = 4106 decimal = 656.96 ft/minute
+
+021/157 Geometric Vertical Rate 11c6
+=> RE 0, RATE 11c6 = 4550 decimal / 6.25 = 728 ft/min
+
+021/160 Airborne Ground Vector 07474eee
+=> RE 0, GS 747 = 1863 decimal * 0.22 = 409.86kt = 0.11385 NM/s
+ANGLE 4eee = 20206 decimal = 110.994873047 deg
+
+021/165 Track Angle Rate, 0018, TAR 18 = 24 decimal / 32 = 0.75 deg/s
+
+021/077 Time of ASTERIX Report Transmission, 010060 = 65632 decimal / 128 = 512.75 seconds = 0.142430556 hours
+
+021/170 Target Identification, 200804080204 = 3.521879946×10¹³ decimal
+
+021/020 Emitter Category, 0f = 15 decimal = Paraglider
+
+021/220 Met Information, A0003cffe2 , Present Item WS, TMP
+=> WS 003c = 60 kt decimal, TMP ffe2 = -30 decimal
+
+021/146 Selected Altitude e528
+=> SAS 1, SRC 3, ALT 528 = 1320 decimal * 25 = 33000ft = FL 330 
+
+021/148 Final State Selected Altitude, 2320
+=> MV 0, AH 0, AM 1, ALT  320 = 800 decimal 25 4 = 20000 ft
+
+021/110 Trajectory Intent, c0c001010640222222072ea61e0002060016 => Items present TIS, TID
+=> TIS c0, --> NAV 1, NVB 1 
+=> TID 01010640222222072ea61e0002060016--> REP 1, TCA 0, NC 0, TCP 1, ALT 0640 = 1600 decimal * 10 = 16000 ft, 
+LAT 222222 = 2236962 decimal * (180/2**23) = 47.999997139 deg, LNG 072ea6 = 470694 decimal *(180/2**23) = 10.09999752 deg
+Point Type 1, TD 3, TRA 1, TOA 0, TOV 000206 = 518 seconds decimal, TTR 0016 = 22 decimal * 0.01 NM = 0.22 NM
+
+021/016 Service Management, 14 = 20 decimal / 0.5 = 10 seconds
+
+021/008 Aircraft Operational Status, 5c
+=> RA 0, TC 2, TS 1, ARV 1, CDTI 1, TCAS 0, SA 0
+
+021/132 Message Amplitude, 23 = 35 decimal
+
+021/250 Mode S MB Data 014040101020208224
+=> REP 1, MB Data 40401010202082 = 1.808483624×10¹⁶ decimal, BDS1 2, BDS2 4
+
+021/260 ACAS Resolution Advisory Report, e2000160001021
+TYP 1c = 28 decimal, STYP 2, ARA 0001 = 1 decimal, RAC 3,RAT 0, MTE 0, TTI 0
+TID 10210 = 66064 decimal
+
+021/400 Receiver ID, 04
+
+021/295 Data Ages, eb858180800afa17050c038702
+=> sub fspec eb858180 = 3951395200 decimal Items Present AOS, TRD, M3A, TI, GH, FL, MH, GVR, ARA
+=> AOS 80 = 128 decimal 12.8s, TRD 0a = 10 decimal = 1s, M3A fa = 250 decimal = 25s, TI 17 = 23 decimal = 2.3s
+=> GH 05 = 0.5s, FL 0c = 12 decimal = 1.2s, MH 03 = 0.3s, GVR 87 = 135 decimal = 13.5s, ARA 02 = 0.2s
+
+021/RE, 0898092424507d42
+=> LENGTH 08, SubFspec 98 => items present BPS, GAO, SGV, 
+BPS 0924 = 2340 decimal = 234 hPa, GAO 24 = 36 decimal, SGV 507d,SGV:STP 0, SGV:HTS 1, SGV:HTT 0, SGV:HRD 1, SGV:GSS 3e = 62 decimal * 1.25 = 77.5kt, FX set
+HGT 21 = 33 decimal * 2.8125 = 92.8125 deg
+
+
+
+
+
+
+
+
+

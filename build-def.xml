@@ -1,0 +1,249 @@
+<?xml version="1.0"?>
+<project name="Fix Multi Purpose Tracker - Asterix Lib" default="all">
+
+   <property file="build.properties" />
+
+   <!-- Definitions for ant contrib and cpptask -->
+   <taskdef resource="net/sf/antcontrib/antcontrib.properties">
+      <classpath>
+         <pathelement location="/usr/share/java/lib/ant-contrib-0.3.jar" />
+      </classpath>
+   </taskdef>
+
+   <taskdef resource="cpptasks.tasks">
+      <classpath>
+         <pathelement location="/usr/share/java/lib/cpptasks.jar" />
+      </classpath>
+   </taskdef>
+
+   <typedef resource="cpptasks.types">
+      <classpath>
+         <pathelement location="/usr/share/java/lib/cpptasks.jar" />
+      </classpath>
+   </typedef>
+
+   <taskdef resource="net/sf/antcontrib/antlib.xml" />
+
+   <!-- Global compiler definition. TODO maybe write to separate xml file -->
+   <compiler name="gcc" id="compilegcc">
+      <compilerarg value="-std=c++2a" />
+      <compilerarg value="-rdynamic" />
+      <compilerarg value="-Wall" />
+      <compilerarg value="-O2" />
+      <compilerarg value="-lstdc++" />
+      <compilerarg value="-m64" />
+      <compilerarg value="-D_FORTIFY_SOURCE=2"/>
+      <!--  Enforce override kayword -->
+      <compilerarg value="-Wsuggest-override"/>
+      <compilerarg value="-Werror=suggest-override"/>
+      <!-- Enforce warning free build -->
+      <compilerarg value="-Werror" />
+      <compilerarg value="-fPIC" />
+      <!-- <compilerarg value="-rdynamic"/> -->
+      <includepath>
+         <path location="${common.project.dir.include}" />
+      </includepath>
+      <sysincludepath>
+         <path location="${common.project.dir.base}/include" /> <!-- Eigen -->
+         <path location="/usr/include/libxml2" />
+      </sysincludepath>
+   </compiler>
+
+   <!-- Compiler definition for compilation with libxml2 support -->
+   <compiler extends="compilegcc" id="compilelibxml2">
+     <!-- cpptask will auto quote thus two args are needed -->
+     <compilerarg value="-isystem" />
+     <compilerarg value="/usr/include/libxml++-2.6" />
+     <compilerarg value="-isystem" />
+     <compilerarg value="/usr/lib64/libxml++-2.6/include" />
+     <compilerarg value="-isystem" />
+     <compilerarg value="/usr/include/libxml2" />
+     <compilerarg value="-isystem" />
+     <compilerarg value="/usr/include/glib-2.0/" />
+     <compilerarg value="-isystem" />
+     <compilerarg value="/usr/include/glibmm-2.4" />
+     <compilerarg value="-isystem" />
+     <compilerarg value="/usr/lib64/glibmm-2.4/include" />
+     <compilerarg value="-isystem" />
+     <compilerarg value="/usr/lib64/glib-2.0/include" />
+     <compilerarg value="-isystem" />
+     <compilerarg value="/usr/include/sigc++-2.0" />
+     <compilerarg value="-isystem" />
+     <compilerarg value="/usr/lib64/sigc++-2.0/include" />
+      <!-- Remove after libxml2 got rid of auto_ptr which is deprectaed and causing this warning-->
+      <compilerarg value="-Wno-deprecated-declarations" />
+   </compiler>
+
+   <!-- Compiler definition for compilation with mpi support -->
+   <compiler extends="compilegcc" id="compilempi">
+      <compilerarg value="-pthread" />
+      <compilerarg value="-isystem" /> <!-- cpptask will auto quote thus two args are needed -->
+      <compilerarg value="/usr/include/openmpi-x86_64" />
+   </compiler>
+
+   <!-- Definition of gcc used for compiling c files -->
+   <compiler name="gcc" id="compilegccC">
+      <compilerarg value="-Wall" />
+      <compilerarg value="-O2" />
+      <compilerarg value="-m64" />
+      <compilerarg value="-Werror" />
+      <!-- Enforce warning free build -->
+      <compilerarg value="-DNETSNMP_ENABLE_IPV6" />
+      <compilerarg value="-fno-strict-aliasing" />
+      <!-- <compilerarg value="-g" /> -->
+      <compilerarg value="-pipe" />
+      <!--<compilerarg value="-Werror=format-security"/> -->
+      <compilerarg value="-D_FORTIFY_SOURCE=2" />
+      <compilerarg value="-fexceptions" />
+      <compilerarg value="-fstack-protector-strong" />
+      <compilerarg value="--param=ssp-buffer-size=4" />
+      <compilerarg value="-grecord-gcc-switches" />
+      <compilerarg value="-mtune=generic" />
+      <compilerarg value="-D_RPM_4_4_COMPAT" />
+      <compilerarg value="-Ulinux" />
+      <compilerarg value="-Dlinux=linux" />
+      <compilerarg value="-D_REENTRANT" />
+      <compilerarg value="-D_GNU_SOURCE" />
+      <compilerarg value="-fwrapv" />
+      <compilerarg value="-fstack-protector" />
+      <compilerarg value="-D_LARGEFILE_SOURCE" />
+      <compilerarg value="-D_FILE_OFFSET_BITS=64" />
+      <compilerarg value="-Wno-error=format=0" />
+      <sysincludepath>
+         <path location="/usr/lib64/perl5/CORE" />
+         <path location="/usr/local/include" />
+         <path location="/usr/include" />
+         <path location="${common.project.dir.base}/include" /><!-- Eigen -->
+      </sysincludepath>
+      <includepath>
+         <path location="${common.project.dir.include}" />
+      </includepath>
+   </compiler>
+
+   <!-- Compiler definition for compilation with libxml2 and mpi support -->
+   <compiler extends="compilelibxml2" id="compilelibxmlmpi">
+      <compilerarg value="-isystem" /> <!-- cpptask will auto quote thus two args are needed -->
+      <compilerarg value="/usr/include/openmpi-x86_64" />
+   </compiler>
+   
+   <!-- Compiler definition for compilation with libxml2 and mpi support -->
+   <compiler extends="compilelibxmlmpi" id="compilelibxmlmpiomp">
+      <compilerarg value="-fopenmp" />
+   </compiler>
+
+   <!-- Compiler for building the Unit Test cases with cpp unit -->
+   <compiler extends="compilelibxml2" id="compileunittest">
+      <!-- Needed because of deprecated auto_ptr in CPPUNIT -->
+      <compilerarg value="-Wno-deprecated-declarations" />
+      <compilerarg value="-isystem" />
+      <compilerarg value="/usr/include/cppunit/" />
+   </compiler>
+
+   <!-- Compiler for building the Unit Test cases with cpp unit -->
+   <compiler extends="compilelibxmlmpi" id="compileunittestmpi">
+      <!-- Needed because of deprecated auto_ptr in CPPUNIT -->
+      <compilerarg value="-Wno-deprecated-declarations" />
+      <compilerarg value="-isystem" />
+      <compilerarg value="/usr/include/cppunit/" />
+   </compiler>
+   
+   <!-- Compiler for building the Unit Test cases with cpp unit -->
+   <compiler extends="compileunittestmpi" id="compileunittestmpiomp">
+      <compilerarg value="-fopenmp" />
+   </compiler>
+
+   <!-- Linker definition shared between all linker definitions-->
+   <linker id="linkbase">
+      <linkerarg value="-lstdc++" />
+      <linkerarg value="-L /usr/lib64" />
+      <linkerarg value="-lm" />
+   </linker>
+
+   <!-- Linker definition for linking against openmpi -->
+   <linker extends="linkbase" id="linkmpi">
+      <linkerarg value="-Wl,-rpath" />
+      <linkerarg value="-Wl,/usr/lib64/openmpi/lib" />
+      <linkerarg value="-Wl,--enable-new-dtags" />
+      <linkerarg value="-L/usr/lib64/openmpi/lib" />
+      <linkerarg value="-lmpi_cxx" />
+      <linkerarg value="-lmpi" />
+   </linker>
+
+   <!-- Linker definition for linking against mpi and libxml2 -->
+   <linker extends="linkmpi" id="linklibxmlmpi">
+      <linkerarg value="-L/usr/lib" />
+      <linkerarg value="-lxml++-2.6" />
+      <linkerarg value="-lxml2" />
+      <linkerarg value="-lglibmm-2.4" />
+      <linkerarg value="-lgobject-2.0" />
+      <linkerarg value="-lglib-2.0" />
+      <linkerarg value="-lsigc-2.0" />
+   </linker>
+
+   <!-- Linker for linking against libxml2, open mpi, and net snmp-->
+   <linker extends="linklibxmlmpi" id="linklibxmlmpisnmp">
+      <linkerarg value="-Wl,-z,relro" />
+      <linkerarg value="-Wl,-z,now" />
+      <linkerarg value="-L/usr/lib64" />
+      <linkerarg value="-lnetsnmpmibs" />
+      <linkerarg value="-lsensors" />
+      <linkerarg value="-ldl" />
+      <linkerarg value="-lrpm" />
+      <linkerarg value="-lrpmio" />
+      <linkerarg value="-lnetsnmpagent" />
+      <!-- <linkerarg value="-lwrap" /> -->
+      <linkerarg value="-Wl,--enable-new-dtags" />
+      <linkerarg value="-lnetsnmp" />
+      <linkerarg value="-lssl" />
+      <linkerarg value="-lcrypto" />
+   </linker>
+
+   <!-- Linker definition for linking against libxml2 -->
+   <linker extends="linkbase" id="linklibxml2">
+      <linkerarg value="-L/usr/lib" />
+      <linkerarg value="-lxml++-2.6" />
+      <linkerarg value="-lxml2" />
+      <linkerarg value="-lglibmm-2.4" />
+      <linkerarg value="-lgobject-2.0" />
+      <linkerarg value="-lglib-2.0" />
+      <linkerarg value="-lsigc-2.0" />
+   </linker>
+
+   <!-- Linker definition for linking against libxml2 and cppunit-->
+   <linker extends="linklibxml2" id="linkunittest">
+      <linkerarg value="-L /usr/lib64" />
+      <linkerarg value="-lcppunit" />
+   </linker>
+
+   <!-- Linker definition for linking against libxml2, open mpi and cppunit-->
+   <linker extends="linklibxmlmpi" id="linkunittestmpi">
+      <linkerarg value="-L /usr/lib64" />
+      <linkerarg value="-lcppunit" />
+   </linker>
+
+   <!-- Linker definition for linking against libxml2, snmp, mpi and cppunit-->
+   <linker extends="linklibxml2" id="linkunittestsnmpmpi">
+      <linkerarg value="-L /usr/lib64" />
+      <linkerarg value="-lcppunit" />
+      <linkerarg value="-Wl,-z,relro" />
+      <linkerarg value="-Wl,-z,now" />
+      <linkerarg value="-L/usr/lib64" />
+      <linkerarg value="-lnetsnmpmibs" />
+      <linkerarg value="-lsensors" />
+      <linkerarg value="-ldl" />
+      <linkerarg value="-lrpm" />
+      <linkerarg value="-lrpmio" />
+      <linkerarg value="-lnetsnmpagent" />
+      <!-- <linkerarg value="-lwrap" /> -->
+      <linkerarg value="-Wl,--enable-new-dtags" />
+      <linkerarg value="-lnetsnmp" />
+      <linkerarg value="-lssl" />
+      <linkerarg value="-lcrypto" />
+      <linkerarg value="-Wl,-rpath" />
+      <linkerarg value="-Wl,/usr/lib64/openmpi/lib" />
+      <linkerarg value="-Wl,--enable-new-dtags" />
+      <linkerarg value="-L/usr/lib64/openmpi/lib" />
+      <linkerarg value="-lmpi_cxx" />
+      <linkerarg value="-lmpi" />
+   </linker>
+</project>

@@ -1,0 +1,19 @@
+to get the hex from bin file call "hexdump -C <input_file> "
+// Note this message is fully fabricated and has no indent to reflect plausible values
+
+CAT 244 Message raw f4 000d c6 0446 010378 06ec 8366
+
+CAT 1 Byte, value f4 = 244 decimal
+LEN 2 Byte, value  000d = 13 decimal
+
+FSPEC, c6 => Items present: 244/010, 244020, 244/050, 244/055 (item under test)
+
+244/010 Trajectory Identifier, 0446 = 1094 dec  
+
+244/020 Time of Day, 010378 = 66424 dec /128 = 518.9375 seconds
+
+244/050 Ground Speed, 06ec = 1772 dec * 0.22 = 389.84 kt
+
+244/055 Air Speed, 8366
+=> IM 1, SPEED  366 = 870 dec * 0.001 = 0.87 Mach
+

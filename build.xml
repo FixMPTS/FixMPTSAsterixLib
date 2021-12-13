@@ -1,0 +1,158 @@
+<?xml version="1.0"?>
+<project name="Asterix" default="all">
+
+	<property file="build.properties" />
+	<import file="build-def.xml" />
+
+        <echo message="Create required directories if not alread existing" />
+        <mkdir dir="lib/objects" />
+        <mkdir dir="lib/lib" />
+        <mkdir dir="lib/rpm/SOURCES" />
+	
+        <!-- Definitions of the default target all -->
+	<target name="all" depends="rpm,rpm.devel">
+		<echo message="Build all Asterix related targets" />
+	</target>
+
+	<!-- Definition of the Asterix library target -->
+	<target name="libs" depends="asterix.buildlib">
+	</target>
+
+	<!-- First comple all Asterix converter -->
+	<target name="asterix.compile.converter">
+		<for param="cppfile">
+			<path>
+				<fileset dir="Converter/src" includes="*.cpp" />
+			</path>
+			<sequential>
+				<echo message="Compiling @{cppfile}" />
+				<cc outtype="static" subsystem="console" objdir="${objects.dir}" rebuild="true" debug="true">
+					<compiler refid="compilelibxml2" />
+					<compilerarg value="-fPIC" />
+					<fileset file="@{cppfile}" />
+					<includepath>
+						<!-- Add top level include directory -->
+						<path location="." />
+						<path location="Converter/include" />
+						<path location="include" />
+					</includepath>
+				</cc>
+			</sequential>
+		</for>
+	</target>
+
+	<target name="asterix.compile" depends="asterix.compile.converter">
+		<for param="cppfile">
+			<path>
+			   <fileset dir="src/if" includes="*.cpp" />
+				<fileset dir="src" includes="*.cpp" />
+			</path>
+			<sequential>
+				<echo message="Compiling @{cppfile}" />
+				<cc outtype="static" subsystem="console" objdir="${objects.dir}" rebuild="true" debug="false">
+					<compiler refid="compilelibxml2" />
+					<compilerarg value="-fPIC" />
+					<fileset file="@{cppfile}" />
+					<includepath>
+                  <path location="." />
+                  <path location="include" />
+                  <path location="include/if" />
+                  <path location="Converter/include" />
+               </includepath>
+				</cc>
+			</sequential>
+		</for>
+	</target>
+
+	<target name="asterix.buildlib" depends="asterix.compile">
+		<echo message="Building the Asterix Library" />
+		<cc outtype="shared" subsystem="console" objdir="${objects.dir}" rebuild="true" 
+		debug="true" link="shared" outfile="asterix.so.1.0.1">
+
+			<fileset dir="${objects.dir}">
+				<include name="AsterixCat*.o" />
+				<include name="AsterixSub*.o" />
+				<include name="AsterixItem*.o" />
+				<include name="AsterixEncoding*.o" />
+				<include name="AsterixCommon*.o" />
+				<include name="AsterixConversionHelper.o" />
+				<include name="*Converter.o" />
+				<include name="*AsterixExceptions.o" />
+				<include name="TrackTypeIf.o" />
+				<include name="DetectionEntry.o" />
+				<include name="AircraftDerivedDataItemExtended.o" />
+				<include name="AircraftDerivedDataItemBase.o" />
+				<include name="PointXYZ.o" />
+				<include name="TrackDetectionAges.o" />
+			</fileset>
+			<linker extends="linkbase">
+			   <linkerarg value="-Wl,-soname,libasterix.so.1" />
+			</linker>
+		</cc>
+		<!-- Change the undesirable cpptask naming-->
+		<move file="libasterix.so.1.0.1.so" tofile="libasterix.so.1.0.1" />
+		<!-- Move the library to the proper location -->
+		<move file="libasterix.so.1.0.1" todir="${lib.dir}" />
+		<symlink link="${lib.dir}/libasterix.so" resource="libasterix.so.1.0.1" failonerror="false"/>
+		<symlink link="${lib.dir}/libasterix.so.1" resource="libasterix.so.1.0.1" failonerror="false" />
+	</target>
+	
+	<!-- Build the library RPM  -->
+	<target name="rpm" description="Package the lib into an RPM" depends="libs,test">
+	  <echo message="Packaging the library into RPM" />
+	  <!--  Package the library into the tar.gz to be used by the rpm build  -->
+	  <tar destfile="${lib.dir}/lib-asterix-0.1.0.tar.gz" compression="gzip" >
+		  <tarfileset dir="${lib.dir}"
+		              fullpath="lib-asterix-0.1.0/lib/libasterix.so.1.0.1"
+		              preserveLeadingSlashes="true">
+		    <include name="libasterix.so.1.0.1"/>
+		  </tarfileset>
+	  </tar>
+	  <move file="${lib.dir}/lib-asterix-0.1.0.tar.gz" todir="${rpm.buildsource.dir}" overwrite="true" failOnError="true" />
+	  <rpm specFile="../../../asterixlib.spec" topDir="build/rpm" cleanBuildDir="true" failOnError="true" />
+	</target>
+	
+	<!-- Build the devel RPM  -->
+   <target name="rpm.devel" description="Package the lib header into an RPM">
+     <echo message="Packaging the library header into the devel RPM" />
+     <!--  Package the library into the tar.gz to be used by the rpm build  -->
+     <tar destfile="${include.dir}/lib-asterix-devel-0.1.0.tar.gz" compression="gzip" >
+        <tarfileset dir="include"
+                    prefix="lib-asterix-devel-0.1.0/include"
+                    preserveLeadingSlashes="true">
+          <include name="*.h"/>
+        </tarfileset>
+        <tarfileset dir="Converter/include"
+                    prefix="lib-asterix-devel-0.1.0/include"
+                    preserveLeadingSlashes="true">
+          <include name="*.h"/>
+        </tarfileset>
+        <tarfileset dir="."
+                    prefix="lib-asterix-devel-0.1.0/"
+                    preserveLeadingSlashes="true">
+          <include name="LICENSE.txt"/>
+        </tarfileset>
+     </tar>
+     <move file="${include.dir}/lib-asterix-devel-0.1.0.tar.gz" todir="${rpm.buildsource.dir}" overwrite="true" failOnError="true" />
+     <rpm specFile="../../../asterixlib-devel.spec" topDir="build/rpm" cleanBuildDir="true" failOnError="true" />
+   </target>
+	
+	<!--  Compile and run unit test -->
+	<target name="test" description="Compile and run the Asterix unit tests" depends="libs">
+	  <ant antfile="test/build.xml" target="all"/>
+	</target>
+
+	<!-- Definition of the clean targets -->
+	<target name="clean" description="Delete all object files">
+		<delete verbose="no">
+			<fileset dir="${objects.dir}" includes="history.xml" />
+			<fileset dir="${objects.dir}" includes="*.o" />
+			<fileset dir="${lib.dir}" includes="libasterix.so*" />
+			<fileset dir="." includes="history.xml" />
+			<fileset dir="${rpm.buildsource.dir}" includes="*" />
+		</delete>
+		<ant antfile="test/build.xml" target="clean"/>
+	</target>
+
+</project>
+

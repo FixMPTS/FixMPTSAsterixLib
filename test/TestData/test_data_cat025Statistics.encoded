@@ -1,0 +1,27 @@
+to get the hex from bin file call "hexdump -C <input_file> "
+// Note this message is fully fabricated and has no indent to reflect plausible values
+
+CAT 10 Message raw 19 0022 fd20 6820 06 010200 12 350513c31820 000be0 0201800000001403800000005d
+
+CAT 1 Byte, value 19 = 25 decimal
+LEN 2 Byte, value  0022 = 34 decimal
+
+FSPEC, fd20 => all Items present, but item 025/100, 025/105, 025/120
+
+025/010 Data Source Identifier,  681f
+=> SAC 68 = 104 dec, SIC 20 = 32 decimal
+
+025/000 Report Type, 06
+=> Type 3, RG 0
+
+025/200 Message Identification, 010200 = 66048 dec
+
+025/015 Service Identification, 12 = 18 dec
+
+025/020 Service Designator, 350513c31820 = MPTS01
+
+025/070 Time of Day, 000be0 = 3040 dec / 128 = 23.75 seconds
+
+025/140 Service Statistics, 02 01 80 00000014 03 80 0000005d
+=> REP 02, TYP.0 1, REFF.0 1, COUNT.0 14 = 20
+=> TYP.1 3, REFF.1 1, COUNTER.1 5d = 93

@@ -1,0 +1,102 @@
+to get the hex from bin file call "hexdump -C <input_file> "
+// Note this message is fully fabricated and has no indent to reflect plausible values
+
+
+CAT 10 Message raw 0b 009e fffffffc 002a 01 52 0111e2 21e6a42606c57e9b  07200227 ff4c0938 305c 0240 10c230c31000 d1d0010101000080c05912aaaaaa48c0c0413332310340 07be 7d011118 3b38f05a1405282201 02 0028 8003 000c ffff 9bab8a ffc6300344484c30303120000002de54413332314d45444e594544444632342042313320202000 09 02 d414c0101c600f7045b412 200502 03001607480fa1 011660
+
+CAT 1 Byte, value 0b = 11 decimal
+LEN 2 Byte, value  009f = 159 decimal
+
+FSPEC, fffffffc => all Items present
+
+011/010 Data Source Identifier,  002a
+=> SAC 00 = 00 dec, SIC 2a = 42 decimal
+
+011/000 Message Type, 01 = Target reports
+
+011/015 Service IdentificationI, 52 = 82 dec
+
+011/140 Time of Track Information, 0111e2 = 70114 dec / 128 = 547.765625 seconds = 9.129427083 minutes
+
+011/041 Position in WGS84, 21e6a426 06c57e9b
+=> LAT 21e6a426 = 568763430 dec * LSB = 47.673199978 deg, LNG 06c57e9b = 113606299 dec * LSB = 9.522369979 deg
+
+011/042 Calculated Psoition Cartesian, 0720 0227
+=> X 0720 = 1824 dec, Y 0227 = 551 dec
+
+011/202 Calculated Velocity Cartesian, ff4c 0938
+=> Vx ff4c = -180 dec * 0.25 =-45 , VY 0938 = 2360 dec * 0.25 = 590
+
+011/210 Calculated Acceleration, 30 5c
+=< Ax 30 = 48 dec * 0.25 = 12, Ay 5c = 92 dec * 0.25 = 23
+
+011/060 Mode 3A Code, Code 0240 = 576 dec
+
+011/245 Target Identification, 00 10c230c31000
+=> STI 0, ID 10c230c31000 = DLH001
+
+011/380 Mode-S Data, d1d0 010101000080c05912 aaaaaa 48c0c0 41333231 03 40
+=> MB, REP 01, MSB 0101000080c059 = 2.825744968×10¹⁴ dec, BDS1 1, BDS2 2
+=> ADR, aaaaaa = 11184810 dec
+=> COM COM 2, STAT 4, SSC 0, ARC 1, AIC 1, B1A 0, B1B 0, AC 1, MN 1, DC 0
+=> ACT 41333231 = A321
+=> EMC 03 = medium
+=> ATC 40 = 64 dec = Mode S 
+
+011/161 Track Number, 07be = 1982 dec 
+
+011/170 Track Status, 7d011118
+=> MON 0, GBS 1, MRH 1, SRC 7, CNF 0, FX 1, SIM 0, TSE 0, TSB 0, FRI 0, ME 0, MI 0, FX 1, AMA 0, SPI 0, CST 0, FPC 1, AFF 0, FX 1
+=> PSR 0, SSR 0, MDS 1, ADS 1, SUC 0, ACC 0, FX 0
+
+011/290 System Track Update Ages, 3b38 f0 5a 14 05 28 22 01
+=> MDA f0 = 240 dec / 4 = 60s,  MFL 5a = 90 dec / 4 = 22.5s , MDS 14 = 20 dec / 4 = 5s, 
+ADB 05 / 4 = 1.25s,LOP 28 = 40dec / 4 = 10s, TRK 22 = 34 dec / 7 = 8.5, MUL 01 / 4 = 0.25 s
+
+011/430 Phase of Flight, 02 Taxing for departure
+
+011/090 Measured Flight Level, 0028 = 40 dec / 4 = FL 10
+
+011/093 Calculated Barometric Altitude,8003
+=> QNH 1, ALT 3 /4 = 0.75 FL = 007 FL
+
+011/092 Calculated Geometric Altitude,000c = 12 dec *6.25 = 75ft
+
+011/215 Calculated Rate C/D, ffff = -1 dec * 6.25 = 6.25 ft/min
+
+011/270 Target Size and Orientation, 9b ab 8a
+=> L 4d = 77dec meters, O 55 = 85 dec * 2.81 = 238.85 deg, W 45 = 69 dec meters
+
+011/390 Flight Plan Data, ffc6 3003 44484c30303120 000002de 54 41333231 4d 45444e59 45444446 323420 423133202020 00
+=> TAG 3003 = SAC 48 , SIC 3, 
+=> CSN 44484c30303120 = DLH001 
+=> IFI TYP 0, NBR 0002de = 734 dec
+=> FCT 54 = GAt 1, FR1 1, RVSM 1, HPR 0
+=> TAG 41333231 = A321
+=> WTC 4d = M = Medium
+=> DEP 45444e59 = EDNY = Friedrichshafen
+=> DST 45444446 = EDDF = FRA
+=> RDS 323420 = 24
+=> AST 423133202020 = B13
+=> STS 00 = EMP 0, AVL 0
+
+011/300 Vehicle Fleet Identication, 09 = Bus
+
+011/310 Pre-programmed Message, 02
+=> TRB 0, MSG 2
+
+011/500 Estimated Accuracies, d4 14c0 101c600f 7045 b412
+=> APC 14c0 , X 14 = 20 dec *0.25 = 5, Y c0 = 192 dec * 0.25 = 48
+=> APW 101c600f LAT 101c = 4124 dec * LSB = 0.00034567 deg , LNG 500f = 24591 dec * LSB = 0.002061194 deg
+=> AVC 7045 , X 70 =  112 dec * 0.1 = 11.2, Y 45 = 69 dec * 0.1 = 6.9
+=> AAC b412, X b4 = 180 dec * 0.01 = 1.8, Y 12 = 18 dec * 0.01 = 0.18
+
+011/600 Alert Message, 200502
+=> ACK 0, SVR 1, AT 5, AN 2
+
+011/605 Tracks in Alert, 03 0016 0748 0fa1
+=> REP 3, T.0 16 = 22 dec, T.1 748 = 1864 dec, T.2 fa1 = 4001 dec
+
+011/610 Holdbar Status, 01 1660
+=> REP 1, BKN 1, I 1632 dec
+

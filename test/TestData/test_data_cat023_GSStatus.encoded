@@ -1,0 +1,25 @@
+to get the hex from bin file call "hexdump -C <input_file> "
+// Note this message is fully fabricated and has no indent to reflect plausible values
+
+
+CAT 23 Message raw 17 000c da 6205 01 430220 12 aa
+
+CAT 1 Byte, value 17 = 23 decimal
+LEN 2 Byte, value  0c = 12 decimal
+
+FSPEC  = da = 218 dec = Items present 023/010, 023/000, 023/070, 023/100, 023/200
+
+023/010 SAC/SIC, 6205
+SAC 62 = 98 dec, SIC 05 = 5 dec
+
+023/000 Report Type, 01 = 1 dec = Ground Station Status Report
+
+023/070 Time of Day, 430220 = 4391456dec /128s = 34308.25s = 9.53 hours
+
+023/100 Ground station Status, 12 = 18 dec
+=> NOGO 0, ODP 0, OXT 0, MSC 1, TSV 0, SPO 0, RN 1, FX 0
+
+023/200 Operational Range, aa = 170 dec = 170 NM
+
+
+

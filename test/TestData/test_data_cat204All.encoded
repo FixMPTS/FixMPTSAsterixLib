@@ -1,0 +1,142 @@
+to get the hex from bin file call "hexdump -C <input_file> "
+// Note this message is fully fabricated and has no indent to reflect plausible values
+
+CAT 204 Message raw cc 00ba ffffffffffe0 63a7 01620f 2d0b 084194 0032e8a10002 0907 04 0005639d383b9f00 10cda7d50408b84d 0d 20d2802386f159d8 0302 02 000038c4 fff829148865656531290801ff00 0708 88 02 02 02aa01 0d 0e2b 0a00 03 fe5620f20a07214163038920476c06e7ff8805 eca380b10411b2c30c604073205323f9c44f1d60 f8010e0501ea33 0094194a 012a434e544e30303120200203 4004118c141120 023c324752 03 029243 00b9cccc960b016c01c7f82e 02 98 001994 6604
+
+CAT 1 Byte, value cc = 204 decimal
+LEN 2 Byte, value  00ba = 186 decimal
+
+FSPEC, ffffffffffe0 => Items present:
+
+204/010 Data Source Identifier, 63a7
+=> SAC 63 = 99 dec, SIC a7 = 55 dec 167
+
+204/012 Data Destination Identifier, 01620f
+=> REP 1, SAC 62 = 98 dec, SIC 0f = 15 dec
+
+204//000 Message Identification, 2d0b = 11531 (Heartbeat)
+
+204//001 NATO Track Number, 084194 = AA145
+
+204/700 Order Identifier, 0032e8a10002
+=> ACK 0, TYPE 32 = 50 dec, ID e8a10002 = 3902865410 dec
+
+204/003 Track Point, 0907 = 2311 dec
+
+204/260 Object Status, 04
+
+204/280 Update Time, 0005639d383b9f00 = 1516901788000000 µseonds = 2018-01-25-17-36-28
+
+204/020 Position WGS84, 10cda7d5 0408b84d
+=> LAT 10cda7d5 = 47.259399835, LNG 0408b84d = 11.345799956
+
+204/030 Track Quality, 0d = 13 dec
+
+204/060 Speed Heading, 20d28 023 86f1 59d8
+=> VSP 1, CLIM 0, VSPEED d28 = 3368 dec * 0.125 = 421 
+=> MACH 023 = 35 dec * 0.1 = 3.5 mach
+=> HDG 86f1 = 34545 * 0.0055 = 189.9975 deg
+=> HSPEED 59d8 = 23000 dec * 0.1 = 2300 m/s
+
+204/070 Primary ID, 0302
+=> EXID 3, Main ID 2
+
+204/080 Environment, 02
+
+204/040 AMSL Altitude, 000038c4 = 14532 m
+
+204/291 Track Data Ages, fff8 29 14 88 65 65 65 31 29 08 01 ff 00
+=> SUBFSPE fff8 all Items presnet
+=> UPD 29 = 41 dec / 4 = 10.25 sec
+=> AMSL 14 = 20 dec / 4 = 5 sec
+=> IFF1 88 = 136 / 4 = 34 sec
+=> IFF 2 = IFF3 = IFF 4 = 65 = 101 dec / 4 = 25.25 sec
+=> IFFC 31 = 49 dec / 4 = 12.25
+=> COM 29 = 41 dec / 4 = 10.25
+=> ACS 8 = 8 dec / 4 = 2
+=> POS 1 = 1 dec / 4 = 0.25
+=> GAL ff = 255 / 4 = 63.75
+=> MB 0 = 0 dec / 4 = 0
+
+204/050 IFFC, 0708 = 1800 dec * 25 ft = 45000 ft
+
+204/081 Object Type, 88
+=> SRP 1, TYPE 8 
+
+204/082 Track Mode, 02 Auto
+
+204/083 Detection Kind, 02
+
+204/080 Strength, 02 aa 01
+=> FORMAT 02, MAX aa = 170 dec, MIN 01
+
+204/090 IFF1, 0d = 13 dec
+
+204/091 IFF2, 0e2b = 3627 dec = 7053 oct
+
+204/092 IFF3, 0a00 = 2560 dec = 5000 oct
+
+204/093 IFF4, 03 valid response
+
+204/094 Mode 5, fe 56 20f20a07 214163038920 476c 06e7 ff88 05
+=> Sub fspec fe = all items present
+=> SUM 56 # M5 0, ID 1, DA 0, M1 1, M2 0, M3 1, MC 1, X 0
+=> PMN 20f20a07 # PIN 20f2 = 8434 dec, NAT 0a - 10 dec, MIS 07 = 7 dec
+=> POS 214163038920 # LAT 214163 = 2179427 dec * LSB = 46.765429974, LNG 038920 = 231712 dec * LSB = 4.972000122
+=> GA 476c # RES 1, GA = 1900 dec * 25 = 47500 ft
+=> EM1 06e7 = 1767 dec
+=> TOS ff88 = 65416 dec = -120 µs
+=> XP 05
+
+204/101 Aircraft Derived Data, ec a380b1 0411b2c30c60 4073 205323f9c44f 1d60
+=> Subfspec ec 
+=> ADR a380b1 = 10715313 dec
+=> TID 0411b2c30c60 = AAF2001
+=> COM 4073 # COM 2, STAT 0, SSC 0, ARC 1, AIC 1, B1A 1, B1B 3
+=> POS 205323 f9c44f #LAT 205323 = 2118435 dec * LSB = 45.456683636, LNG f9c44f = -408497 = -8.765394688
+=> GAL 1d60 = 7520 dec * 6.25 = 47000
+
+204/130 Secondary Identity Information, f8 01 0e 05 01ea 33
+=> Subfspec f8
+=> CONF 1
+=> ACT 0e = 14 dec
+=> TYP 5
+=> STYP 01ea = 490 dec
+=> NAT 33 = 51 dec = Austria
+
+204/170 Indicators Block, 0094194a
+=> IFC 0, IF3 0, IF2 0, IF1 0, FIX 2, C2 1, JAM 1 EMR 0
+=> ENG 0, EXER 1, INT 2, SPI 1, SIF 1, TN 0, SIM 2, FTEL 2
+
+204/620 Mission Weapon Engagement, 01 2a 434e544e3030312020 02 03
+=> REP 1, 
+=> ENV 2,  ROLE 1, TYP 0, CNTN 434e544e3030312020 = CNTN001, STS 2, WS 3
+
+204/245 Target Identification, 40 04118c141120
+=> STI 1, ID 04118c141120 = AAFLEAD
+
+204/630 Sensor List,02 3c 32 47 52
+=> REP 2, SAC.0 3c = 60 dec, SIC.0 32 = 50 dec, SAC.1 47 = 71 dec, SIC.1 52 = 82 dec
+
+204/690 Resource Availability, 03
+
+204/085 Size, 02 92 43
+=> FROMAT 2, MAX 92 = 146 dec, MIN 43 = 67 dec
+
+204/400 Strobe Data, 00b9 cccc 960b 016c 01c7 f82e
+=> SIM 0, DESC 5, ORI 1, ACCUR 9, RANGE cccc = 52428 dec * ( 500/2**16) = 399.993896484 km
+=> AZIM 960b  = 38411 dec *LSB = 210.997924805 
+=> AZIMW 016c = 364 dec * LSB = 1.999511719 deg
+=> AZRANGE 01c7 = 455 dec * LSB = 4.998779297 deg
+=> ELEVATION f82e = -2002 dec * LSB = -10.997314453 deg
+
+204/710 Acknowledgement Designator, 02
+
+204/720 Track Filter Designator, 98
+=> SS 1, RS 0, NTN 9, ID 1, RTT 1
+
+204/730 NTN Specifier, 001994
+C1 0, C2 3, C3 1, C4 4, C5 5
+
+204/740 RElayed Data Source Identifier, 6604
+=> SAC 66 = 102 dec, SIC 4

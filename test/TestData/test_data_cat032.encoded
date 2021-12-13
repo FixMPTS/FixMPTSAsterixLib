@@ -1,0 +1,66 @@
+to get the hex from bin file call "hexdump -C <input_file> "
+// Note this message is fully fabricated and has no indent to reflect plausible values
+
+CAT 10 Message raw 20 0060 fffff8 08c8 fffa 08fa 11 2070b1 1000 01200102026a 0f40 53575231383820 0007 40 4c535a48 5a535044 0500 010a 41333433 48 05045800480e4108100008 fb80000004100231362001300d15244332372020205349443120202044454745532020
+
+CAT 1 Byte, value 20 = 32 decimal
+LEN 2 Byte, value  0063 = 99 decimal
+
+FSPEC, fffff8 => all Items present, except the RE item
+
+032/010 Data Source Identifier,  08c8
+=> SAC 8 = 8 dec, SIC c8 = 200 decimal
+
+032/015 User Number, fffa = 65530 dec
+
+032/018 Data Source Identification Tag, 08fa
+=> SAC 8, SIC fa = 250 dec
+
+032/035 Type of Message, 11
+=> FAMILY 1, NATURE 1
+
+032/020 Time of Asterix Report, 2070b1 = 2126001 dec / 128 = 16609.3828125 seconds = 4.613717448 hours
+
+032/040 Track Number, 1000 = 4096 dec
+
+032/050 Composed Track Number, 01 2001 02 026a
+=> MSU 1, MTN 1000 = 4096 dec , FX 1
+=> SSU 2, STN 135 = 309 dec, FX 0
+
+032/060 Track Mode 3A, 0f40
+=> CODE f40 = 3904 dec = 7500 oct
+
+032/400 Callsign, 53575231383820 = SWR188
+
+032/410 Plan Number, 0007 = 7 dec
+
+032/420 Flight Category, 40
+=> GAT 1, FR1 00, SP1 0, SP2 0, SP3 0
+
+032/440 Departure Airport, 4c535a48 = LSZH = Zuerich
+
+032/450 Destination Airport, 5a535044 = ZSPD = Shangai
+
+032/480 Current Cleared Flight Level, 0500 = 1280 dec * 25 ft = 32000 ft
+
+032/490 Current Control Position, 010a
+=> CENTRE 1, POSITION a = 10 dec
+
+032/430 Type of Aircraft, 41333433 = A343
+
+032/435 Wake Turbulence Category, 48 = H (Heavy)
+
+032/460 Allocated SSR Codes, 05 0458 0048 0e41 0810 0008
+=> REP 5, CODE.0 0458 = 1112 dec, CODE.1 0048 = 72 dec, CODE.2 0e41 = 3649 dec, CODE.3 0810 = 2064 dec, CODE.4 0008 = 8 dec
+
+032/500 Supplementary Flight Data, fb80 00000410 02 313620 01300d1524 433237202020 53494431202020 44454745532020
+=> IFI 00000410, TYP 0, NBR 410 = 1040 dec
+=> RVSM 02 RVSM 1, HPR 0
+=> RDS 313620 = 16
+=> TOD 01600d1524 REP 1, TYP 6, DAY 0, HOR d = 13 dec, MIN 15 = 21 dec, AVS 0 , SEC 24 = 36 dec   
+=> AST 433237202020 = C27
+=> STD 53494431202020 = SID1
+=> STA 44454745532020 = DEGES
+
+
+

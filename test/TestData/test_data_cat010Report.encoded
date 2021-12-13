@@ -1,0 +1,78 @@
+to get the hex from bin file call "hexdump -C <input_file> "
+// Note this message is fully fabricated and has no indent to reflect plausible values
+
+
+CAT 10 Message raw 0a 0057 fffffbf0 000a 01 ad02 0100ff 2396424906104ac5 01031123 008e0b31 004656c1 000cffd8 082f 25c0 02e8 242720 00000485579df4 012000400261184051 0e 0000 05 95817a 01 08160005 030a0b02030719 c7 4454
+
+CAT 1 Byte, value 0a = 10 decimal
+LEN 2 Byte, value  0057 = 87 decimal
+
+FSPEC, fffffbf0 => all Items present but 010/550, 010/SP, 010/RE
+
+010/010 Data Source Identifier 00fa
+=> SAC 00 = 98 dec, SIC 0a = 10 decimal
+
+010/000 Message Type, 01
+
+010/020 Target Report, ad02
+=> TYP 5, DCR 0, CHN 1, GBS 1, CBT 0, FX 1
+=> SIM 0, TST 0, RAB 0, LOP 0, TOT 1, FX 0
+
+010/140 Time of Day, 0100ff = 65791 dec / 128 = 513.9921875 = 8.566536458 minutes
+
+010/041 Position in WGS84 Coordinates, 23964249 06104ac5
+=> LAT 23964249 = 597049929 dec = 50.044146935 deg , LNG 06104ac5 = 101731013 dec = 8.526995005 deg
+
+010/040 Measured Position Polar, 0103 1123
+=> Rho 0103 = 259 dec, Theta 1123 = 4387 dec = 24.098510742 deg
+
+010/042 Position in Cartesian Coordinates, 008e 0b31
+=> X 008e = 142 dec, Y 0b31= 2865 dec
+
+010/200 Calculated Track Velocity Polar 0046 56c1
+=> GSP 46 = 70 dec = 15.4 kt, TA 56c1 = 22209 dec = 121.997680664 deg
+
+010/202 Calculated Track Velocity Cartesian, 000c ffd8
+=> VX c = 12 dec = 3 m/s, Vy ffd8 = -40 dec = -10 m/s
+
+010/161 Track Number, 082f = 2095 dec
+
+010/170 Track Status, 25c0
+=> CNF 0, TRE 0, CST 2, MAH 0, TCC 1, STH 0, FX 1
+=> TOM 3, DOU 0, MRS 0, FX 0
+
+010/060 Mode 3A Code Octal, 02e8
+=> V 0, G 0, L 1, Code 2e8 = 744 dec 
+
+010/220 Target Address, 242720 = 2369312 dec
+
+010/245 Target Identification, 00000485579df4 = REU974
+
+010/250  Mode S MB Data, 01 20004002611840 51
+=> REP 1, DATA 20004002611840 = 9.007474173×10¹⁵ dec, BDS1 5, BDS2 1
+
+010/300 Vehicle Fleet Identification, 0e = 14 dec = Catering
+
+010/090 Flight Level Binary, 0000
+=> V 0, G 0, CODE 0
+
+010/091 Measured Height, 0005 = 5dec * 6.25 = 31.25 feet
+
+010/270 Target Size and Orientation, 95817a
+=> Length 4a = 74 dec, Orientation 40 = 64 dec * 2.81 = 180, Width 3d = 61m
+
+010/310 Preprogrammed Message, 01 = Towing AC
+
+010/500 Standard Deviation in Position, 08160005
+=> dx 8 /0.25 = 32, dy 16 = 22 dec /0.25 = 88, dxy 5 /0.25 = 20
+
+010/280 Presence 030a0b02030719
+=> REP 3, DROH.1 0a = 10 dec  DTHETA.1 0b = 11 dec *0.15 = 1.65deg
+=> DROH.2 2 = 2 dec  DTHETA.2 03 = 3 dec *0.15 = 0.45deg
+=> DROH.3 7 = 7 dec  DTHETA.3 19 = 25 dec *0.15 = 3.75deg
+
+010/131 Implitude of Primary Plot, c7 = 199 dec 
+
+010/210 Calculated Acceleration, 4454
+=> Ax 44 = 68 dec *0.25 = 17 m/s, Ay 54 = 84 dec * 0.25 = 21 m/s
+

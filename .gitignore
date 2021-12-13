@@ -1,0 +1,54 @@
+# Compiled Object files
+*.slo
+*.lo
+*.o
+*.obj
+*.rpm
+*.tar.gz
+
+# Compiled Dynamic libraries
+*.so
+*.so.*
+*.dylib
+*.dll
+
+# Compiled Static libraries
+*.lai
+*.la
+*.a
+*.lib
+lib
+
+# Executables
+*.exe
+*.out
+*.app
+
+#Eclipse files
+.metadata*
+*.lock
+*.log
+*.cproject
+*.project
+
+#third party includes
+
+# test data
+testdata
+
+#bin
+bin
+
+#test results
+Results/
+history.xml
+
+# tmp debug files
+*.dat
+
+#Misc
+*.pdf
+*.xls
+
+#Individual Files
+CppCheckResults.xml
