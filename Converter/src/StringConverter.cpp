@@ -31,14 +31,20 @@
 #include "StringConverter.h"
 #include "AsterixExceptions.h"
 
-StringConverter::StringConverter() {
+////////////////////////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////     To6BitChar     ////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////////////////////////
+StringConverter::To6BitChar::To6BitChar() :
+   ItemConverterBase() {
 }
-
-StringConverter::~StringConverter() {
+std::shared_ptr<ItemConverterBase> StringConverter::To6BitChar::get() {
+   static std::shared_ptr<To6BitChar> instance = std::make_shared<To6BitChar>( To6BitChar() );
+   return instance;
 }
-
-std::string StringConverter::to6BitChar( char* value, unsigned int value_length,
-   double& dest_buffer ) {
+uint64_t StringConverter::To6BitChar::toExternal(std::string value, unsigned int value_length) {
+   return 0; // TODO implement
+}
+std::string StringConverter::To6BitChar::fromExternal(char *value, unsigned int value_length) {
 
    unsigned long int value_converted = std::stoull( value );
    std::bitset<48> bin_id( value_converted );
@@ -60,16 +66,40 @@ std::string StringConverter::to6BitChar( char* value, unsigned int value_length,
    return return_str;
 }
 
-std::string StringConverter::toASCII( char* value, unsigned int value_length,
-   double& dest_buffer ) {
+////////////////////////////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////     toASCII     ////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////////////////////////
+StringConverter::ToASCII::ToASCII() :
+   ItemConverterBase() {
+}
+std::shared_ptr<ItemConverterBase> StringConverter::ToASCII::get() {
+   static std::shared_ptr<ToASCII> instance = std::make_shared<ToASCII>( ToASCII() );
+   return instance;
+}
+uint64_t StringConverter::ToASCII::toExternal(std::string value, unsigned int value_length) {
+   return 0; // TODO implement
+}
+std::string StringConverter::ToASCII::fromExternal(char *value, unsigned int value_length) {
    if( value == nullptr ) {
       return "Value is not a string";
    }
    return std::string( value );
 }
 
-std::string StringConverter::BitsToNATOtn19Bit( char* value, unsigned int value_length,
-   double& dest_buffer ) {
+////////////////////////////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////     BitsToNATOtn19Bit     ///////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////////////////////////
+StringConverter::BitsToNATOtn19Bit::BitsToNATOtn19Bit() :
+   ItemConverterBase() {
+}
+std::shared_ptr<ItemConverterBase> StringConverter::BitsToNATOtn19Bit::get() {
+   static std::shared_ptr<BitsToNATOtn19Bit> instance = std::make_shared<BitsToNATOtn19Bit>( BitsToNATOtn19Bit() );
+   return instance;
+}
+uint64_t StringConverter::BitsToNATOtn19Bit::toExternal(std::string value, unsigned int value_length) {
+   return 0; // TODO implement
+}
+std::string StringConverter::BitsToNATOtn19Bit::fromExternal(char *value, unsigned int value_length) {
    unsigned long int value_converted = std::stoull( value );
    std::bitset<19> bin_id( value_converted );
    std::string return_str = "";

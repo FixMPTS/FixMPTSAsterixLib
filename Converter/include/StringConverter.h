@@ -29,12 +29,12 @@
 #ifndef STRINGCONVERTER_H_
 #define STRINGCONVERTER_H_
 
-#include <string>
+#include "ItemConverterBase.h"
 
-class StringConverter {
-public:
-   StringConverter();
-   virtual ~StringConverter();
+#include <string>
+#include <memory>
+
+namespace StringConverter {
 
    /**
     * Convert the given bytes into six bit characters in accordance to ICAO Annex 10.
@@ -44,7 +44,16 @@ public:
     * @return the value converted to the specified resolution
     * @throw ConverterError in case the input cannot be converted
     */
-   static std::string to6BitChar( char* value, unsigned int value_length, double& dest_buffer );
+class To6BitChar: public ItemConverterBase, public std::enable_shared_from_this<To6BitChar> {
+private:
+   To6BitChar();
+
+public:
+   void operator=(const To6BitChar&) = delete;
+   static std::shared_ptr<ItemConverterBase> get();
+   virtual uint64_t toExternal(std::string value, unsigned int value_length) override;
+   virtual std::string fromExternal(char *value, unsigned int value_length) override;
+};
 
    /**
     * Convert the given bytes to ASICC characters.
@@ -54,7 +63,16 @@ public:
     * @return the converted characters
     * @throw No throw
     */
-   static std::string toASCII( char* value, unsigned int value_length, double& dest_buffer );
+class ToASCII: public ItemConverterBase, public std::enable_shared_from_this<ToASCII> {
+private:
+   ToASCII();
+
+public:
+   void operator=(const ToASCII&) = delete;
+   static std::shared_ptr<ItemConverterBase> get();
+   virtual uint64_t toExternal(std::string value, unsigned int value_length) override;
+   virtual std::string fromExternal(char *value, unsigned int value_length) override;
+};
 
    /**
     * Convert the given 19 Bits comprised of two 5 bit and 3 three bit characters into a NATO
@@ -65,8 +83,16 @@ public:
     * @return the converted characters
     * @throw No throw
     */
-   static std::string BitsToNATOtn19Bit( char* value, unsigned int value_length,
-      double& dest_buffer );
+class BitsToNATOtn19Bit: public ItemConverterBase, public std::enable_shared_from_this<BitsToNATOtn19Bit> {
+private:
+   BitsToNATOtn19Bit();
+
+public:
+   void operator=(const BitsToNATOtn19Bit&) = delete;
+   static std::shared_ptr<ItemConverterBase> get();
+   virtual uint64_t toExternal(std::string value, unsigned int value_length) override;
+   virtual std::string fromExternal(char *value, unsigned int value_length) override;
 };
 
+} // end namespace
 #endif /* STRINGCONVERTER_H_ */

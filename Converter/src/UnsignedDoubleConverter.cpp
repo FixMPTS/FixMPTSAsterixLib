@@ -30,125 +30,345 @@
 
 #include "UnsignedDoubleConverter.h"
 
-UnsignedDoubleConverter::UnsignedDoubleConverter() {
+////////////////////////////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////     CircleSegment8Bit     ///////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////////////////////////
+UnsignedDoubleConverter::CircleSegment8Bit::CircleSegment8Bit() :
+   ItemConverterBase() {
 }
-
-UnsignedDoubleConverter::~UnsignedDoubleConverter() {
+std::shared_ptr<ItemConverterBase> UnsignedDoubleConverter::CircleSegment8Bit::get() {
+   static std::shared_ptr<CircleSegment8Bit> instance = std::make_shared<CircleSegment8Bit>( CircleSegment8Bit() );
+   return instance;
 }
-
-// Set of Circle/Degree converter
-std::string UnsignedDoubleConverter::circleSegment8Bit( char* value, unsigned int value_length,
-   double& dest_buffer ) {
+uint64_t UnsignedDoubleConverter::CircleSegment8Bit::toExternal(std::string value, unsigned int value_length) {
+   return 0; // TODO implement
+}
+std::string UnsignedDoubleConverter::CircleSegment8Bit::fromExternal(char *value, unsigned int value_length) {
    unsigned long int value_converted = std::stoull( value );
    return std::to_string( (value_converted / pow( 2, 8 )) * 360.0 );
 }
 
-std::string UnsignedDoubleConverter::circleSegment16Bit( char* value, unsigned int value_length,
-   double& dest_buffer ) {
+////////////////////////////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////     CircleSegment16Bit     //////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////////////////////////
+UnsignedDoubleConverter::CircleSegment16Bit::CircleSegment16Bit() :
+   ItemConverterBase() {
+}
+std::shared_ptr<ItemConverterBase> UnsignedDoubleConverter::CircleSegment16Bit::get() {
+   static std::shared_ptr<CircleSegment16Bit> instance = std::make_shared<CircleSegment16Bit>( CircleSegment16Bit() );
+   return instance;
+}
+uint64_t UnsignedDoubleConverter::CircleSegment16Bit::toExternal(std::string value, unsigned int value_length) {
+   return 0; // TODO implement
+}
+std::string UnsignedDoubleConverter::CircleSegment16Bit::fromExternal(char *value, unsigned int value_length) {
    unsigned long int value_converted = std::stoull( value );
    return std::to_string( (value_converted / pow( 2, 16 )) * 360.0 );
 }
 
-std::string UnsignedDoubleConverter::direction13Bit( char* value, unsigned int value_length,
-   double& dest_buffer ) {
+////////////////////////////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////     Direction14Bit     //////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////////////////////////
+UnsignedDoubleConverter::Direction13Bit::Direction13Bit() :
+   ItemConverterBase() {
+}
+std::shared_ptr<ItemConverterBase> UnsignedDoubleConverter::Direction13Bit::get() {
+   static std::shared_ptr<Direction13Bit> instance = std::make_shared<Direction13Bit>( Direction13Bit() );
+   return instance;
+}
+uint64_t UnsignedDoubleConverter::Direction13Bit::toExternal(std::string value, unsigned int value_length) {
+   return 0; // TODO implement
+}
+std::string UnsignedDoubleConverter::Direction13Bit::fromExternal(char *value, unsigned int value_length) {
    unsigned long int value_converted = std::stoull( value );
    return std::to_string( (360.0 / pow( 2, 13 ) * value_converted) );
 }
 
-std::string UnsignedDoubleConverter::direction14Bit( char* value, unsigned int value_length,
-   double& dest_buffer ) {
+////////////////////////////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////     Direction14Bit     //////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////////////////////////
+UnsignedDoubleConverter::Direction14Bit::Direction14Bit() :
+   ItemConverterBase() {
+}
+std::shared_ptr<ItemConverterBase> UnsignedDoubleConverter::Direction14Bit::get() {
+   static std::shared_ptr<Direction14Bit> instance = std::make_shared<Direction14Bit>( Direction14Bit() );
+   return instance;
+}
+uint64_t UnsignedDoubleConverter::Direction14Bit::toExternal(std::string value, unsigned int value_length) {
+   return 0; // TODO implement
+}
+std::string UnsignedDoubleConverter::Direction14Bit::fromExternal(char *value, unsigned int value_length) {
    unsigned long int value_converted = std::stoull( value );
    return std::to_string( (360.0 / pow( 2, 14 ) * value_converted) );
 }
 
-std::string UnsignedDoubleConverter::direction16Bit( char* value, unsigned int value_length,
-   double& dest_buffer ) {
+////////////////////////////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////     Direction16Bit     //////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////////////////////////
+UnsignedDoubleConverter::Direction16Bit::Direction16Bit() :
+   ItemConverterBase() {
+}
+std::shared_ptr<ItemConverterBase> UnsignedDoubleConverter::Direction16Bit::get() {
+   static std::shared_ptr<Direction16Bit> instance = std::make_shared<Direction16Bit>( Direction16Bit() );
+   return instance;
+}
+uint64_t UnsignedDoubleConverter::Direction16Bit::toExternal(std::string value, unsigned int value_length) {
+   return 0; // TODO implement
+}
+std::string UnsignedDoubleConverter::Direction16Bit::fromExternal(char *value, unsigned int value_length) {
    unsigned long int value_converted = std::stoull( value );
    return std::to_string( (360.0 / pow( 2, 16 ) * value_converted) );
 }
 
-std::string UnsignedDoubleConverter::direction128th( char* value, unsigned int value_length,
-   double& dest_buffer ) {
+////////////////////////////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////     Direction128th     //////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////////////////////////
+UnsignedDoubleConverter::Direction128th::Direction128th() :
+   ItemConverterBase() {
+}
+std::shared_ptr<ItemConverterBase> UnsignedDoubleConverter::Direction128th::get() {
+   static std::shared_ptr<Direction128th> instance = std::make_shared<Direction128th>( Direction128th() );
+   return instance;
+}
+uint64_t UnsignedDoubleConverter::Direction128th::toExternal(std::string value, unsigned int value_length) {
+   return 0; // TODO implement
+}
+std::string UnsignedDoubleConverter::Direction128th::fromExternal(char *value, unsigned int value_length) {
    unsigned long int value_converted = std::stoull( value );
    return std::to_string( value_converted * (360.0 / 128.0) );
 }
 
-std::string UnsignedDoubleConverter::directionHalfCircle8Bit( char* value,
-   unsigned int value_length, double& dest_buffer ) {
+////////////////////////////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////     DirectionHalfCircle8Bit     /////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////////////////////////
+UnsignedDoubleConverter::DirectionHalfCircle8Bit::DirectionHalfCircle8Bit() :
+   ItemConverterBase() {
+}
+std::shared_ptr<ItemConverterBase> UnsignedDoubleConverter::DirectionHalfCircle8Bit::get() {
+   static std::shared_ptr<DirectionHalfCircle8Bit> instance = std::make_shared<DirectionHalfCircle8Bit>(
+      DirectionHalfCircle8Bit() );
+   return instance;
+}
+uint64_t UnsignedDoubleConverter::DirectionHalfCircle8Bit::toExternal(std::string value, unsigned int value_length) {
+   return 0; // TODO implement
+}
+std::string UnsignedDoubleConverter::DirectionHalfCircle8Bit::fromExternal(char *value, unsigned int value_length) {
    unsigned long int value_converted = std::stoull( value );
    return std::to_string( (value_converted * (180 / pow( 2, 8 ))) );
 }
 
-// Fraction Converter
-std::string UnsignedDoubleConverter::fraction4th( char* value, unsigned int value_length,
-   double& dest_buffer ) {
+////////////////////////////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////     Fraction4th     /////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////////////////////////
+UnsignedDoubleConverter::Fraction4th::Fraction4th() :
+   ItemConverterBase() {
+}
+std::shared_ptr<ItemConverterBase> UnsignedDoubleConverter::Fraction4th::get() {
+   static std::shared_ptr<Fraction4th> instance = std::make_shared<Fraction4th>( Fraction4th() );
+   return instance;
+}
+uint64_t UnsignedDoubleConverter::Fraction4th::toExternal(std::string value, unsigned int value_length) {
+   return 0; // TODO implement
+}
+std::string UnsignedDoubleConverter::Fraction4th::fromExternal(char *value, unsigned int value_length) {
    unsigned long int value_converted = std::stoull( value );
    return std::to_string( value_converted / 4.0 );
 }
 
-std::string UnsignedDoubleConverter::fraction10th( char* value, unsigned int value_length,
-   double& dest_buffer ) {
+////////////////////////////////////////////////////////////////////////////////////////////////////
+/////////////////////////////////     Fraction10th     /////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////////////////////////
+UnsignedDoubleConverter::Fraction10th::Fraction10th() :
+   ItemConverterBase() {
+}
+std::shared_ptr<ItemConverterBase> UnsignedDoubleConverter::Fraction10th::get() {
+   static std::shared_ptr<Fraction10th> instance = std::make_shared<Fraction10th>( Fraction10th() );
+   return instance;
+}
+uint64_t UnsignedDoubleConverter::Fraction10th::toExternal(std::string value, unsigned int value_length) {
+   return 0; // TODO implement
+}
+std::string UnsignedDoubleConverter::Fraction10th::fromExternal(char *value, unsigned int value_length) {
    unsigned long int value_converted = std::stoull( value );
    return std::to_string( value_converted * 0.1 );
 }
 
-std::string UnsignedDoubleConverter::fraction32nd( char* value, unsigned int value_length,
-   double& dest_buffer ) {
+////////////////////////////////////////////////////////////////////////////////////////////////////
+/////////////////////////////////     Fraction100th     ////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////////////////////////
+UnsignedDoubleConverter::Fraction32nd::Fraction32nd() :
+   ItemConverterBase() {
+}
+std::shared_ptr<ItemConverterBase> UnsignedDoubleConverter::Fraction32nd::get() {
+   static std::shared_ptr<Fraction32nd> instance = std::make_shared<Fraction32nd>( Fraction32nd() );
+   return instance;
+}
+uint64_t UnsignedDoubleConverter::Fraction32nd::toExternal(std::string value, unsigned int value_length) {
+   return 0; // TODO implement
+}
+std::string UnsignedDoubleConverter::Fraction32nd::fromExternal(char *value, unsigned int value_length) {
    unsigned long int value_converted = std::stoull( value );
    return std::to_string( value_converted / 32.0 );
 }
 
-std::string UnsignedDoubleConverter::fraction100th( char* value, unsigned int value_length,
-   double& dest_buffer ) {
+////////////////////////////////////////////////////////////////////////////////////////////////////
+/////////////////////////////////     Fraction100th     ////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////////////////////////
+UnsignedDoubleConverter::Fraction100th::Fraction100th() :
+   ItemConverterBase() {
+}
+std::shared_ptr<ItemConverterBase> UnsignedDoubleConverter::Fraction100th::get() {
+   static std::shared_ptr<Fraction100th> instance = std::make_shared<Fraction100th>( Fraction100th() );
+   return instance;
+}
+uint64_t UnsignedDoubleConverter::Fraction100th::toExternal(std::string value, unsigned int value_length) {
+   return 0; // TODO implement
+}
+std::string UnsignedDoubleConverter::Fraction100th::fromExternal(char *value, unsigned int value_length) {
    unsigned long int value_converted = std::stoull( value );
    return std::to_string( value_converted * 0.01 );
 }
 
-std::string UnsignedDoubleConverter::fraction128th( char* value, unsigned int value_length ) {
+////////////////////////////////////////////////////////////////////////////////////////////////////
+/////////////////////////////////     Fraction128th     ////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////////////////////////
+UnsignedDoubleConverter::Fraction128th::Fraction128th() :
+   ItemConverterBase() {
+}
+std::shared_ptr<ItemConverterBase> UnsignedDoubleConverter::Fraction128th::get() {
+   static std::shared_ptr<Fraction128th> instance = std::make_shared<Fraction128th>( Fraction128th() );
+   return instance;
+}
+uint64_t UnsignedDoubleConverter::Fraction128th::toExternal(std::string value, unsigned int value_length) {
+   return 0; // TODO implement
+}
+std::string UnsignedDoubleConverter::Fraction128th::fromExternal(char *value, unsigned int value_length) {
    unsigned long int value_converted = std::stoull( value );
    return std::to_string( value_converted / 128.0 );
 }
 
-std::string UnsignedDoubleConverter::fraction360th( char* value, unsigned int value_length,
-   double& dest_buffer ) {
+////////////////////////////////////////////////////////////////////////////////////////////////////
+/////////////////////////////////     Fraction360th     ////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////////////////////////
+UnsignedDoubleConverter::Fraction360th::Fraction360th() :
+   ItemConverterBase() {
+}
+std::shared_ptr<ItemConverterBase> UnsignedDoubleConverter::Fraction360th::get() {
+   static std::shared_ptr<Fraction360th> instance = std::make_shared<Fraction360th>( Fraction360th() );
+   return instance;
+}
+uint64_t UnsignedDoubleConverter::Fraction360th::toExternal(std::string value, unsigned int value_length) {
+   return 0; // TODO implement
+}
+std::string UnsignedDoubleConverter::Fraction360th::fromExternal(char *value, unsigned int value_length) {
    unsigned long int value_converted = std::stoull( value );
    return std::to_string( value_converted / 360.0 );
 }
 
-std::string UnsignedDoubleConverter::fraction30Bit( char* value, unsigned int value_length,
-   double& dest_buffer ) {
+////////////////////////////////////////////////////////////////////////////////////////////////////
+/////////////////////////////////     Fraction30Bit     ////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////////////////////////
+UnsignedDoubleConverter::Fraction30Bit::Fraction30Bit() :
+   ItemConverterBase() {
+}
+std::shared_ptr<ItemConverterBase> UnsignedDoubleConverter::Fraction30Bit::get() {
+   static std::shared_ptr<Fraction30Bit> instance = std::make_shared<Fraction30Bit>( Fraction30Bit() );
+   return instance;
+}
+uint64_t UnsignedDoubleConverter::Fraction30Bit::toExternal(std::string value, unsigned int value_length) {
+   return 0; // TODO implement
+}
+std::string UnsignedDoubleConverter::Fraction30Bit::fromExternal(char *value, unsigned int value_length) {
    unsigned long int value_converted = std::stoull( value );
    return std::to_string( value_converted / pow( 2, 30 ) );
 }
 
-// Heading related converter
-std::string UnsignedDoubleConverter::selectedHeading( char* value, unsigned int value_length,
-   double& dest_buffer ) {
+////////////////////////////////////////////////////////////////////////////////////////////////////
+/////////////////////////////////     SelectedHeading     //////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////////////////////////
+UnsignedDoubleConverter::SelectedHeading::SelectedHeading() :
+   ItemConverterBase() {
+}
+std::shared_ptr<ItemConverterBase> UnsignedDoubleConverter::SelectedHeading::get() {
+   static std::shared_ptr<SelectedHeading> instance = std::make_shared<SelectedHeading>( SelectedHeading() );
+   return instance;
+}
+uint64_t UnsignedDoubleConverter::SelectedHeading::toExternal(std::string value, unsigned int value_length) {
+   return 0; // TODO implement
+}
+std::string UnsignedDoubleConverter::SelectedHeading::fromExternal(char *value, unsigned int value_length) {
    unsigned long int value_converted = std::stoull( value );
    return std::to_string( value_converted * 0.703125 );
 }
 
-std::string UnsignedDoubleConverter::groundTrackHeading( char* value, unsigned int value_length,
-   double& dest_buffer ) {
+////////////////////////////////////////////////////////////////////////////////////////////////////
+//////////////////////////////     GroundTrackHeading     //////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////////////////////////
+UnsignedDoubleConverter::GroundTrackHeading::GroundTrackHeading() :
+   ItemConverterBase() {
+}
+std::shared_ptr<ItemConverterBase> UnsignedDoubleConverter::GroundTrackHeading::get() {
+   static std::shared_ptr<GroundTrackHeading> instance = std::make_shared<GroundTrackHeading>( GroundTrackHeading() );
+   return instance;
+}
+uint64_t UnsignedDoubleConverter::GroundTrackHeading::toExternal(std::string value, unsigned int value_length) {
+   return 0; // TODO implement
+}
+std::string UnsignedDoubleConverter::GroundTrackHeading::fromExternal(char *value, unsigned int value_length) {
    unsigned long int value_converted = std::stoull( value );
    return std::to_string( value_converted * 2.8125 );
 }
 
-// Speed related converter
-std::string UnsignedDoubleConverter::speedNMToKt( char* value, unsigned int value_length,
-   double& dest_buffer ) {
+////////////////////////////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////    SpeedNMToKt     //////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////////////////////////
+UnsignedDoubleConverter::SpeedNMToKt::SpeedNMToKt() :
+   ItemConverterBase() {
+}
+std::shared_ptr<ItemConverterBase> UnsignedDoubleConverter::SpeedNMToKt::get() {
+   static std::shared_ptr<SpeedNMToKt> instance = std::make_shared<SpeedNMToKt>( SpeedNMToKt() );
+   return instance;
+}
+uint64_t UnsignedDoubleConverter::SpeedNMToKt::toExternal(std::string value, unsigned int value_length) {
+   return 0; // TODO implement
+}
+std::string UnsignedDoubleConverter::SpeedNMToKt::fromExternal(char *value, unsigned int value_length) {
    unsigned long int value_converted = std::stoull( value );
    return std::to_string( (value_converted * pow( 2, -14 )) * 3600.0 );
 }
 
-std::string UnsignedDoubleConverter::speedVelToKt( char* value, unsigned int value_length,
-   double& dest_buffer ) {
+////////////////////////////////////////////////////////////////////////////////////////////////////
+/////////////////////////////////////    SpeedVelToKt     //////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////////////////////////
+UnsignedDoubleConverter::SpeedVelToKt::SpeedVelToKt() :
+   ItemConverterBase() {
+}
+std::shared_ptr<ItemConverterBase> UnsignedDoubleConverter::SpeedVelToKt::get() {
+   static std::shared_ptr<SpeedVelToKt> instance = std::make_shared<SpeedVelToKt>( SpeedVelToKt() );
+   return instance;
+}
+uint64_t UnsignedDoubleConverter::SpeedVelToKt::toExternal(std::string value, unsigned int value_length) {
+   return 0; // TODO implement
+}
+std::string UnsignedDoubleConverter::SpeedVelToKt::fromExternal(char *value, unsigned int value_length) {
    unsigned long int value_converted = std::stoull( value );
    return std::to_string( (value_converted * 0.125) );
 }
 
-std::string UnsignedDoubleConverter::airspeed14Bit( char* value, unsigned int value_length,
-   double& dest_buffer ) {
+////////////////////////////////////////////////////////////////////////////////////////////////////
+/////////////////////////////////////    Airspeed14Bit     /////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////////////////////////
+UnsignedDoubleConverter::Airspeed14Bit::Airspeed14Bit() :
+   ItemConverterBase() {
+}
+std::shared_ptr<ItemConverterBase> UnsignedDoubleConverter::Airspeed14Bit::get() {
+   static std::shared_ptr<Airspeed14Bit> instance = std::make_shared<Airspeed14Bit>( Airspeed14Bit() );
+   return instance;
+}
+uint64_t UnsignedDoubleConverter::Airspeed14Bit::toExternal(std::string value, unsigned int value_length) {
+   return 0; // TODO implement
+}
+std::string UnsignedDoubleConverter::Airspeed14Bit::fromExternal(char *value, unsigned int value_length) {
    unsigned long int value_converted = std::stoull( value );
    std::bitset<16> converted_value( value_converted );
 
@@ -160,15 +380,38 @@ std::string UnsignedDoubleConverter::airspeed14Bit( char* value, unsigned int va
    }
 }
 
-// Misc converter
-std::string UnsignedDoubleConverter::fact10( char* value, unsigned int value_length,
-   double& dest_buffer ) {
+////////////////////////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////    Fact10     /////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////////////////////////
+UnsignedDoubleConverter::Fact10::Fact10() :
+   ItemConverterBase() {
+}
+std::shared_ptr<ItemConverterBase> UnsignedDoubleConverter::Fact10::get() {
+   static std::shared_ptr<Fact10> instance = std::make_shared<Fact10>( Fact10() );
+   return instance;
+}
+uint64_t UnsignedDoubleConverter::Fact10::toExternal(std::string value, unsigned int value_length) {
+   return 0; // TODO implement
+}
+std::string UnsignedDoubleConverter::Fact10::fromExternal(char *value, unsigned int value_length) {
    unsigned long int value_converted = std::stoull( value );
    return std::to_string( value_converted * 10.0 );
 }
 
-std::string UnsignedDoubleConverter::eRange( char* value, unsigned int value_length,
-   double& dest_buffer ) {
+////////////////////////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////    ERange     /////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////////////////////////
+UnsignedDoubleConverter::ERange::ERange() :
+   ItemConverterBase() {
+}
+std::shared_ptr<ItemConverterBase> UnsignedDoubleConverter::ERange::get() {
+   static std::shared_ptr<ERange> instance = std::make_shared<ERange>( ERange() );
+   return instance;
+}
+uint64_t UnsignedDoubleConverter::ERange::toExternal(std::string value, unsigned int value_length) {
+   return 0; // TODO implement
+}
+std::string UnsignedDoubleConverter::ERange::fromExternal(char *value, unsigned int value_length) {
    unsigned long int value_converted = std::stoull( value );
    return std::to_string( (value_converted * (500.0 / pow( 2, 16 ))) );
 }

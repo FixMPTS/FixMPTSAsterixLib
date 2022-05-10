@@ -25,17 +25,40 @@
  */
 
 #include "CommonConverter.h"
-
-CommonConverter::~CommonConverter() {
+namespace CommonConverter {
+////////////////////////////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////     NoneConverter     ///////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////////////////////////
+NoneConverter::NoneConverter() :
+   ItemConverterBase() {
 }
-
-std::string CommonConverter::NoneConverter( char* value, unsigned int value_length ) {
+std::shared_ptr<ItemConverterBase> NoneConverter::get() {
+   static std::shared_ptr<ItemConverterBase> instance = std::make_shared<NoneConverter>( NoneConverter() );
+   return instance;
+}
+uint64_t NoneConverter::toExternal(std::string value, unsigned int value_length) {
+   return 0; // TODO implement
+}
+std::string NoneConverter::fromExternal(char *value, unsigned int value_length) {
    long int value_converted = std::stoll( value );
    return std::to_string( value_converted );
 }
 
-std::string CommonConverter::NoneConverterBuffer( char* value, unsigned int value_length,
-   double& dest_buffer ) {
+////////////////////////////////////////////////////////////////////////////////////////////////////
+///////////////////////////////     NoneConverterBuffer     ////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////////////////////////
+NoneConverterBuffer::NoneConverterBuffer() :
+   ItemConverterBase() {
+}
+std::shared_ptr<ItemConverterBase> NoneConverterBuffer::get() {
+   static std::shared_ptr<ItemConverterBase> instance = std::make_shared<NoneConverterBuffer>( NoneConverterBuffer() );
+   return instance;
+}
+uint64_t NoneConverterBuffer::toExternal(std::string value, unsigned int value_length) {
+   return 0; // TODO implement
+}
+std::string NoneConverterBuffer::fromExternal(char *value, unsigned int value_length) {
    unsigned long int value_converted = reinterpret_cast<unsigned long int>( &value );
    return std::to_string( value_converted );
+}
 }

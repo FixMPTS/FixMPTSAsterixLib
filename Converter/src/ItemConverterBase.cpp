@@ -1,8 +1,8 @@
 /**
- * @file UnsignedIntegerConverter.h
- * @author  Felix Kreuter <felix@fixmpts.org>
+ * @file ItemConverterBase.cpp
+ * @author  Felix Kreuter <felix.kreuter@lordcentury.net>
  * @version 1.0
- * Created on: 2 Feb 2018
+ * Created on: 17 Apr 2022
  *
  * @section LICENSE
  *
@@ -22,24 +22,14 @@
  *
  * @section DESCRIPTION
  *
- * Class holding the Asterix unsigned integer converter. The conversion if from/to a raw Asterix
- * value which has to be interpreted as unsigned integer.
- *
- * NOTE! All names indication a size in bit (e.g. fraction10Bit ) have no bit constrained at the
- * input or output, but rather indicate that 2 to the power of X, in this case 10, will be used
- * for the conversion. The above example will result in the following conversion
- *
- * ' value / 2**10'
- *
+ * see .h file for more information
  */
+#include "ItemConverterBase.h"
 
-#ifndef UNSIGNEDINTEGERCONVERTER_H_
-#define UNSIGNEDINTEGERCONVERTER_H_
+ItemConverterBase::ItemConverterBase() {
 
-class UnsignedIntegerConverter {
-public:
-   UnsignedIntegerConverter();
-   virtual ~UnsignedIntegerConverter();
-};
+}
 
-#endif /* UNSIGNEDINTEGERCONVERTER_H_ */
+ItemConverterBase::~ItemConverterBase() {
+   // noting to do
+}

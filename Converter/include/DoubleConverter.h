@@ -35,12 +35,12 @@
 #ifndef DOUBLECONVERTER_H_
 #define DOUBLECONVERTER_H_
 
-#include <string>
+#include "ItemConverterBase.h"
 
-class DoubleConverter {
-public:
-   DoubleConverter();
-   virtual ~DoubleConverter();
+#include <string>
+#include <memory>
+
+namespace DoubleConverter {
 
    /**
     * Covert the input value by multiplying it with 0.5
@@ -50,7 +50,15 @@ public:
     * @return the string representation of the converted value
     * @throw No throw
     */
-   static std::string fractionHalf( char* value, unsigned int value_length, double& dest_buffer );
+class FractionHalf: public ItemConverterBase, public std::enable_shared_from_this<FractionHalf> {
+private:
+   FractionHalf();
+
+public:
+   static std::shared_ptr<ItemConverterBase> get();
+   virtual uint64_t toExternal(std::string value, unsigned int value_length) override;
+   virtual std::string fromExternal(char *value, unsigned int value_length) override;
+};
 
    /**
     * Convert the value to quarter of the given raw value
@@ -60,7 +68,15 @@ public:
     * @return The converted value
     * @throw None
     */
-   static std::string fraction4th( char* value, unsigned int value_length, double& dest_buffer );
+class Fraction4th: public ItemConverterBase, public std::enable_shared_from_this<Fraction4th> {
+private:
+   Fraction4th();
+
+public:
+   static std::shared_ptr<ItemConverterBase> get();
+   virtual uint64_t toExternal(std::string value, unsigned int value_length) override;
+   virtual std::string fromExternal(char *value, unsigned int value_length) override;
+};
 
    /**
     * Convert the given raw value by dividing it by 16
@@ -70,7 +86,15 @@ public:
     * @return The converted value
     * @throw None
     */
-   static std::string fraction8th( char* value, unsigned int value_length, double& dest_buffer );
+class Fraction8th: public ItemConverterBase, public std::enable_shared_from_this<Fraction8th> {
+private:
+   Fraction8th();
+
+public:
+   static std::shared_ptr<ItemConverterBase> get();
+   virtual uint64_t toExternal(std::string value, unsigned int value_length) override;
+   virtual std::string fromExternal(char *value, unsigned int value_length) override;
+};
 
    /**
     * Convert the given raw value by dividing it by 16
@@ -80,7 +104,15 @@ public:
     * @return The converted value
     * @throw None
     */
-   static std::string fraction16th( char* value, unsigned int value_length, double& dest_buffer );
+class Fraction16th: public ItemConverterBase, public std::enable_shared_from_this<Fraction16th> {
+private:
+   Fraction16th();
+
+public:
+   static std::shared_ptr<ItemConverterBase> get();
+   virtual uint64_t toExternal(std::string value, unsigned int value_length) override;
+   virtual std::string fromExternal(char *value, unsigned int value_length) override;
+};
 
    /**
     * Convert the given value to the new value with a resolution of 1/64.
@@ -90,7 +122,15 @@ public:
     * @return the converted value as string
     * @throw No throw
     */
-   static std::string fraction64th( char* value, unsigned int value_length, double& dest_buffer );
+class Fraction64th: public ItemConverterBase, public std::enable_shared_from_this<Fraction64th> {
+private:
+   Fraction64th();
+
+public:
+   static std::shared_ptr<ItemConverterBase> get();
+   virtual uint64_t toExternal(std::string value, unsigned int value_length) override;
+   virtual std::string fromExternal(char *value, unsigned int value_length) override;
+};
 
    /**
     * Convert the input value to the output being 1/128 nautical mile of the input.
@@ -100,8 +140,15 @@ public:
     * @return double representation of the input value as 1/128th nautical miles
     * @throw None
     */
-   static std::string fraction128th( char* value, unsigned int value_length, double& dest_buffer );
+class Fraction128th: public ItemConverterBase, public std::enable_shared_from_this<Fraction128th> {
+private:
+   Fraction128th();
 
+public:
+   static std::shared_ptr<ItemConverterBase> get();
+   virtual uint64_t toExternal(std::string value, unsigned int value_length) override;
+   virtual std::string fromExternal(char *value, unsigned int value_length) override;
+};
    /** Convert the input value to the output being 1/256 nautical mile of the input.
     *
     * @param value The value which should be converted
@@ -109,7 +156,15 @@ public:
     * @return double representation of the input value as 1/256th nautical miles
     * @throw None
     */
-   static std::string fraction256th( char* value, unsigned int value_length, double& dest_buffer );
+class Fraction256th: public ItemConverterBase, public std::enable_shared_from_this<Fraction256th> {
+private:
+   Fraction256th();
+
+public:
+   static std::shared_ptr<ItemConverterBase> get();
+   virtual uint64_t toExternal(std::string value, unsigned int value_length) override;
+   virtual std::string fromExternal(char *value, unsigned int value_length) override;
+};
 
    /**
     * Convert the given value by dividing it by 10 to the power of 5
@@ -119,8 +174,15 @@ public:
     * @return the converted value in string representation
     * @throw No throw
     */
-   static std::string fraction10ToPower5( char* value, unsigned int value_length,
-      double& dest_buffer );
+class Fraction10ToPower5: public ItemConverterBase, public std::enable_shared_from_this<Fraction10ToPower5> {
+private:
+   Fraction10ToPower5();
+
+public:
+   static std::shared_ptr<ItemConverterBase> get();
+   virtual uint64_t toExternal(std::string value, unsigned int value_length) override;
+   virtual std::string fromExternal(char *value, unsigned int value_length) override;
+};
 
    /**
     * Convert the given value by dividing it by 10 to the power of 6
@@ -130,8 +192,15 @@ public:
     * @return the converted value in string representation
     * @throw No throw
     */
-   static std::string fraction10ToPower6( char* value, unsigned int value_length,
-      double& dest_buffer );
+class Fraction10ToPower6: public ItemConverterBase, public std::enable_shared_from_this<Fraction10ToPower6> {
+private:
+   Fraction10ToPower6();
+
+public:
+   static std::shared_ptr<ItemConverterBase> get();
+   virtual uint64_t toExternal(std::string value, unsigned int value_length) override;
+   virtual std::string fromExternal(char *value, unsigned int value_length) override;
+};
 
    /**
     * Convert the input value to a WGS84 height with a resolution of 0.25 meters
@@ -141,8 +210,15 @@ public:
     * @return the value converted to the specified resolution
     * @throw No throw
     */
-   static std::string WGS84AltQuarter( char* value, unsigned int value_length,
-      double& dest_buffer );
+class WGS84AltQuarter: public ItemConverterBase, public std::enable_shared_from_this<WGS84AltQuarter> {
+private:
+   WGS84AltQuarter();
+
+public:
+   static std::shared_ptr<ItemConverterBase> get();
+   virtual uint64_t toExternal(std::string value, unsigned int value_length) override;
+   virtual std::string fromExternal(char *value, unsigned int value_length) override;
+};
 
    /**
     * Convert the 24 bit value into a double with resolution is 180/2^23 (deg).
@@ -152,8 +228,15 @@ public:
     * @return the value converted to the specified resolution
     * @throw No throw
     */
-   static std::string WGS84resolution23Bit( char* value, unsigned int value_length,
-      double& dest_buffer );
+class WGS84resolution23Bit: public ItemConverterBase, public std::enable_shared_from_this<WGS84resolution23Bit> {
+private:
+   WGS84resolution23Bit();
+
+public:
+   static std::shared_ptr<ItemConverterBase> get();
+   virtual uint64_t toExternal(std::string value, unsigned int value_length) override;
+   virtual std::string fromExternal(char *value, unsigned int value_length) override;
+};
 
    /**
     * Convert the 24 bit value into a double with resolution is 180/2^25 (deg).
@@ -163,8 +246,15 @@ public:
     * @return the value converted to the specified resolution
     * @throw No throw
     */
-   static std::string WGS84resolution25Bit( char* value, unsigned int value_length,
-      double& dest_buffer );
+class WGS84resolution25Bit: public ItemConverterBase, public std::enable_shared_from_this<WGS84resolution25Bit> {
+private:
+   WGS84resolution25Bit();
+
+public:
+   static std::shared_ptr<ItemConverterBase> get();
+   virtual uint64_t toExternal(std::string value, unsigned int value_length) override;
+   virtual std::string fromExternal(char *value, unsigned int value_length) override;
+};
 
    /**
     * Convert the 32 bit value into a double with resolution is 180/2**30 (deg).
@@ -174,8 +264,15 @@ public:
     * @return the value converted to the specified resolution
     * @throw No throw
     */
-   static std::string WGS84resolution30Bit( char* value, unsigned int value_length,
-      double& dest_buffer );
+class WGS84resolution30Bit: public ItemConverterBase, public std::enable_shared_from_this<WGS84resolution30Bit> {
+private:
+   WGS84resolution30Bit();
+
+public:
+   static std::shared_ptr<ItemConverterBase> get();
+   virtual uint64_t toExternal(std::string value, unsigned int value_length) override;
+   virtual std::string fromExternal(char *value, unsigned int value_length) override;
+};
 
    /**
     * Convert the 32 bit value into a double with resolution is 180/2**31 (deg).
@@ -185,8 +282,15 @@ public:
     * @return the value converted to the specified resolution
     * @throw No throw
     */
-   static std::string WGS84resolution31Bit( char* value, unsigned int value_length,
-      double& dest_buffer );
+class WGS84resolution31Bit: public ItemConverterBase, public std::enable_shared_from_this<WGS84resolution31Bit> {
+private:
+   WGS84resolution31Bit();
+
+public:
+   static std::shared_ptr<ItemConverterBase> get();
+   virtual uint64_t toExternal(std::string value, unsigned int value_length) override;
+   virtual std::string fromExternal(char *value, unsigned int value_length) override;
+};
 
    /**
     * Convert the 32 bit value into a double with resolution is 90/2**31 (deg).
@@ -196,8 +300,16 @@ public:
     * @return the value converted to the specified resolution
     * @throw No throw
     */
-   static std::string WGS8490degResolution31Bit( char* value, unsigned int value_length,
-      double& dest_buffer );
+class WGS8490degResolution31Bit: public ItemConverterBase,
+   public std::enable_shared_from_this<WGS8490degResolution31Bit> {
+private:
+   WGS8490degResolution31Bit();
+
+public:
+   static std::shared_ptr<ItemConverterBase> get();
+   virtual uint64_t toExternal(std::string value, unsigned int value_length) override;
+   virtual std::string fromExternal(char *value, unsigned int value_length) override;
+};
 
    /**
     * Convert value altitude with a resolution of 0.012 kt/s
@@ -207,8 +319,15 @@ public:
     * @return The converted altitude
     * @throw None
     */
-   static std::string groundVectorAcceleration(char *value, unsigned int value_length,
-      double& dest_buffer );
+class GroundVectorAcceleration: public ItemConverterBase, public std::enable_shared_from_this<GroundVectorAcceleration> {
+private:
+   GroundVectorAcceleration();
+
+public:
+   static std::shared_ptr<ItemConverterBase> get();
+   virtual uint64_t toExternal(std::string value, unsigned int value_length) override;
+   virtual std::string fromExternal(char *value, unsigned int value_length) override;
+};
 
    /**
     * Convert value altitude with a resolution of 6.25 ft
@@ -218,7 +337,15 @@ public:
     * @return The converted altitude
     * @throw None
     */
-   static std::string geoAltitudeFt( char* value, unsigned int value_length, double& dest_buffer );
+class GeoAltitudeFt: public ItemConverterBase, public std::enable_shared_from_this<GeoAltitudeFt> {
+private:
+   GeoAltitudeFt();
+
+public:
+   static std::shared_ptr<ItemConverterBase> get();
+   virtual uint64_t toExternal(std::string value, unsigned int value_length) override;
+   virtual std::string fromExternal(char *value, unsigned int value_length) override;
+};
 
    /**
     * Convert value into a vertical rate with a resolution of 6.25 feet per minute
@@ -228,7 +355,15 @@ public:
     * @return The converted vertical rate
     * @throw None
     */
-   static std::string verticalRate( char* value, unsigned int value_length, double& dest_buffer );
+class VerticalRate: public ItemConverterBase, public std::enable_shared_from_this<VerticalRate> {
+private:
+   VerticalRate();
+
+public:
+   static std::shared_ptr<ItemConverterBase> get();
+   virtual uint64_t toExternal(std::string value, unsigned int value_length) override;
+   virtual std::string fromExternal(char *value, unsigned int value_length) override;
+};
 
    /**
     * Convert the given raw value by multiplying it with an LSB of 0.15
@@ -238,7 +373,15 @@ public:
     * @return The converted value
     * @throw None
     */
-   static std::string factor015( char* value, unsigned int value_length, double& dest_buffer );
+class Factor015: public ItemConverterBase, public std::enable_shared_from_this<Factor015> {
+private:
+   Factor015();
+
+public:
+   static std::shared_ptr<ItemConverterBase> get();
+   virtual uint64_t toExternal(std::string value, unsigned int value_length) override;
+   virtual std::string fromExternal(char *value, unsigned int value_length) override;
+};
 
    /**
     * Converts the given 16 Bit values to a segment of circle, with all values evenly distributed.
@@ -249,7 +392,15 @@ public:
     * @return the converted value as string
     * @throws Not yet decided
     */
-   static std::string direction16Bit( char* value, unsigned int value_length, double& dest_buffer );
+class Direction16Bit: public ItemConverterBase, public std::enable_shared_from_this<Direction16Bit> {
+private:
+   Direction16Bit();
+
+public:
+   static std::shared_ptr<ItemConverterBase> get();
+   virtual uint64_t toExternal(std::string value, unsigned int value_length) override;
+   virtual std::string fromExternal(char *value, unsigned int value_length) override;
+};
 
    /**
     * Converts the given 16 Bit values to a segment of a half circle, with all values evenly distributed.
@@ -260,9 +411,17 @@ public:
     * @return the converted value as string
     * @throws Not yet decided
     */
-   static std::string elevation16Bit( char* value, unsigned int value_length, double& dest_buffer );
+class Elevation16Bit: public ItemConverterBase, public std::enable_shared_from_this<Elevation16Bit> {
+private:
+   Elevation16Bit();
 
-
+public:
+   static std::shared_ptr<ItemConverterBase> get();
+   virtual uint64_t toExternal(std::string value, unsigned int value_length) override;
+   virtual std::string fromExternal(char *value, unsigned int value_length) override;
 };
+
+
+} // end namespace DoubleCOonverter
 
 #endif /* DOUBLECONVERTER_H_ */

@@ -28,15 +28,16 @@
 #ifndef COMMONCONVERTER_H_
 #define COMMONCONVERTER_H_
 
+#include "ItemConverterBase.h"
 //global includes
 #include <string>
-#include <math.h>
-#include <bitset>
-#include <iostream>
-#include <sstream>
+//#include <math.h>
+//#include <bitset>
+//#include <iostream>
+//#include <sstream>
+#include <memory>
 
-class CommonConverter {
-public:
+namespace CommonConverter {
    /**
     * Empty converter. This converter does nothing as to return the input value as string.
     *
@@ -44,12 +45,28 @@ public:
     * @return the string representation of the input value.
     * @throw None
     */
-   static std::string NoneConverter( char* value, unsigned int value_length );
+//static std::string NoneConverter( char* value, unsigned int value_length );
+class NoneConverter: public ItemConverterBase, public std::enable_shared_from_this<NoneConverter> {
+private:
+   NoneConverter();
 
-   static std::string NoneConverterBuffer( char* value, unsigned int value_length,
-      double& dest_buffer );
-
-   virtual ~CommonConverter();
+public:
+   static std::shared_ptr<ItemConverterBase> get();
+   virtual uint64_t toExternal(std::string value, unsigned int value_length) override;
+   virtual std::string fromExternal(char *value, unsigned int value_length) override;
 };
+
+//static std::string NoneConverterBuffer(char *value, unsigned int value_length, double &dest_buffer);
+class NoneConverterBuffer: public ItemConverterBase, public std::enable_shared_from_this<NoneConverterBuffer> {
+private:
+   NoneConverterBuffer();
+
+public:
+   static std::shared_ptr<ItemConverterBase> get();
+   virtual uint64_t toExternal(std::string value, unsigned int value_length) override;
+   virtual std::string fromExternal(char *value, unsigned int value_length) override;
+};
+
+} // end namespace
 
 #endif /* COMMONCONVERTER_H_ */

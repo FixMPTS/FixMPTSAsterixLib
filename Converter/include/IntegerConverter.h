@@ -35,13 +35,12 @@
 #ifndef INTEGERCONVERTER_H_
 #define INTEGERCONVERTER_H_
 
+#include "ItemConverterBase.h"
+
 #include <string>
+#include <memory>
 
-class IntegerConverter {
-public:
-   IntegerConverter();
-   virtual ~IntegerConverter();
-
+namespace IntegerConverter {
    /**
     * Convert the value to quarter of what is has been before.
     *
@@ -50,7 +49,16 @@ public:
     * @return The converted value
     * @throw None
     */
-   static std::string lBitsToQuarter( char* value, unsigned int value_length );
+class LBitsToQuarter: public ItemConverterBase, public std::enable_shared_from_this<LBitsToQuarter> {
+private:
+   LBitsToQuarter();
+
+public:
+   void operator=(const LBitsToQuarter&) = delete;
+   static std::shared_ptr<ItemConverterBase> get();
+   virtual uint64_t toExternal(std::string value, unsigned int value_length) override;
+   virtual std::string fromExternal(char *value, unsigned int value_length) override;
+};
 
    /**
     * Convert the value to FL with a resolution of 25ft
@@ -60,8 +68,17 @@ public:
     * @return The converted FL
     * @throw None
     */
-   static std::string alt25ft( char* value, unsigned int value_length );
+class Alt25ft: public ItemConverterBase, public std::enable_shared_from_this<Alt25ft> {
+private:
+   Alt25ft();
 
+public:
+   void operator=(const Alt25ft&) = delete;
+   static std::shared_ptr<ItemConverterBase> get();
+   virtual uint64_t toExternal(std::string value, unsigned int value_length) override;
+   virtual std::string fromExternal(char *value, unsigned int value_length) override;
 };
+
+} // end namespace
 
 #endif /* INTEGERCONVERTER_H_ */

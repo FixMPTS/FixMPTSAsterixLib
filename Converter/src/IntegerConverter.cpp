@@ -27,18 +27,38 @@
 
 #include "IntegerConverter.h"
 
-IntegerConverter::IntegerConverter() {
+////////////////////////////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////     LBitsToQuarter     //////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////////////////////////
+IntegerConverter::LBitsToQuarter::LBitsToQuarter() :
+   ItemConverterBase() {
 }
-
-IntegerConverter::~IntegerConverter() {
+std::shared_ptr<ItemConverterBase> IntegerConverter::LBitsToQuarter::get() {
+   static std::shared_ptr<LBitsToQuarter> instance = std::make_shared<LBitsToQuarter>( LBitsToQuarter() );
+   return instance;
 }
-
-std::string IntegerConverter::lBitsToQuarter( char* value, unsigned int value_length ) {
+uint64_t IntegerConverter::LBitsToQuarter::toExternal(std::string value, unsigned int value_length) {
+   return 0; // TODO implement
+}
+std::string IntegerConverter::LBitsToQuarter::fromExternal(char *value, unsigned int value_length) {
    long int value_converted = std::stoll( value );
    return std::to_string( (int) (value_converted / 4.0) );
 }
 
-std::string IntegerConverter::alt25ft( char* value, unsigned int value_length ) {
+////////////////////////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////     Alt25ft     ///////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////////////////////////
+IntegerConverter::Alt25ft::Alt25ft() :
+   ItemConverterBase() {
+}
+std::shared_ptr<ItemConverterBase> IntegerConverter::Alt25ft::get() {
+   static std::shared_ptr<Alt25ft> instance = std::make_shared<Alt25ft>( Alt25ft() );
+   return instance;
+}
+uint64_t IntegerConverter::Alt25ft::toExternal(std::string value, unsigned int value_length) {
+   return 0; // TODO implement
+}
+std::string IntegerConverter::Alt25ft::fromExternal(char *value, unsigned int value_length) {
    unsigned long int value_converted = std::stoull( value );
    return std::to_string( (int) (value_converted * 25) );
 }

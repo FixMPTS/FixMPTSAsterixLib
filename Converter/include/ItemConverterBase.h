@@ -1,8 +1,8 @@
 /**
- * @file UnsignedIntegerConverter.cpp
- * @author Felix Kreuter <felix@fixmpts.org>
+ * @file ItemConverterBase.h
+ * @author  Felix Kreuter <felix.kreuter@lordcentury.net>
  * @version 1.0
- * Created on: 2 Feb 2018
+ * Created on: 17 Apr 2022
  *
  * @section LICENSE
  *
@@ -22,15 +22,28 @@
  *
  * @section DESCRIPTION
  *
- * See .h file for more information
+ * TODO
  */
+#ifndef ITEMCONVERTERBASE_H_
+#define ITEMCONVERTERBASE_H_
 
-#include "UnsignedIntegerConverter.h"
+#include <string>
+#include <vector>
+#include <cstdint>
+#include <memory>
 
-UnsignedIntegerConverter::UnsignedIntegerConverter() {
-}
+class ItemConverterBase {
+private:
 
-UnsignedIntegerConverter::~UnsignedIntegerConverter() {
-}
+public:
+   ItemConverterBase();
+   virtual ~ItemConverterBase();
 
+   std::shared_ptr<ItemConverterBase> get() {
+      return nullptr;
+   }
+   virtual uint64_t toExternal(std::string value, unsigned int value_length) = 0;
+   virtual std::string fromExternal(char *value, unsigned int value_length) = 0;
+};
 
+#endif /* ITEMCONVERTERBASE_H_ */
