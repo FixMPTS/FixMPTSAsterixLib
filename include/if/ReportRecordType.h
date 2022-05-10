@@ -178,6 +178,7 @@ protected:
       mode_3aC mc;
       double_t meas_3D_height;
       mode_3aC m3a;
+      mode_3aC mode2;
       aircraft_id aircraft_ident;
       aircraft_address icao_address;
       local_track_number local_trk_no;
@@ -256,6 +257,7 @@ public:
    void setBaroHeight( double height, bool present = true );
    void setGeoHeight(double height, bool present = true);
    void setMode3A( int code, bool present = true, bool garbled = false, bool valid = true );
+   void setMode2(int code, bool present = true, bool garbled = false, bool valid = true);
    void setModeC( int code, bool present = true, bool garbled = false, bool valid = true );
    void setAircraftIdent( std::string id, bool present = true );
    void setAircraftAddress( unsigned long address, bool present = true );
@@ -297,6 +299,7 @@ public:
    double get3DHeight();
    int getModeCCode();
    int getMode3ACode();
+   int getMode2Code();
    std::string getAircraftIdent();
    unsigned long getAircraftAddress();
    int getLocalTrackNumber();
@@ -313,7 +316,7 @@ public:
    //IS
    bool isGeoPosPresent();
    bool isHeadingPresent();
-   bool isGroundSPeedPresent();
+   bool isGroundSpeedPresent();
    bool isEleveationPresent();
    bool isRangeAzimuthPresent();
    bool isBarometricHeightPresent();
@@ -325,6 +328,10 @@ public:
    bool isMode3AValidNotGarbled();
    bool isMode3AValid();
    bool isMode3AGarbled();
+   bool isMode2Present();
+   bool isMode2ValidNotGarbled();
+   bool isMode2Valid();
+   bool isMode2Garbled();
    bool isAircraftIdentPresent();
    bool isAircraftAddressPresent();
    bool isAircraftDerivedItemPresent(

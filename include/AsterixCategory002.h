@@ -49,6 +49,11 @@ private:
     */
    void setSubitems() override;
 
+   // Just for convenience
+   std::map<unsigned, std::string, cmpByFRN> fpsec_item_name_map =
+      { { 0, "I002/010" }, { 1, "I002/000" }, { 2, "I002/020" }, { 3, "I002/030" }, { 4, "I002/041" }, { 5, "I002/050" },
+         { 6, "I002/060" }, { 7, "I002/070" }, { 8, "I002/100" }, { 9, "I002/090" }, { 10, "I002/080" } };
+
 public:
    virtual ~AsterixCategory002();
    AsterixCategory002();

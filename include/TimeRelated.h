@@ -29,7 +29,7 @@
 
 //global includes
 #include <chrono>
-
+#include <iostream>
 /**
  * Get the current time in ms.
  *
@@ -93,7 +93,7 @@ inline unsigned int convertTODtoUTC(uint64_t tod) {
    midnight->tm_min = 0;
    midnight->tm_sec = 0;
 
-   uint64_t utc_time = std::chrono::duration_cast<std::chrono::seconds>
+   uint64_t utc_time = std::chrono::duration_cast<std::chrono::milliseconds>
       ( std::chrono::system_clock::from_time_t( std::mktime( midnight ) + tod ).time_since_epoch() ).count();
 
    return utc_time;

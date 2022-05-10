@@ -43,6 +43,7 @@
 #include "DetectionEntry.h"
 
 #include <bitset>
+
 AsterixCategory001::AsterixCategory001() :
    AsterixCategory( 1 ) {
    // Init the calling Asterix Category
@@ -459,4 +460,389 @@ void AsterixCategory001::fillRecord(std::shared_ptr<ReportRecordType> record) {
       record->setDetectionType(
          static_cast<DetectionEntry::DET_TYPE>( atoi( getValue( Cat001ItemNames::I001_020_DET ).c_str() ) - 1 ) ); //-1 because Asterix counts from one
    }
+}
+
+std::vector<unsigned char> AsterixCategory001::getEncodedMessage(std::shared_ptr<ReportRecordType> record,
+   std::map<std::string, bool> items_to_be_served) {
+
+   std::vector<unsigned char> message;
+   std::vector<unsigned char> header;
+
+   // The track UAP is in use here
+   for( auto item : fpsec_item_name_map ) {
+
+      // Reset the FSPEC for this item
+      fspec[item.first] = false;
+
+      // I001/010 Data Source Identifier
+      if( item.second == Cat001ItemNames::I001_010 ) { // Mandatory.
+         std::tuple<int, int> sensor_id = record->getSourceID();
+         std::vector<unsigned char> sac_sic = AsterixEncodingHelper::encodeSACSIC16Bit(
+            std::get<0>( sensor_id ), std::get<1>( sensor_id ) );
+
+         // item is present
+         if( sac_sic.size() == 2 ) {
+            fspec[item.first] = true;
+            message.insert( message.end(), sac_sic.begin(), sac_sic.end() );
+         }
+      }
+
+      // I001/020 Target Report Descriptor
+      if( item.second == Cat001ItemNames::I001_020 ) { // Mandatory
+         std::bitset<8> first_octet( 0 );
+         first_octet[7] = 1; // Track UAP
+         first_octet[6] = 0; // Actual plot TODO as input
+         first_octet[5] =
+            (record->getDetectionType() == DetectionEntry::DET_TYPE::SSR
+               || record->getDetectionType() == DetectionEntry::DET_TYPE::CMB) ? 1 : 0;
+         first_octet[4] =
+            (record->getDetectionType() == DetectionEntry::DET_TYPE::NONE
+               || record->getDetectionType() == DetectionEntry::DET_TYPE::PSR
+               || record->getDetectionType() == DetectionEntry::DET_TYPE::CMB) ? 1 : 0;
+         first_octet[3] = 0; // Antenna 0 TODO make input
+         first_octet[2] = record->getSPI();
+         first_octet[1] = 0; // RAB TODO make input
+
+         std::bitset<8> first_extent( 0 );
+         first_extent[7] = 0; // TST TODO make input
+         first_extent[6] = 0;
+         first_extent[5] = 0;
+         if( record->isMode3APresent() ) {
+            int code = record->getMode3ACode();
+            first_extent[6] = (code == 3968/*7600*/|| code == 4032/*7700*/) ? 1 : 0;
+            first_extent[5] = (code == 3904/*7500*/|| code == 4032/*7700*/) ? 1 : 0;
+         }
+         first_extent[4] = 0; // ME TODO make setter
+         first_extent[3] = 0; // MI TODO mkae setter
+
+         // Bits 3/2 spare
+
+         std::bitset<8> second_extent( 0 ); // Not foreseen in the spec at the moment
+
+         // Finally set the FX bits
+         first_extent[0] = second_extent.any();
+         first_octet[0] = first_extent.any();
+         message.push_back( first_octet.to_ulong() & 0xff );
+
+         if( first_extent.any() ) {
+            message.push_back( first_extent.to_ulong() & 0xff );
+         }
+         if( second_extent.any() ) {
+            message.push_back( second_extent.to_ulong() & 0xff );
+         }
+         fspec[item.first] = true;
+      }
+
+      // I001/161 Track/Plot Number
+      if( item.second == Cat001ItemNames::I001_161 ) { // Mandatory
+         std::vector<unsigned char> track_number = AsterixEncodingHelper::encodeTrackNumber16Bit(
+            record->getLocalTrackNumber() );
+
+         if( track_number.size() == 2 ) {
+            message.insert( message.end(), track_number.begin(), track_number.end() );
+            fspec[item.first] = true;
+         }
+      }
+
+      // I001/040 ModMeasured Position in Polar Coordinates
+      if( item.second == Cat001ItemNames::I001_040
+         && items_to_be_served.find( item.second ) != items_to_be_served.end()
+         && items_to_be_served.at( item.second ) ) {
+         if( record->isRangeAzimuthPresent() ) {
+            double rho_lsb = 1.0 / 128.0;
+            double theta_lsb = 0.0055;
+            uint16_t rho = std::get<0>( record->getRangeAzimuth() ) / rho_lsb;
+            uint16_t theta = std::get<1>( record->getRangeAzimuth() ) / theta_lsb;
+
+            message.push_back( (rho >> 8) & 0xff );
+            message.push_back( rho & 0xff );
+            message.push_back( (theta >> 8) & 0xff );
+            message.push_back( theta & 0xff );
+            fspec[item.first] = true;
+         }
+      }
+
+      // I001/042 Calculated Position in Cartesian Coordinates
+      if( item.second == Cat001ItemNames::I001_042
+         && items_to_be_served.find( item.second ) != items_to_be_served.end()
+         && items_to_be_served.at( item.second ) ) {
+         if( record->isGeoPosPresent() ) {
+            double lsb = 1.0 / 64.0;
+
+            uint16_t pos_x = static_cast<uint16_t>( std::get<0>( record->getGeoPos() ) / lsb );
+            uint16_t pos_y = static_cast<uint16_t>( std::get<1>( record->getGeoPos() ) / lsb );
+            message.push_back( (pos_x >> 8) & 0xff );
+            message.push_back( pos_x & 0xff );
+            message.push_back( (pos_y >> 8) & 0xff );
+            message.push_back( pos_y & 0xff );
+
+            fspec[item.first] = true;
+         }
+      }
+
+      // I001/200 Calculated Track Velocity in polar Coordinates
+      if( item.second == Cat001ItemNames::I001_200
+         && items_to_be_served.find( item.second ) != items_to_be_served.end()
+         && items_to_be_served.at( item.second ) ) {
+         if( record->isGroundSpeedPresent() && record->isHeadingPresent() ) {
+            float gsp_lsb = 0.22;
+            float heading_lsb = 0.0055;
+            uint16_t gsp = record->getGroundSpeed() / gsp_lsb;
+            uint16_t heading = record->getHeading() / heading_lsb;
+
+            message.push_back( (gsp >> 8) & 0xff );
+            message.push_back( gsp & 0xff );
+            message.push_back( (heading >> 8) & 0xff );
+            message.push_back( heading & 0xff );
+
+            fspec[item.first] = true;
+         }
+      }
+
+      // I001/070 Mode-3/A Code in Octal Representation
+      if( item.second == Cat001ItemNames::I001_070
+         && items_to_be_served.find( item.second ) != items_to_be_served.end()
+         && items_to_be_served.at( item.second ) ) {
+         if( record->isMode3APresent() ) {
+            // 2 Byte
+            std::vector<unsigned char> m3A = AsterixEncodingHelper::encodeTrackMode3A(
+               record->getMode3ACode(), record->isMode3AValid(), record->isMode3AGarbled() );
+
+            if( m3A.size() == 2 ) {
+               message.insert( message.end(), m3A.begin(), m3A.end() );
+               fspec[item.first] = true;
+            }
+         }
+      }
+
+      // I001/090 Mode-C Code in Binary Representation
+      if( item.second == Cat001ItemNames::I001_090
+         && items_to_be_served.find( item.second ) != items_to_be_served.end()
+         && items_to_be_served.at( item.second ) ) {
+         if( record->isModeCPresent() ) {
+            short lsb = 25; // 1/4
+            std::bitset<16> mode_c( record->getModeCCode() / lsb );
+
+               // set the valid and garbled flags. Those are located at the end of the bit set
+            mode_c[15] = !record->isModeCValid();
+            mode_c[14] = record->isModeCGarbled();
+
+               // Write the data structure
+            uint16_t complete_code = mode_c.to_ulong();
+            message.push_back( (complete_code >> 8) & 0xff );
+            message.push_back( complete_code & 0xff );
+            fspec[item.first] = true;
+         }
+      }
+
+      // I001/141 Truncated Time of Day
+      if( item.second == Cat001ItemNames::I001_141
+         && items_to_be_served.find( item.second ) != items_to_be_served.end()
+         && items_to_be_served.at( item.second ) ) {
+         if( record->getDetectionTime() > 0 ) {
+            // convert delta to seconds
+            unsigned long time_since_midnight;
+            time_since_midnight = convertToTimeSinceMidnightMS( record->getDetectionTimeUTC() ) / 1000;
+
+            // split into 1/128 seconds
+            time_since_midnight *= 128;
+
+            //write the three bytes
+            message.push_back( (time_since_midnight >> 8) & 0xff );
+            message.push_back( time_since_midnight & 0xff );
+            fspec[item.first] = true;
+         }
+      }
+
+      // I001/130 Radar Plot Characteristics
+      if( item.second == Cat001ItemNames::I001_130
+         && items_to_be_served.find( item.second ) != items_to_be_served.end() ) {
+         //not encoded at the moment
+      }
+
+      // I001/131 Received Power
+      if( item.second == Cat001ItemNames::I001_131
+         && items_to_be_served.find( item.second ) != items_to_be_served.end() ) {
+         if( isItemPresent( Cat001ItemNames::I001_131 ) ) {
+            int value = std::atoi( getValue( Cat001ItemNames::I001_131 ).c_str() );
+            message.push_back( value & 0xff );
+            fspec[item.first] = true;
+         }
+      }
+
+      // I001/120 Measured Radial Doppler Speed
+      if( item.second == Cat001ItemNames::I001_120
+         && items_to_be_served.find( item.second ) != items_to_be_served.end()
+         && items_to_be_served.at( item.second ) ) {
+         float lsb = 14.052;
+         if( isItemPresent( Cat001ItemNames::I001_120 ) ) {
+            uint8_t value = std::atoi( getValue( Cat001ItemNames::I001_120 ).c_str() ) / lsb;
+            message.push_back( value & 0xff );
+            fspec[item.first] = true;
+         }
+      }
+
+      // I001/170 Track Status
+      if( item.second == Cat001ItemNames::I001_170
+         && items_to_be_served.find( item.second ) != items_to_be_served.end()
+         && items_to_be_served.at( item.second ) ) {
+         std::bitset<8> first_octet( 0 );
+         first_octet[7] =
+            (isItemPresent( Cat001ItemNames::I001_170_CON )
+               && std::atoi( getValue( Cat001ItemNames::I001_170_CON ).c_str() ) == 1) ? 1 : 0; // CON
+         first_octet[6] =
+            (isItemPresent( Cat001ItemNames::I001_170_RAD )
+               && std::atoi( getValue( Cat001ItemNames::I001_170_RAD ).c_str() ) == 1) ? 1 : 0; // RAD
+         first_octet[5] =
+            (isItemPresent( Cat001ItemNames::I001_170_MAN )
+               && std::atoi( getValue( Cat001ItemNames::I001_170_MAN ).c_str() ) == 1) ? 1 : 0; // MAN
+         first_octet[4] =
+            (isItemPresent( Cat001ItemNames::I001_170_DOU )
+               && std::atoi( getValue( Cat001ItemNames::I001_170_DOU ).c_str() ) == 1) ? 1 : 0; // DOU
+         first_octet[3] =
+            (isItemPresent( Cat001ItemNames::I001_170_RDPC )
+               && std::atoi( getValue( Cat001ItemNames::I001_170_RDPC ).c_str() ) == 1) ? 1 : 0; // RDPC
+         // bit 3 is spare
+         first_octet[1] =
+            (isItemPresent( Cat001ItemNames::I001_170_GHO )
+               && std::atoi( getValue( Cat001ItemNames::I001_170_GHO ).c_str() ) == 1) ? 1 : 0; // GHO
+
+         std::bitset<8> first_extent( 0 );
+         first_extent[7] =
+            (isItemPresent( Cat001ItemNames::I001_170_TRE )
+               && std::atoi( getValue( Cat001ItemNames::I001_170_TRE ).c_str() ) == 1) ? 1 : 0; // TRE
+         // remaining bits are spare
+
+         std::bitset<8> second_extent( 0 ); // Not foreseen in the spec at the moment
+
+         // Finally set the FX bits
+         first_extent[0] = second_extent.any();
+         first_octet[0] = first_extent.any();
+
+         if( first_octet.any() ) {
+            message.push_back( first_octet.to_ulong() & 0xff );
+            fspec[item.first] = true;
+         }
+         if( first_extent.any() ) {
+            message.push_back( first_extent.to_ulong() & 0xff );
+         }
+         if( second_extent.any() ) {
+            message.push_back( second_extent.to_ulong() & 0xff );
+         }
+      }
+
+      // I001/210 Track Quality
+      if( item.second == Cat001ItemNames::I001_210
+         && items_to_be_served.find( item.second ) != items_to_be_served.end() ) {
+         // Not encoded at the moment
+      }
+
+      // I001/050 Mode-2 Code in Octal Representation
+      if( item.second == Cat001ItemNames::I001_050
+         && items_to_be_served.find( item.second ) != items_to_be_served.end()
+         && items_to_be_served.at( item.second ) ) {
+         if( record->isMode2Present() ) {
+            // 2 Byte
+            std::vector<unsigned char> m2 = AsterixEncodingHelper::encodeTrackMode3A(
+               record->getMode2Code(), record->isMode2Valid(), record->isMode2Garbled() );
+
+            if( m2.size() == 2 ) {
+               message.insert( message.end(), m2.begin(), m2.end() );
+               fspec[item.first] = true;
+            }
+         }
+      }
+
+      // I001/080 Mode-3/A Code Confidence Indicator
+      if( item.second == Cat001ItemNames::I001_080
+         && items_to_be_served.find( item.second ) != items_to_be_served.end()
+         && items_to_be_served.at( item.second ) ) {
+         if( isItemPresent( Cat001ItemNames::I001_080 ) ) {
+            std::bitset<16> value( std::atoi( getValue( Cat001ItemNames::I001_080 ).c_str() ) );
+            // set spare bits to 0
+            value[15] = 0;
+            value[14] = 0;
+            value[13] = 0;
+            value[12] = 0;
+            message.push_back( (value.to_ulong() >> 8) & 0xff );
+            message.push_back( value.to_ulong() & 0xff );
+            fspec[item.first] = true;
+         }
+      }
+
+      // I001/100 Mode-C Code and Code Confidence Indicator
+      if( item.second == Cat001ItemNames::I001_100
+         && items_to_be_served.find( item.second ) != items_to_be_served.end()
+         && items_to_be_served.at( item.second ) ) {
+         if( isItemPresent( Cat001ItemNames::I001_100 ) ) {
+            std::bitset<16> value( std::atoi( getValue( Cat001ItemNames::I001_100 ).c_str() ) );
+            // set spare bits to 0
+            value[15] = 0;
+            value[14] = 0;
+            value[13] = 0;
+            value[12] = 0;
+            message.push_back( (value.to_ulong() >> 8) & 0xff );
+            message.push_back( value.to_ulong() & 0xff );
+            fspec[item.first] = true;
+         }
+      }
+
+      // I001/060 Mode-2 Code Confidence Indicator
+      if( item.second == Cat001ItemNames::I001_060
+         && items_to_be_served.find( item.second ) != items_to_be_served.end()
+         && items_to_be_served.at( item.second ) ) {
+         if( isItemPresent( Cat001ItemNames::I001_060 ) ) {
+            std::bitset<16> value( std::atoi( getValue( Cat001ItemNames::I001_060 ).c_str() ) );
+            // set spare bits to 0
+            value[15] = 0;
+            value[14] = 0;
+            value[13] = 0;
+            value[12] = 0;
+            message.push_back( (value.to_ulong() >> 8) & 0xff );
+            message.push_back( value.to_ulong() & 0xff );
+            fspec[item.first] = true;
+         }
+      }
+
+      // I001/030 Warning/Error Conditions
+      if( item.second == Cat001ItemNames::I001_030
+         && items_to_be_served.find( item.second ) != items_to_be_served.end()
+         && items_to_be_served.at( item.second ) ) {
+         if( isItemPresent( Cat001ItemNames::I001_030 ) ) {
+            std::bitset<8> value( std::atoi( getValue( Cat001ItemNames::I001_030 ).c_str() ) );
+            // set FX bit
+            value = (value << 1);
+            value[0] = 0;
+            message.push_back( value.to_ulong() & 0xff );
+            fspec[item.first] = true;
+         }
+      }
+
+      // I001/150 Presence of X-Pulse
+      if( item.second == Cat001ItemNames::I001_150
+         && items_to_be_served.find( item.second ) != items_to_be_served.end()
+         && items_to_be_served.at( item.second ) ) {
+         if( isItemPresent( Cat001ItemNames::I001_150 ) ) {
+            std::bitset<8> value( 0 );
+            // set the values
+            value[7] = (isItemPresent( Cat001ItemNames::I001_150_XA )
+               && std::atoi( getValue( Cat001ItemNames::I001_150_XA ).c_str() ) == 1) ? 1 : 0; // XA
+            // bit 6 is spare
+            value[5] = (isItemPresent( Cat001ItemNames::I001_150_XC )
+               && std::atoi( getValue( Cat001ItemNames::I001_150_XC ).c_str() ) == 1) ? 1 : 0; // XC
+            // bit 4,3 are spare
+            value[2] = (isItemPresent( Cat001ItemNames::I001_150_X2 )
+               && std::atoi( getValue( Cat001ItemNames::I001_150_X2 ).c_str() ) == 1) ? 1 : 0; // X2
+            // bit 0,1 are spare
+            message.push_back( value.to_ulong() & 0xff );
+            fspec[item.first] = true;
+         }
+      }
+   }
+
+   // add header to message
+   getHeader( header, message.size() );
+   message.insert( message.begin(), header.begin(), header.end() );
+
+   return message;
 }

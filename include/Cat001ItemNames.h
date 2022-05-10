@@ -78,7 +78,7 @@ public:
    inline static const std::string I001_170_RAD = "I001/170#RAD";
    inline static const std::string I001_170_MAN = "I001/170#MAN";
    inline static const std::string I001_170_DOU = "I001/170#DOU";
-   inline static const std::string I001_170_RDCP = "I001/170#RDCP";
+   inline static const std::string I001_170_RDPC = "I001/170#RDPC";
    inline static const std::string I001_170_SPARE = "I001/170#SPARE";
    inline static const std::string I001_170_GHO = "I001/170#GHO";
    inline static const std::string I001_170_TRE = "I001/170#TRE";

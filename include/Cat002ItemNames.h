@@ -47,6 +47,9 @@ public:
    inline static const std::string I002_060 = "I002/060";
    inline static const std::string I002_080 = "I002/080";
    inline static const std::string I002_070 = "I002/070";
+   inline static const std::string I002_070_A = "I002/070#A";
+   inline static const std::string I002_070_ID = "I002/070#ID";
+   inline static const std::string I002_070_CNT = "I002/070#CNT";
    inline static const std::string I002_090 = "I002/090";
    inline static const std::string I002_090_AZM = "I002/090#AZM";
    inline static const std::string I002_090_RNG = "I002/090#RNG";

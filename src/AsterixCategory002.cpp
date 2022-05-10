@@ -42,6 +42,7 @@
 
 #include <cstdint>
 #include <cmath>
+
 AsterixCategory002::~AsterixCategory002() {
 }
 
@@ -180,4 +181,254 @@ void AsterixCategory002::fillRecord(std::shared_ptr<ReportRecordType> record) {
       sic = 0; // not valid
    }
    record->setSource( sac, sic );
+}
+
+void AsterixCategory002::setDataSource(unsigned short sac, unsigned short sic) {
+   unrolled_values[Cat002ItemNames::I002_010_SAC] = std::to_string( sac );
+   unrolled_values[Cat002ItemNames::I002_010_SIC] = std::to_string( sic );
+}
+
+void AsterixCategory002::setMessageType(SensorServiceRecordType::MESSAGETYPE type) {
+   unrolled_values[Cat002ItemNames::I002_000_TYP] = std::to_string( static_cast<unsigned int>( type ) );
+}
+
+void AsterixCategory002::setSectorNumber(unsigned short number) {
+   unrolled_values[Cat002ItemNames::I002_020_SCT] = std::to_string( number );
+}
+
+void AsterixCategory002::setTimeOfDay(double time) {
+   float lsb = 1.0 / 128.0;
+   unrolled_values[Cat002ItemNames::I002_030_TOD] = std::to_string( time * lsb );
+}
+
+void AsterixCategory002::setAntennaRotationPeriod(double period) {
+   float lsb = 1.0 / 128.0;
+   unrolled_values[Cat002ItemNames::I002_041_ROT] = std::to_string( period * lsb );
+}
+
+void AsterixCategory002::setDynamicWindow(double rho_start, double rho_end, double theta_start, double theta_end) {
+   float rho_lsb = 1.0 / 128.0;
+   float theta_lsb = 0.0055;
+   unrolled_values[Cat002ItemNames::I002_100_RHS] = std::to_string( rho_start / rho_lsb );
+   unrolled_values[Cat002ItemNames::I002_100_RHE] = std::to_string( rho_end / rho_lsb );
+   unrolled_values[Cat002ItemNames::I002_100_THS] = std::to_string( theta_start / theta_lsb );
+   unrolled_values[Cat002ItemNames::I002_100_THE] = std::to_string( theta_end / theta_lsb );
+}
+
+void AsterixCategory002::setCollimationError(double range, double azimuth) {
+   float rho_lsb = 1.0 / 128.0;
+   float theta_lsb = 0.0055;
+   unrolled_values[Cat002ItemNames::I002_090_RNG] = std::to_string( range / rho_lsb );
+   unrolled_values[Cat002ItemNames::I002_090_AZM] = std::to_string( azimuth / theta_lsb );
+}
+
+void AsterixCategory002::setWarningError(unsigned int value) {
+   unrolled_values[Cat002ItemNames::I002_080] = std::to_string( value );
+}
+
+void AsterixCategory002::resetPlotCount() {
+   // TODO not implemented yet
+}
+
+void AsterixCategory002::addPlotCount(bool antenna1, unsigned short identifier, unsigned short counter) {
+   // TODO not implemented yet
+}
+
+std::vector<unsigned char> AsterixCategory002::getEncodedMessage(SensorServiceRecordType record,
+   std::map<std::string, bool> items_to_be_served) {
+   std::vector<unsigned char> message;
+   std::vector<unsigned char> header;
+
+   // The track UAP is in use here
+   for( auto item : fpsec_item_name_map ) {
+      // Reset the FSPEC for this item
+      fspec[item.first] = false;
+
+      // I002/010 Data Source Identifier
+      if( item.second == Cat002ItemNames::I002_010 ) { // Mandatory.
+         std::tuple<unsigned int, unsigned int> sensor_id = record.getSensorId();
+         unsigned int sac = std::get<0>( sensor_id );
+         unsigned int sic = std::get<1>( sensor_id );
+         // check if items have been set via the dedicated setter which have priority
+         if( isItemPresent( Cat002ItemNames::I002_010_SAC ) && isItemPresent( Cat002ItemNames::I002_010_SIC ) ) {
+            sac = std::atoi( getValue( Cat002ItemNames::I002_010_SAC ).c_str() );
+            sic = std::atoi( getValue( Cat002ItemNames::I002_010_SIC ).c_str() );
+         }
+         std::vector<unsigned char> sac_sic = AsterixEncodingHelper::encodeSACSIC16Bit( sac, sic );
+
+         // item is present
+         if( sac_sic.size() == 2 ) {
+            fspec[item.first] = true;
+            message.insert( message.end(), sac_sic.begin(), sac_sic.end() );
+         }
+      }
+
+      // I002/000 Message Type
+      if( item.second == Cat002ItemNames::I002_000 ) { // Mandatory.
+         unsigned short type = std::numeric_limits<unsigned short>::infinity();
+         if( isItemPresent( Cat002ItemNames::I002_000_TYP ) ) {
+            type = std::atoi( getValue( Cat002ItemNames::I002_000_TYP ).c_str() );
+         } else if( record.isMessageTypePresent() ) {
+            type = record.getMessageType();
+         } else {
+            // error
+            continue;
+         }
+         fspec[item.first] = true;
+         message.push_back( type & 0xff );
+      }
+
+      // I002/020 Sector Number
+      if( item.second == Cat002ItemNames::I002_020
+         && items_to_be_served.find( item.second ) != items_to_be_served.end()
+         && items_to_be_served.at( item.second ) ) {
+         float lsb = 1.41;
+         float sector_number = std::numeric_limits<float>::infinity();
+         if( isItemPresent( Cat002ItemNames::I002_020_SCT ) ) {
+            sector_number = std::atof( getValue( Cat002ItemNames::I002_020_SCT ).c_str() );
+         } else if( record.isSectorNumberPresent() ) {
+            sector_number = record.getSectorNumber();
+         } else {
+            // error
+            continue;
+         }
+         sector_number = sector_number / lsb;
+         fspec[item.first] = true;
+         message.push_back( std::lround( sector_number ) & 0xff );
+      }
+
+      // I002/030 Time of Day
+      if( item.second == Cat002ItemNames::I002_030
+         && items_to_be_served.find( item.second ) != items_to_be_served.end()
+         && items_to_be_served.at( item.second ) ) {
+         float lsb = 1.0 / 128.0;
+         double tod = std::numeric_limits<float>::infinity();
+         if( isItemPresent( Cat002ItemNames::I002_030_TOD ) ) {
+            tod = std::atof( getValue( Cat002ItemNames::I002_030_TOD ).c_str() );
+         } else {
+            tod = record.getTimeOfDay() / lsb;
+         }
+
+         fspec[item.first] = true;
+         uint_fast64_t tod_out = tod;
+         message.push_back( (tod_out >> 16) & 0xff );
+         message.push_back( (tod_out >> 8) & 0xff );
+         message.push_back( tod_out & 0xff );
+      }
+
+      // I002/041 Antenna Rotation Period
+      if( item.second == Cat002ItemNames::I002_041
+         && items_to_be_served.find( item.second ) != items_to_be_served.end()
+         && items_to_be_served.at( item.second ) ) {
+         float lsb = 1.0 / 128.0;
+         double rotation = std::numeric_limits<float>::infinity();
+         if( isItemPresent( Cat002ItemNames::I002_041_ROT ) ) {
+            rotation = std::atof( getValue( Cat002ItemNames::I002_041_ROT ).c_str() );
+         } else if( record.isAntennaSpeedPresent() ) {
+            rotation = record.getAntennaSpeed();
+            rotation /= lsb;
+         } else {
+            // error
+            continue;
+         }
+
+         fspec[item.first] = true;
+         uint_fast64_t rot = rotation;
+         message.push_back( (rot >> 8) & 0xff );
+         message.push_back( rot & 0xff );
+      }
+
+      // Items I002/050 and I002/060 are not encoded
+      // I002/070 Plot Count Values
+      if( item.second == Cat002ItemNames::I002_070
+         && items_to_be_served.find( item.second ) != items_to_be_served.end()
+         && items_to_be_served.at( item.second ) ) {
+         // Add the repetition counter to the message
+         message.push_back( record.getPlotCount().size() & 0xff );
+         for( auto plot_count : record.getPlotCount() ) {
+            uint16_t value = plot_count.getAntenna();
+            value <<= 5;
+            value |= (plot_count.getIdent() & 0x1f);
+            value <<= 10;
+            value |= (plot_count.getCounter() & 0x3ff);
+            message.push_back( (value >> 8) & 0xff );
+            message.push_back( value & 0xff );
+         }
+         fspec[item.first] = true;
+      }
+
+      // I002/100 Dynamic Window
+      if( item.second == Cat002ItemNames::I002_100
+         && items_to_be_served.find( item.second ) != items_to_be_served.end()
+         && items_to_be_served.at( item.second ) ) {
+         //
+         std::vector<unsigned char> tmp_item;
+         if( isItemPresent( Cat002ItemNames::I002_100_RHS ) ) {
+            uint16_t rhs = std::atoi( getValue( Cat002ItemNames::I002_100_RHS ).c_str() );
+            tmp_item.push_back( (rhs >> 8) & 0xff );
+            tmp_item.push_back( rhs & 0xff );
+         }
+         if( isItemPresent( Cat002ItemNames::I002_100_RHE ) ) {
+            uint16_t rhe = std::atoi( getValue( Cat002ItemNames::I002_100_RHE ).c_str() );
+            tmp_item.push_back( (rhe >> 8) & 0xff );
+            tmp_item.push_back( rhe & 0xff );
+         }
+         if( isItemPresent( Cat002ItemNames::I002_100_THS ) ) {
+            uint16_t theta_s = std::atoi( getValue( Cat002ItemNames::I002_100_THS ).c_str() );
+            tmp_item.push_back( (theta_s >> 8) & 0xff );
+            tmp_item.push_back( theta_s & 0xff );
+         }
+         if( isItemPresent( Cat002ItemNames::I002_100_THE ) ) {
+            uint16_t theta_e = std::atoi( getValue( Cat002ItemNames::I002_100_THE ).c_str() );
+            tmp_item.push_back( (theta_e >> 8) & 0xff );
+            tmp_item.push_back( theta_e & 0xff );
+         }
+
+         // write item to message only if all bytes have been set
+         if( tmp_item.size() == 8 ) {
+            message.insert( message.end(), tmp_item.begin(), tmp_item.end() );
+            fspec[item.first] = true;
+         }
+      }
+
+      //I002/090 Collimation Error
+      if( item.second == Cat002ItemNames::I002_090
+         && items_to_be_served.find( item.second ) != items_to_be_served.end()
+         && items_to_be_served.at( item.second ) ) {
+         std::vector<unsigned char> tmp_item;
+
+         if( isItemPresent( Cat002ItemNames::I002_090_RNG ) ) {
+            uint8_t range = std::atoi( getValue( Cat002ItemNames::I002_090_RNG ).c_str() );
+            tmp_item.push_back( range & 0xff );
+         }
+         if( isItemPresent( Cat002ItemNames::I002_090_AZM ) ) {
+            uint8_t azimuth = std::atoi( getValue( Cat002ItemNames::I002_090_AZM ).c_str() );
+            tmp_item.push_back( azimuth & 0xff );
+         }
+
+         if( tmp_item.size() == 2 ) {
+            message.insert( message.end(), tmp_item.begin(), tmp_item.end() );
+            fspec[item.first] = true;
+         }
+      }
+
+      //I002/080 Warning/Error Conditions
+      if( item.second == Cat002ItemNames::I002_080
+         && items_to_be_served.find( item.second ) != items_to_be_served.end()
+         && items_to_be_served.at( item.second ) ) {
+         if( isItemPresent( Cat002ItemNames::I002_080 ) ) {
+            uint8_t error = std::atoi( getValue( Cat002ItemNames::I002_080 ).c_str() );
+            // Set the FX bit to 0
+            error <<= 1;
+            error |= (1 & 0x01);
+            message.push_back( error & 0xff );
+            fspec[item.first] = true;
+         }
+      }
+   }
+
+   // add header to message
+   getHeader( header, message.size() );
+   message.insert( message.begin(), header.begin(), header.end() );
+   return message;
 }
