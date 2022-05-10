@@ -31,19 +31,18 @@
 #include <bitset>
 #include <cmath>
 
-AsterixSubitemBase::AsterixSubitemBase( int length, simpleConverter_T converterFunction ) :
-   raw_value( nullptr ), length( length ), simple_converter( std::move( converterFunction ) ) {
-   double_conveter = nullptr;
+AsterixSubitemBase::AsterixSubitemBase(int length, std::shared_ptr<ItemConverterBase> converter) :
+   raw_value( nullptr ), length( length ), converter( converter ) {
    raw_value_length = (unsigned int) std::ceil( (length - 0.5) / 8.0 );
 }
 
-AsterixSubitemBase::AsterixSubitemBase( int length,
-   std::function<std::string( char*, unsigned int, double& dest_buffer )> converterFunction ) :
-   raw_value( nullptr ), length( length ) {
-   simple_converter = nullptr;
-   double_conveter = converterFunction;
-   raw_value_length = (unsigned int) std::ceil( length / 8.0 );
-}
+//AsterixSubitemBase::AsterixSubitemBase( int length,
+///   std::function<std::string( char*, unsigned int, double& dest_buffer )> converterFunction ) :
+//   raw_value( nullptr ), length( length ) {
+//   simple_converter = nullptr;
+//   double_conveter = converterFunction;
+//   raw_value_length = (unsigned int) std::ceil( length / 8.0 );
+//}
 
 
 AsterixSubitemBase::~AsterixSubitemBase(){

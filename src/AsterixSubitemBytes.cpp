@@ -33,13 +33,8 @@
 #include <cmath>
 
 AsterixSubitemBytes::AsterixSubitemBytes( int length,
-   std::function<std::string( char*, unsigned int )> converterFunction ) :
-   AsterixSubitemBase( length, converterFunction ) {
-}
-
-AsterixSubitemBytes::AsterixSubitemBytes( int length,
-   std::function<std::string( char*, unsigned int, double& dest_buffer )> converterFunction ) :
-   AsterixSubitemBase( length, converterFunction ) {
+   std::shared_ptr<ItemConverterBase> converter) :
+   AsterixSubitemBase( length, converter ) {
 }
 
 AsterixSubitemBytes::~AsterixSubitemBytes() {
@@ -102,16 +97,6 @@ void AsterixSubitemBytes::decode( std::deque<char>& input_buffer, unsigned bit_p
    //raw_value = (char*) std::to_string( bit_value ).c_str();
    std::strcpy( raw_value, value_string.c_str() );
 
-   encoded_value = value_string;
-   if( simple_converter != nullptr ) {
-      encoded_value = simple_converter( raw_value, raw_value_length );
-   } else if( double_conveter != nullptr ) {
-      double converted_value;
-      encoded_value = double_conveter( raw_value, (int) std::ceil( length / 8.0 ),
-         converted_value );
-   } else {
-      encoded_value = std::string( raw_value ); // Default convert
-   }
-
+   encoded_value = converter->fromExternal( raw_value, raw_value_length );
 }
 

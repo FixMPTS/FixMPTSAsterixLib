@@ -34,14 +34,9 @@
 #include <cstring>
 
 AsterixSubitemBitNamed::AsterixSubitemBitNamed( int length,
-   std::function<std::string(char*, unsigned int)> converterFunction, value_names_t names) :
-   AsterixSubitemBase( length, converterFunction ), value_names( names ) {
-}
-
-AsterixSubitemBitNamed::AsterixSubitemBitNamed( int length,
-   std::function<std::string( char*, unsigned int, double& dest_buffer )> converterFunction,
+   std::shared_ptr<ItemConverterBase> converter,
    value_names_t names) :
-   AsterixSubitemBase( length, converterFunction ), value_names( names ) {
+   AsterixSubitemBase( length, converter ), value_names( names ) {
 }
 
 AsterixSubitemBitNamed::~AsterixSubitemBitNamed() {

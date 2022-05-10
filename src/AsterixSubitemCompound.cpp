@@ -29,20 +29,9 @@
 
 #include <bitset>
 
-AsterixSubitemCompound::AsterixSubitemCompound( int length,
-   std::function<std::string( char*, unsigned int )> converterFunction ) :
-   AsterixSubitemBase( length, converterFunction ){
-}
-
-AsterixSubitemCompound::AsterixSubitemCompound( int length,
-   std::function<std::string( char*, unsigned int, double& dest_buffer )> converterFunction ) :
-   AsterixSubitemBase( length, converterFunction ){
-}
-
-AsterixSubitemCompound::AsterixSubitemCompound( int length,
-   std::function<std::string( char*, unsigned int, double& dest_buffer )> converterFunction,
+AsterixSubitemCompound::AsterixSubitemCompound(int length, std::shared_ptr<ItemConverterBase> converter,
    subitem_map_t subitem_list ) :
-   AsterixSubitemBase( length, converterFunction ){
+   AsterixSubitemBase( length, converter ) {
 
    subitems = subitem_list;
 }
@@ -55,7 +44,7 @@ void AsterixSubitemCompound::decode(std::deque<char>& input_buffer, unsigned bit
 
    for (auto item : subitems) {
 
-      // Delegate the decoding to the sub item type. This should also removae all completelly read bytes
+      // Delegate the decoding to the sub item type. This should also remove all completely read bytes
       item.second->decode( input_buffer, bit_position );
       std::string value = item.second->getValue();
 

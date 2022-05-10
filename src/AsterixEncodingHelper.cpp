@@ -361,8 +361,7 @@ std::vector<unsigned char> AsterixEncodingHelper::encodeBaroAltitude( double fli
          //Set Bit 16 to one
          baro_altitude.push_back( (baro_alt >> 8) & 0xff );
          baro_altitude.push_back( baro_alt & 0xff );
-      }
-      else {
+      } else {
          uint16_t baro_alt = baro_alt_bits.to_ulong();
          baro_altitude.push_back( (baro_alt >> 8) & 0xff );
          baro_altitude.push_back( baro_alt & 0xff );

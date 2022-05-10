@@ -31,13 +31,8 @@
 #include <cstring>
 
 AsterixSubitemSigned::AsterixSubitemSigned( int length,
-   std::function<std::string( char*, unsigned int )> converterFunction ) :
-   AsterixSubitemNumber( length, converterFunction ) {
-}
-
-AsterixSubitemSigned::AsterixSubitemSigned( int length,
-   std::function<std::string( char*, unsigned int, double& dest_buffer )> converterFunction ) :
-   AsterixSubitemNumber( length, converterFunction ) {
+   std::shared_ptr<ItemConverterBase> converter) :
+   AsterixSubitemNumber( length, converter ) {
 }
 
 AsterixSubitemSigned::~AsterixSubitemSigned() {

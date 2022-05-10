@@ -28,21 +28,15 @@
 #include "BinaryHelper.h"
 
 AsterixSubItemRep::AsterixSubItemRep( int length,
-   std::function<std::string( char*, unsigned int )> converterFunction ) :
-   AsterixSubitemBase( length, converterFunction ) {
+   std::shared_ptr<ItemConverterBase> converter) :
+   AsterixSubitemBase( length, converter ) {
    repetition_factor = 0;
 }
 
-AsterixSubItemRep::AsterixSubItemRep( int length,
-   std::function<std::string( char*, unsigned int, double& dest_buffer )> converterFunction ) :
-   AsterixSubitemBase( length, converterFunction ) {
-   repetition_factor = 0;
-}
-
-AsterixSubItemRep::AsterixSubItemRep( int length,
-   std::function<std::string( char*, unsigned int, double& dest_buffer )> converterFunction,
+AsterixSubItemRep::AsterixSubItemRep(int length,
+   std::shared_ptr<ItemConverterBase> converter,
    subitem_map_t subitem_list ) :
-   AsterixSubitemBase( length, converterFunction ) {
+   AsterixSubitemBase( length, converter ) {
 
    subitems = subitem_list;
    repetition_factor = 0;

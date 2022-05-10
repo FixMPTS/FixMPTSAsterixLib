@@ -346,6 +346,17 @@ void ReportRecordType::setMode3A( int code, bool present, bool garbled, bool val
       current_record.m3a.present = present;
    }
 }
+void ReportRecordType::setMode2(int code, bool present, bool garbled, bool valid) {
+   if( code < 00000 || code > 07777 ) {
+      current_record.mode2.code = 00000;
+      current_record.mode2.present = false;
+   } else {
+      current_record.mode2.code = code;
+      current_record.mode2.garbled = garbled;
+      current_record.mode2.valid = valid;
+      current_record.mode2.present = present;
+   }
+}
 void ReportRecordType::setModeC( int code, bool present, bool garbled, bool valid ) {
    if( code < 00000 || code > 07777 ) {
       current_record.mc.code = 00000;
@@ -407,7 +418,7 @@ void ReportRecordType::setDetectionTimeFromTOD( uint64_t tod ) {
       d_time -= std::chrono::hours( 24 );
    }
    current_record.det_time = std::chrono::duration_cast<std::chrono::milliseconds>( d_time.time_since_epoch() ).count();
-   current_record.det_time += tod;
+   current_record.det_time = tod;   // TODO removed +=
 }
 
 void ReportRecordType::setRecord( ReportRecord_T& record ) {
@@ -527,6 +538,9 @@ int ReportRecordType::getModeCCode() {
 int ReportRecordType::getMode3ACode() {
    return current_record.m3a.code;
 }
+int ReportRecordType::getMode2Code() {
+   return current_record.mode2.code;
+}
 std::string ReportRecordType::getAircraftIdent() {
    return std::string( current_record.aircraft_ident.ac_id );
 }
@@ -578,7 +592,7 @@ bool ReportRecordType::isGeoPosPresent() {
 bool ReportRecordType::isHeadingPresent() {
    return current_record.heading.value_present;
 }
-bool ReportRecordType::isGroundSPeedPresent() {
+bool ReportRecordType::isGroundSpeedPresent() {
    return current_record.ground_speed.value_present;
 }
 bool ReportRecordType::isEleveationPresent() {
@@ -613,6 +627,18 @@ bool ReportRecordType::isMode3AValid() {
 }
 bool ReportRecordType::isMode3AGarbled() {
    return current_record.m3a.garbled;
+}
+bool ReportRecordType::isMode2Present() {
+   return current_record.mode2.present;
+}
+bool ReportRecordType::isMode2ValidNotGarbled() {
+   return current_record.mode2.valid && !current_record.m3a.garbled;
+}
+bool ReportRecordType::isMode2Valid() {
+   return current_record.mode2.valid;
+}
+bool ReportRecordType::isMode2Garbled() {
+   return current_record.mode2.garbled;
 }
 bool ReportRecordType::isAircraftIdentPresent() {
    return current_record.aircraft_ident.ac_id_present;

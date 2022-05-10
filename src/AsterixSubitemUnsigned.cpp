@@ -32,14 +32,8 @@
 #include <vector>
 #include <cstring>
 
-AsterixSubitemUnsigned::AsterixSubitemUnsigned( int length,
-   std::function<std::string( char*, unsigned int )> converterFunction ) :
-   AsterixSubitemNumber( length, converterFunction ) {
-}
-
-AsterixSubitemUnsigned::AsterixSubitemUnsigned( int length,
-   std::function<std::string( char*, unsigned, double& dest_buffer )> converterFunction ) :
-   AsterixSubitemNumber( length, converterFunction ) {
+AsterixSubitemUnsigned::AsterixSubitemUnsigned(int length, std::shared_ptr<ItemConverterBase> converter) :
+   AsterixSubitemNumber( length, converter ) {
 }
 
 AsterixSubitemUnsigned::~AsterixSubitemUnsigned(){

@@ -31,13 +31,8 @@
 #include <cmath>
 
 AsterixSubitemNumber::AsterixSubitemNumber( int length,
-   std::function<std::string( char*, unsigned int )> converterFunction ) :
-   AsterixSubitemBase( length, converterFunction ) {
-}
-
-AsterixSubitemNumber::AsterixSubitemNumber( int length,
-   std::function<std::string( char*, unsigned int, double& dest_buffer )> converterFunction ) :
-   AsterixSubitemBase( length, converterFunction ) {
+   std::shared_ptr<ItemConverterBase> converter) :
+   AsterixSubitemBase( length, converter ) {
 }
 
 AsterixSubitemNumber::~AsterixSubitemNumber() {
@@ -99,25 +94,7 @@ long AsterixSubitemNumber::getRawValue(std::vector<bool> result) {
 }
 
 std::string AsterixSubitemNumber::getConvertedValue( char* value, unsigned int value_length ) {
-   std::string return_value;
-
-   //store the decoded value in the corresponding string variable
-   /* To do this we unfortunately need to check all converter function pointers until the one
-    * which is not zero is found. At the moment there is no better way to store converter functions
-    * with different signatures. It would be nice to have only one member variable in which the
-    * call able object is stored, independent of the return type or the signature.
-    */
-
-   if( simple_converter != nullptr ) {
-      return_value = simple_converter( value, value_length );
-   } else if( double_conveter != nullptr ) {
-      double converted_value;
-      return_value = double_conveter( value, (int) std::ceil( length / 8.0 ), converted_value );
-   } else {
-      return_value = std::string( value ); // Default convert
-   }
-
-   return return_value;
+   return converter->fromExternal( value, (int) std::ceil( length / 8.0 ) );
 }
 
 std::vector<char> AsterixSubitemNumber::encode() {
