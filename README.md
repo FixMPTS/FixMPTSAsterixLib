@@ -1,4 +1,4 @@
-![FixMPTS](FixMPTSLogo.png)
+<img src="https://github.com/FixMPTS/FixMPTSAsterixLib/blob/HEAD/FixMPTSLogo.png" width="450" alt="Logo">
 
 # FixMPTS Asterix Library
 The FixMPTs Asterix Library is a spin off from the [FixMPTS](https://www.fixmpts.org) project. It encapsulates the de- and encoding part for the Asterix protocol.
