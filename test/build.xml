@@ -53,6 +53,7 @@
 				<include name="ReportRecordType.o" />
 				<include name="TestAsterixCAT62Encoding.o" />
 				<include name="TestAsterixCAT01Decoding.o" />
+				<include name="TestAsterixCAT01Encoding.o" />
 				<include name="TestAsterixCAT02Decoding.o" />
 				<include name="TestAsterixCAT10Decoding.o" />
 				<include name="TestAsterixCAT11Decoding.o" />
@@ -69,9 +70,10 @@
 				<include name="TestAsterixCAT65Decoding.o" />
 				<include name="TestAsterixCAT204Decoding.o" />
 				<include name="TestAsterixCAT244Decoding.o" />
+				<include name="TestAsterixCAT02Encoding.o" />
 				<include name="Exceptions.o" />
-				<include name="MathExceptions.o" />
-				<include name="NetworkCompat.o" />
+				<!-- <include name="MathExceptions.o" />
+				<include name="NetworkCompat.o" /> -->
 			</fileset>
 			<fileset dir="test">
 				<include name="TestAsterixMain.cpp" />

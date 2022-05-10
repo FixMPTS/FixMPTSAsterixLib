@@ -70,7 +70,6 @@ void TestAsterixCAT61Decoding::testCAT061() {
 
    CPPUNIT_ASSERT( cat061_message->getValue( Cat061ItemNames::I061_000_FAM ) == "1" );
    CPPUNIT_ASSERT( cat061_message->getValue( Cat061ItemNames::I061_000_NAT ) == "5" );
-   std::cout << "1" << std::endl;
    CPPUNIT_ASSERT( cat061_message->getValue( Cat061ItemNames::I061_012_UID ) == "130" );
 
    CPPUNIT_ASSERT( cat061_message->getValue( Cat061ItemNames::I061_015_SID ) == "101" );

@@ -168,7 +168,7 @@ void TestAsterixCAT01Decoding::test2CAT001() {
          CPPUNIT_ASSERT( cat001_message->getValue( Cat001ItemNames::I001_170_DOU ) == "0" );
          CPPUNIT_ASSERT( cat001_message->getValue( Cat001ItemNames::I001_170_MAN ) == "0" );
          CPPUNIT_ASSERT( cat001_message->getValue( Cat001ItemNames::I001_170_RAD ) == "1" );
-         CPPUNIT_ASSERT( cat001_message->getValue( Cat001ItemNames::I001_170_RDCP ) == "1" );
+         CPPUNIT_ASSERT( cat001_message->getValue( Cat001ItemNames::I001_170_RDPC ) == "1" );
 
          //Test length of remaining message
          remaining_length = cat001_message->getRemainingLength();

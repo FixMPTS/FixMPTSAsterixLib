@@ -64,7 +64,6 @@ void TestAsterixCAT32Decoding::testCAT032() {
 
    //cat032_message->printMessage();
 
-   std::cout << "1" << std::endl;
    CPPUNIT_ASSERT( cat032_message->getValue( Cat032ItemNames::I032_010_SAC ) == "8" );
    CPPUNIT_ASSERT( cat032_message->getValue( Cat032ItemNames::I032_010_SIC ) == "200" );
 

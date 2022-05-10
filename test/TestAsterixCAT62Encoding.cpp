@@ -58,7 +58,7 @@ void TestAsterixCAT62Encoding::testI062_010(){
    // Define an item selector which just contains the SDPS identification item. Note the mandatory
    // items will be included in the final message anyway.
    std::map<std::string, bool> items_to_be_served;
-   items_to_be_served["I062/010"] = true;
+   items_to_be_served[Cat062ItemNames::I062_010] = true;
 
    // Define as basic track although it is not directly needed for this special test case
    std::shared_ptr<TrackTypeIf> track = std::make_shared<TrackTypeIf>();

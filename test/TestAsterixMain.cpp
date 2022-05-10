@@ -44,6 +44,8 @@
 #include "TestAsterixCAT65Decoding.h"
 #include "TestAsterixCAT204Decoding.h"
 #include "TestAsterixCAT244Decoding.h"
+#include "TestAsterixCAT01Encoding.h"
+#include "TestAsterixCAT02Encoding.h"
 
 //#include "Core/Logging/LogManager.h"
 //#include "Core/Logging/Termlog.h"
@@ -58,9 +60,12 @@
 #include "XmlOutputter.h"
 #include "TextOutputter.h"
 
+// @formatter:off
 CPPUNIT_TEST_SUITE_REGISTRATION( TestAsterixCAT62Encoding );
 CPPUNIT_TEST_SUITE_REGISTRATION( TestAsterixCAT01Decoding );
+CPPUNIT_TEST_SUITE_REGISTRATION( TestAsterixCAT01Encoding );
 CPPUNIT_TEST_SUITE_REGISTRATION( TestAsterixCAT02Decoding );
+CPPUNIT_TEST_SUITE_REGISTRATION( TestAsterixCAT02Encoding );
 CPPUNIT_TEST_SUITE_REGISTRATION( TestAsterixCAT10Decoding );
 CPPUNIT_TEST_SUITE_REGISTRATION( TestAsterixCAT11Decoding );
 CPPUNIT_TEST_SUITE_REGISTRATION( TestAsterixCAT19Decoding );
@@ -76,6 +81,7 @@ CPPUNIT_TEST_SUITE_REGISTRATION( TestAsterixCAT63Decoding );
 CPPUNIT_TEST_SUITE_REGISTRATION( TestAsterixCAT65Decoding );
 CPPUNIT_TEST_SUITE_REGISTRATION( TestAsterixCAT204Decoding );
 CPPUNIT_TEST_SUITE_REGISTRATION( TestAsterixCAT244Decoding );
+// @formatter:on
 
 int main( int argc, char **argv ){
    //LogManager logger = LogManager( "TestAsterix" );
@@ -85,7 +91,6 @@ int main( int argc, char **argv ){
 
    CppUnit::TestResultCollector result;
    controller.addListener( &result );
-   ;
 
    std::ofstream xmlout( "../Results/testresult_asterix_standalone.xml" );
    CppUnit::XmlOutputter xmlOutputter( &result, xmlout );
@@ -103,5 +108,5 @@ int main( int argc, char **argv ){
    xmlOutputter.write();
    consoleOutputter.write();
 
-   exit( 0 );
+   return result.wasSuccessful() ? 0 : 1;
 }
