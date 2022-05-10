@@ -216,620 +216,620 @@ void AsterixCategory204::setSubitems() {
    subitem_map_t sensor_identification;
    sensor_identification.push_back(
       subitem_t( Cat204ItemNames::I204_010_SAC,
-         std::make_shared<AsterixSubitemUnsigned>( 8, CommonConverter::NoneConverter ) ) );
+         std::make_shared<AsterixSubitemUnsigned>( 8, CommonConverter::NoneConverter::get() ) ) );
    sensor_identification.push_back(
       subitem_t( Cat204ItemNames::I204_010_SIC,
-         std::make_shared<AsterixSubitemUnsigned>( 8, CommonConverter::NoneConverter ) ) );
+         std::make_shared<AsterixSubitemUnsigned>( 8, CommonConverter::NoneConverter::get() ) ) );
 
    subitem_map_t data_destination_identifier;
    data_destination_identifier.push_back(
       subitem_t( Cat204ItemNames::I204_012_SAC,
-         std::make_shared<AsterixSubitemUnsigned>( 8, CommonConverter::NoneConverter ) ) );
+         std::make_shared<AsterixSubitemUnsigned>( 8, CommonConverter::NoneConverter::get() ) ) );
    data_destination_identifier.push_back(
       subitem_t( Cat204ItemNames::I204_012_SIC,
-         std::make_shared<AsterixSubitemUnsigned>( 8, CommonConverter::NoneConverter ) ) );
+         std::make_shared<AsterixSubitemUnsigned>( 8, CommonConverter::NoneConverter::get() ) ) );
 
    subitem_map_t message_type;
    message_type.push_back(
       subitem_t( Cat204ItemNames::I204_000_CODE,
-         std::make_shared<AsterixSubitemUnsigned>( 16, CommonConverter::NoneConverter ) ) );
+         std::make_shared<AsterixSubitemUnsigned>( 16, CommonConverter::NoneConverter::get() ) ) );
 
    subitem_map_t nato_track_number;
    nato_track_number.push_back(
       subitem_t( Cat204ItemNames::I204_001_SPARE,
-         std::make_shared<AsterixSubitemUnsigned>( 3, CommonConverter::NoneConverter ) ) );
+         std::make_shared<AsterixSubitemUnsigned>( 3, CommonConverter::NoneConverter::get() ) ) );
    nato_track_number.push_back(
       subitem_t( Cat204ItemNames::I204_001_TN,
-         std::make_shared<AsterixSubitemUnsigned>( 19, StringConverter::BitsToNATOtn19Bit ) ) );
+         std::make_shared<AsterixSubitemUnsigned>( 19, StringConverter::BitsToNATOtn19Bit::get() ) ) );
    nato_track_number.push_back(
       subitem_t( Cat204ItemNames::I204_001_SPARE2,
-         std::make_shared<AsterixSubitemUnsigned>( 2, CommonConverter::NoneConverter ) ) );
+         std::make_shared<AsterixSubitemUnsigned>( 2, CommonConverter::NoneConverter::get() ) ) );
 
    subitem_map_t order_identification;
    order_identification.push_back(
       subitem_t( Cat204ItemNames::I204_700_ACK,
-         std::make_shared<AsterixSubitemUnsigned>( 1, CommonConverter::NoneConverter ) ) );
+         std::make_shared<AsterixSubitemUnsigned>( 1, CommonConverter::NoneConverter::get() ) ) );
    order_identification.push_back(
       subitem_t( Cat204ItemNames::I204_700_TYP,
-         std::make_shared<AsterixSubitemUnsigned>( 15, CommonConverter::NoneConverter ) ) );
+         std::make_shared<AsterixSubitemUnsigned>( 15, CommonConverter::NoneConverter::get() ) ) );
    order_identification.push_back(
       subitem_t( Cat204ItemNames::I204_700_ID,
-         std::make_shared<AsterixSubitemUnsigned>( 32, CommonConverter::NoneConverter ) ) );
+         std::make_shared<AsterixSubitemUnsigned>( 32, CommonConverter::NoneConverter::get() ) ) );
 
    subitem_map_t track_point;
    track_point.push_back(
       subitem_t( Cat204ItemNames::I204_003_ID,
-         std::make_shared<AsterixSubitemUnsigned>( 16, CommonConverter::NoneConverter ) ) );
+         std::make_shared<AsterixSubitemUnsigned>( 16, CommonConverter::NoneConverter::get() ) ) );
 
    subitem_map_t object_status;
    object_status.push_back(
       subitem_t( Cat204ItemNames::I204_260_STS,
-         std::make_shared<AsterixSubitemUnsigned>( 8, CommonConverter::NoneConverter ) ) );
+         std::make_shared<AsterixSubitemUnsigned>( 8, CommonConverter::NoneConverter::get() ) ) );
 
    subitem_map_t update_time;
    update_time.push_back(
       subitem_t( Cat204ItemNames::I204_280_TIME,
-         std::make_shared<AsterixSubitemUnsigned>( 64, CommonConverter::NoneConverter ) ) );
+         std::make_shared<AsterixSubitemUnsigned>( 64, CommonConverter::NoneConverter::get() ) ) );
 
    subitem_map_t position_wgs;
    position_wgs.push_back(
       subitem_t( Cat204ItemNames::I204_020_LAT,
-         std::make_shared<AsterixSubitemSigned>( 32, DoubleConverter::WGS84resolution30Bit ) ) );
+         std::make_shared<AsterixSubitemSigned>( 32, DoubleConverter::WGS84resolution30Bit::get() ) ) );
    position_wgs.push_back(
       subitem_t( Cat204ItemNames::I204_020_LNG,
-         std::make_shared<AsterixSubitemSigned>( 32, DoubleConverter::WGS84resolution30Bit ) ) );
+         std::make_shared<AsterixSubitemSigned>( 32, DoubleConverter::WGS84resolution30Bit::get() ) ) );
 
    subitem_map_t track_quality;
    track_quality.push_back(
       subitem_t( Cat204ItemNames::I204_030_TQ,
-         std::make_shared<AsterixSubitemUnsigned>( 8, CommonConverter::NoneConverter ) ) );
+         std::make_shared<AsterixSubitemUnsigned>( 8, CommonConverter::NoneConverter::get() ) ) );
 
    subitem_map_t speed_heading;
    speed_heading.push_back(
       subitem_t( Cat204ItemNames::I204_060_SPARE1,
-         std::make_shared<AsterixSubitemUnsigned>( 2, CommonConverter::NoneConverter ) ) );
+         std::make_shared<AsterixSubitemUnsigned>( 2, CommonConverter::NoneConverter::get() ) ) );
    speed_heading.push_back(
       subitem_t( Cat204ItemNames::I204_060_VSP,
-         std::make_shared<AsterixSubitemUnsigned>( 1, CommonConverter::NoneConverter ) ) );
+         std::make_shared<AsterixSubitemUnsigned>( 1, CommonConverter::NoneConverter::get() ) ) );
    speed_heading.push_back(
       subitem_t( Cat204ItemNames::I204_060_CLIM,
-         std::make_shared<AsterixSubitemUnsigned>( 1, CommonConverter::NoneConverter ) ) );
+         std::make_shared<AsterixSubitemUnsigned>( 1, CommonConverter::NoneConverter::get() ) ) );
    speed_heading.push_back(
       subitem_t( Cat204ItemNames::I204_060_VSPEED,
-         std::make_shared<AsterixSubitemUnsigned>( 16, UnsignedDoubleConverter::speedVelToKt ) ) );
+         std::make_shared<AsterixSubitemUnsigned>( 16, UnsignedDoubleConverter::SpeedVelToKt::get() ) ) );
    speed_heading.push_back(
       subitem_t( Cat204ItemNames::I204_060_MACH,
-         std::make_shared<AsterixSubitemUnsigned>( 12, UnsignedDoubleConverter::fraction10th ) ) );
+         std::make_shared<AsterixSubitemUnsigned>( 12, UnsignedDoubleConverter::Fraction10th::get() ) ) );
    speed_heading.push_back(
       subitem_t( Cat204ItemNames::I204_060_HDG,
-         std::make_shared<AsterixSubitemUnsigned>( 16, UnsignedDoubleConverter::direction16Bit ) ) );
+         std::make_shared<AsterixSubitemUnsigned>( 16, UnsignedDoubleConverter::Direction16Bit::get() ) ) );
    speed_heading.push_back(
       subitem_t( Cat204ItemNames::I204_060_HSPEED,
-         std::make_shared<AsterixSubitemUnsigned>( 16, UnsignedDoubleConverter::fraction10th ) ) );
+         std::make_shared<AsterixSubitemUnsigned>( 16, UnsignedDoubleConverter::Fraction10th::get() ) ) );
 
    subitem_map_t primary_identity;
    primary_identity.push_back(
       subitem_t( Cat204ItemNames::I204_070_EID,
-         std::make_shared<AsterixSubitemUnsigned>( 8, CommonConverter::NoneConverter ) ) );
+         std::make_shared<AsterixSubitemUnsigned>( 8, CommonConverter::NoneConverter::get() ) ) );
    primary_identity.push_back(
       subitem_t( Cat204ItemNames::I204_070_MID,
-         std::make_shared<AsterixSubitemUnsigned>( 8, CommonConverter::NoneConverter ) ) );
+         std::make_shared<AsterixSubitemUnsigned>( 8, CommonConverter::NoneConverter::get() ) ) );
 
    subitem_map_t environment_category;
    environment_category.push_back(
       subitem_t( Cat204ItemNames::I204_080_ECAT,
-         std::make_shared<AsterixSubitemUnsigned>( 8, CommonConverter::NoneConverter ) ) );
+         std::make_shared<AsterixSubitemUnsigned>( 8, CommonConverter::NoneConverter::get() ) ) );
 
    subitem_map_t amsl_altitude;
    amsl_altitude.push_back(
       subitem_t( Cat204ItemNames::I204_040_ALT,
-         std::make_shared<AsterixSubitemSigned>( 32, CommonConverter::NoneConverter ) ) );
+         std::make_shared<AsterixSubitemSigned>( 32, CommonConverter::NoneConverter::get() ) ) );
 
    subitem_map_t track_data_ages;
    track_data_ages.push_back(
       subitem_t( Cat204ItemNames::I204_291_UPD,
-         std::make_shared<AsterixSubitemUnsigned>( 8, UnsignedDoubleConverter::fraction4th ) ) );
+         std::make_shared<AsterixSubitemUnsigned>( 8, UnsignedDoubleConverter::Fraction4th::get() ) ) );
    track_data_ages.push_back(
       subitem_t( Cat204ItemNames::I204_291_AMSL,
-         std::make_shared<AsterixSubitemUnsigned>( 8, UnsignedDoubleConverter::fraction4th ) ) );
+         std::make_shared<AsterixSubitemUnsigned>( 8, UnsignedDoubleConverter::Fraction4th::get() ) ) );
    track_data_ages.push_back(
       subitem_t( Cat204ItemNames::I204_291_IFF1,
-         std::make_shared<AsterixSubitemUnsigned>( 8, UnsignedDoubleConverter::fraction4th ) ) );
+         std::make_shared<AsterixSubitemUnsigned>( 8, UnsignedDoubleConverter::Fraction4th::get() ) ) );
    track_data_ages.push_back(
       subitem_t( Cat204ItemNames::I204_291_IFF2,
-         std::make_shared<AsterixSubitemUnsigned>( 8, UnsignedDoubleConverter::fraction4th ) ) );
+         std::make_shared<AsterixSubitemUnsigned>( 8, UnsignedDoubleConverter::Fraction4th::get() ) ) );
    track_data_ages.push_back(
       subitem_t( Cat204ItemNames::I204_291_IFF3,
-         std::make_shared<AsterixSubitemUnsigned>( 8, UnsignedDoubleConverter::fraction4th ) ) );
+         std::make_shared<AsterixSubitemUnsigned>( 8, UnsignedDoubleConverter::Fraction4th::get() ) ) );
    track_data_ages.push_back(
       subitem_t( Cat204ItemNames::I204_291_IFF4,
-         std::make_shared<AsterixSubitemUnsigned>( 8, UnsignedDoubleConverter::fraction4th ) ) );
+         std::make_shared<AsterixSubitemUnsigned>( 8, UnsignedDoubleConverter::Fraction4th::get() ) ) );
    track_data_ages.push_back(
       subitem_t( Cat204ItemNames::I204_291_IFFC,
-         std::make_shared<AsterixSubitemUnsigned>( 8, UnsignedDoubleConverter::fraction4th ) ) );
+         std::make_shared<AsterixSubitemUnsigned>( 8, UnsignedDoubleConverter::Fraction4th::get() ) ) );
    track_data_ages.push_back(
       subitem_t( Cat204ItemNames::I204_291_COM,
-         std::make_shared<AsterixSubitemUnsigned>( 8, UnsignedDoubleConverter::fraction4th ) ) );
+         std::make_shared<AsterixSubitemUnsigned>( 8, UnsignedDoubleConverter::Fraction4th::get() ) ) );
    track_data_ages.push_back(
       subitem_t( Cat204ItemNames::I204_291_ACS,
-         std::make_shared<AsterixSubitemUnsigned>( 8, UnsignedDoubleConverter::fraction4th ) ) );
+         std::make_shared<AsterixSubitemUnsigned>( 8, UnsignedDoubleConverter::Fraction4th::get() ) ) );
    track_data_ages.push_back(
       subitem_t( Cat204ItemNames::I204_291_POS,
-         std::make_shared<AsterixSubitemUnsigned>( 8, UnsignedDoubleConverter::fraction4th ) ) );
+         std::make_shared<AsterixSubitemUnsigned>( 8, UnsignedDoubleConverter::Fraction4th::get() ) ) );
    track_data_ages.push_back(
       subitem_t( Cat204ItemNames::I204_291_GAL,
-         std::make_shared<AsterixSubitemUnsigned>( 8, UnsignedDoubleConverter::fraction4th ) ) );
+         std::make_shared<AsterixSubitemUnsigned>( 8, UnsignedDoubleConverter::Fraction4th::get() ) ) );
    track_data_ages.push_back(
       subitem_t( Cat204ItemNames::I204_291_MB,
-         std::make_shared<AsterixSubitemUnsigned>( 8, UnsignedDoubleConverter::fraction4th ) ) );
+         std::make_shared<AsterixSubitemUnsigned>( 8, UnsignedDoubleConverter::Fraction4th::get() ) ) );
 
    subitem_map_t iffc;
    iffc.push_back(
       subitem_t( Cat204ItemNames::I204_050_IFFFC,
-         std::make_shared<AsterixSubitemSigned>( 16, IntegerConverter::alt25ft ) ) );
+         std::make_shared<AsterixSubitemSigned>( 16, IntegerConverter::Alt25ft::get() ) ) );
 
    subitem_map_t object_type;
    object_type.push_back(
       subitem_t( Cat204ItemNames::I204_081_SRP,
-         std::make_shared<AsterixSubitemUnsigned>( 1, CommonConverter::NoneConverter ) ) );
+         std::make_shared<AsterixSubitemUnsigned>( 1, CommonConverter::NoneConverter::get() ) ) );
    object_type.push_back(
       subitem_t( Cat204ItemNames::I204_081_TYPE,
-         std::make_shared<AsterixSubitemUnsigned>( 7, CommonConverter::NoneConverter ) ) );
+         std::make_shared<AsterixSubitemUnsigned>( 7, CommonConverter::NoneConverter::get() ) ) );
 
    subitem_map_t track_mode;
    track_mode.push_back(
       subitem_t( Cat204ItemNames::I204_082_MODE,
-         std::make_shared<AsterixSubitemUnsigned>( 8, CommonConverter::NoneConverter ) ) );
+         std::make_shared<AsterixSubitemUnsigned>( 8, CommonConverter::NoneConverter::get() ) ) );
 
    subitem_map_t detection_kind;
    detection_kind.push_back(
       subitem_t( Cat204ItemNames::I204_083_KIND,
-         std::make_shared<AsterixSubitemUnsigned>( 8, CommonConverter::NoneConverter ) ) );
+         std::make_shared<AsterixSubitemUnsigned>( 8, CommonConverter::NoneConverter::get() ) ) );
 
    subitem_map_t strength;
    strength.push_back(
       subitem_t( Cat204ItemNames::I204_084_FORMAT,
-         std::make_shared<AsterixSubitemUnsigned>( 8, CommonConverter::NoneConverter ) ) );
+         std::make_shared<AsterixSubitemUnsigned>( 8, CommonConverter::NoneConverter::get() ) ) );
    strength.push_back(
       subitem_t( Cat204ItemNames::I204_084_MAX,
-         std::make_shared<AsterixSubitemUnsigned>( 8, CommonConverter::NoneConverter ) ) );
+         std::make_shared<AsterixSubitemUnsigned>( 8, CommonConverter::NoneConverter::get() ) ) );
    strength.push_back(
       subitem_t( Cat204ItemNames::I204_084_MIN,
-         std::make_shared<AsterixSubitemUnsigned>( 8, CommonConverter::NoneConverter ) ) );
+         std::make_shared<AsterixSubitemUnsigned>( 8, CommonConverter::NoneConverter::get() ) ) );
 
    subitem_map_t iff1;
    iff1.push_back(
       subitem_t( Cat204ItemNames::I204_090_SPARE,
-         std::make_shared<AsterixSubitemUnsigned>( 3, CommonConverter::NoneConverter ) ) );
+         std::make_shared<AsterixSubitemUnsigned>( 3, CommonConverter::NoneConverter::get() ) ) );
    iff1.push_back(
       subitem_t( Cat204ItemNames::I204_090_IFF1,
-         std::make_shared<AsterixSubitemUnsigned>( 5, CommonConverter::NoneConverter ) ) );
+         std::make_shared<AsterixSubitemUnsigned>( 5, CommonConverter::NoneConverter::get() ) ) );
 
    subitem_map_t iff2;
    iff2.push_back(
       subitem_t( Cat204ItemNames::I204_091_SPARE,
-         std::make_shared<AsterixSubitemUnsigned>( 4, CommonConverter::NoneConverter ) ) );
+         std::make_shared<AsterixSubitemUnsigned>( 4, CommonConverter::NoneConverter::get() ) ) );
    iff2.push_back(
       subitem_t( Cat204ItemNames::I204_091_IFF2,
-         std::make_shared<AsterixSubitemUnsigned>( 12, CommonConverter::NoneConverter ) ) );
+         std::make_shared<AsterixSubitemUnsigned>( 12, CommonConverter::NoneConverter::get() ) ) );
 
    subitem_map_t iff3;
    iff3.push_back(
       subitem_t( Cat204ItemNames::I204_092_SPARE,
-         std::make_shared<AsterixSubitemUnsigned>( 4, CommonConverter::NoneConverter ) ) );
+         std::make_shared<AsterixSubitemUnsigned>( 4, CommonConverter::NoneConverter::get() ) ) );
    iff3.push_back(
       subitem_t( Cat204ItemNames::I204_092_IFF3,
-         std::make_shared<AsterixSubitemUnsigned>( 12, CommonConverter::NoneConverter ) ) );
+         std::make_shared<AsterixSubitemUnsigned>( 12, CommonConverter::NoneConverter::get() ) ) );
 
    subitem_map_t iff4;
    iff4.push_back(
       subitem_t( Cat204ItemNames::I204_093_SPARE,
-         std::make_shared<AsterixSubitemUnsigned>( 5, CommonConverter::NoneConverter ) ) );
+         std::make_shared<AsterixSubitemUnsigned>( 5, CommonConverter::NoneConverter::get() ) ) );
    iff4.push_back(
       subitem_t( Cat204ItemNames::I204_093_IFF4,
-         std::make_shared<AsterixSubitemUnsigned>( 3, CommonConverter::NoneConverter ) ) );
+         std::make_shared<AsterixSubitemUnsigned>( 3, CommonConverter::NoneConverter::get() ) ) );
 
    // Subitem 094 compound sub item definitions
    subitem_map_t sub_sub_item_094_sum;
    sub_sub_item_094_sum.push_back(
       subitem_t( Cat204ItemNames::I204_094_SUM_M5,
-         std::make_shared<AsterixSubitemUnsigned>( 1, CommonConverter::NoneConverter ) ) );
+         std::make_shared<AsterixSubitemUnsigned>( 1, CommonConverter::NoneConverter::get() ) ) );
    sub_sub_item_094_sum.push_back(
       subitem_t( Cat204ItemNames::I204_094_SUM_ID,
-         std::make_shared<AsterixSubitemUnsigned>( 1, CommonConverter::NoneConverter ) ) );
+         std::make_shared<AsterixSubitemUnsigned>( 1, CommonConverter::NoneConverter::get() ) ) );
    sub_sub_item_094_sum.push_back(
       subitem_t( Cat204ItemNames::I204_094_SUM_DA,
-         std::make_shared<AsterixSubitemUnsigned>( 1, CommonConverter::NoneConverter ) ) );
+         std::make_shared<AsterixSubitemUnsigned>( 1, CommonConverter::NoneConverter::get() ) ) );
    sub_sub_item_094_sum.push_back(
       subitem_t( Cat204ItemNames::I204_094_SUM_M1,
-         std::make_shared<AsterixSubitemUnsigned>( 1, CommonConverter::NoneConverter ) ) );
+         std::make_shared<AsterixSubitemUnsigned>( 1, CommonConverter::NoneConverter::get() ) ) );
    sub_sub_item_094_sum.push_back(
       subitem_t( Cat204ItemNames::I204_094_SUM_M2,
-         std::make_shared<AsterixSubitemUnsigned>( 1, CommonConverter::NoneConverter ) ) );
+         std::make_shared<AsterixSubitemUnsigned>( 1, CommonConverter::NoneConverter::get() ) ) );
    sub_sub_item_094_sum.push_back(
       subitem_t( Cat204ItemNames::I204_094_SUM_M3,
-         std::make_shared<AsterixSubitemUnsigned>( 1, CommonConverter::NoneConverter ) ) );
+         std::make_shared<AsterixSubitemUnsigned>( 1, CommonConverter::NoneConverter::get() ) ) );
    sub_sub_item_094_sum.push_back(
       subitem_t( Cat204ItemNames::I204_094_SUM_MC,
-         std::make_shared<AsterixSubitemUnsigned>( 1, CommonConverter::NoneConverter ) ) );
+         std::make_shared<AsterixSubitemUnsigned>( 1, CommonConverter::NoneConverter::get() ) ) );
    sub_sub_item_094_sum.push_back(
       subitem_t( Cat204ItemNames::I204_094_SUM_X,
-         std::make_shared<AsterixSubitemUnsigned>( 1, CommonConverter::NoneConverter ) ) );
+         std::make_shared<AsterixSubitemUnsigned>( 1, CommonConverter::NoneConverter::get() ) ) );
 
    subitem_map_t sub_sub_item_094_pmn;
    sub_sub_item_094_pmn.push_back(
       subitem_t( Cat204ItemNames::I204_094_PMN_SPARE1,
-         std::make_shared<AsterixSubitemUnsigned>( 2, CommonConverter::NoneConverter ) ) );
+         std::make_shared<AsterixSubitemUnsigned>( 2, CommonConverter::NoneConverter::get() ) ) );
    sub_sub_item_094_pmn.push_back(
       subitem_t( Cat204ItemNames::I204_094_PMN_PIN,
-         std::make_shared<AsterixSubitemUnsigned>( 14, CommonConverter::NoneConverter ) ) );
+         std::make_shared<AsterixSubitemUnsigned>( 14, CommonConverter::NoneConverter::get() ) ) );
    sub_sub_item_094_pmn.push_back(
       subitem_t( Cat204ItemNames::I204_094_PMN_SPARE2,
-         std::make_shared<AsterixSubitemUnsigned>( 3, CommonConverter::NoneConverter ) ) );
+         std::make_shared<AsterixSubitemUnsigned>( 3, CommonConverter::NoneConverter::get() ) ) );
    sub_sub_item_094_pmn.push_back(
       subitem_t( Cat204ItemNames::I204_094_PMN_NAT,
-         std::make_shared<AsterixSubitemUnsigned>( 5, CommonConverter::NoneConverter ) ) );
+         std::make_shared<AsterixSubitemUnsigned>( 5, CommonConverter::NoneConverter::get() ) ) );
    sub_sub_item_094_pmn.push_back(
       subitem_t( Cat204ItemNames::I204_094_PMN_SPARE3,
-         std::make_shared<AsterixSubitemUnsigned>( 2, CommonConverter::NoneConverter ) ) );
+         std::make_shared<AsterixSubitemUnsigned>( 2, CommonConverter::NoneConverter::get() ) ) );
    sub_sub_item_094_pmn.push_back(
       subitem_t( Cat204ItemNames::I204_094_PMN_MIS,
-         std::make_shared<AsterixSubitemUnsigned>( 6, CommonConverter::NoneConverter ) ) );
+         std::make_shared<AsterixSubitemUnsigned>( 6, CommonConverter::NoneConverter::get() ) ) );
 
    subitem_map_t sub_sub_item_094_pos;
    sub_sub_item_094_pos.push_back(
       subitem_t( Cat204ItemNames::I204_094_POS_LAT,
-         std::make_shared<AsterixSubitemSigned>( 24, DoubleConverter::WGS84resolution23Bit ) ) );
+         std::make_shared<AsterixSubitemSigned>( 24, DoubleConverter::WGS84resolution23Bit::get() ) ) );
    sub_sub_item_094_pos.push_back(
       subitem_t( Cat204ItemNames::I204_094_POS_LNG,
-         std::make_shared<AsterixSubitemSigned>( 24, DoubleConverter::WGS84resolution23Bit ) ) );
+         std::make_shared<AsterixSubitemSigned>( 24, DoubleConverter::WGS84resolution23Bit::get() ) ) );
 
    subitem_map_t sub_sub_item_094_ga;
    sub_sub_item_094_ga.push_back(
       subitem_t( Cat204ItemNames::I204_094_GA_SPARE,
-         std::make_shared<AsterixSubitemUnsigned>( 1, CommonConverter::NoneConverter ) ) );
+         std::make_shared<AsterixSubitemUnsigned>( 1, CommonConverter::NoneConverter::get() ) ) );
    sub_sub_item_094_ga.push_back(
       subitem_t( Cat204ItemNames::I204_094_GA_RES,
-         std::make_shared<AsterixSubitemUnsigned>( 1, CommonConverter::NoneConverter ) ) );
+         std::make_shared<AsterixSubitemUnsigned>( 1, CommonConverter::NoneConverter::get() ) ) );
    sub_sub_item_094_ga.push_back(
       subitem_t( Cat204ItemNames::I204_094_GA_ALT,
-         std::make_shared<AsterixSubitemSigned>( 14, IntegerConverter::alt25ft ) ) );
+         std::make_shared<AsterixSubitemSigned>( 14, IntegerConverter::Alt25ft::get() ) ) );
 
    subitem_map_t sub_sub_item_094_em1;
    sub_sub_item_094_em1.push_back(
       subitem_t( Cat204ItemNames::I204_094_EM1_SPARE,
-         std::make_shared<AsterixSubitemUnsigned>( 4, CommonConverter::NoneConverter ) ) );
+         std::make_shared<AsterixSubitemUnsigned>( 4, CommonConverter::NoneConverter::get() ) ) );
    sub_sub_item_094_em1.push_back(
       subitem_t( Cat204ItemNames::I204_094_EM1_CODE,
-         std::make_shared<AsterixSubitemUnsigned>( 12, CommonConverter::NoneConverter ) ) );
+         std::make_shared<AsterixSubitemUnsigned>( 12, CommonConverter::NoneConverter::get() ) ) );
 
    subitem_map_t sub_sub_item_094_x;
    sub_sub_item_094_x.push_back(
       subitem_t( Cat204ItemNames::I204_094_XP_SPARE,
-         std::make_shared<AsterixSubitemUnsigned>( 3, CommonConverter::NoneConverter ) ) );
+         std::make_shared<AsterixSubitemUnsigned>( 3, CommonConverter::NoneConverter::get() ) ) );
    sub_sub_item_094_x.push_back(
       subitem_t( Cat204ItemNames::I204_094_XP_X5,
-         std::make_shared<AsterixSubitemUnsigned>( 1, CommonConverter::NoneConverter ) ) );
+         std::make_shared<AsterixSubitemUnsigned>( 1, CommonConverter::NoneConverter::get() ) ) );
    sub_sub_item_094_x.push_back(
       subitem_t( Cat204ItemNames::I204_094_XP_XC,
-         std::make_shared<AsterixSubitemUnsigned>( 1, CommonConverter::NoneConverter ) ) );
+         std::make_shared<AsterixSubitemUnsigned>( 1, CommonConverter::NoneConverter::get() ) ) );
    sub_sub_item_094_x.push_back(
       subitem_t( Cat204ItemNames::I204_094_XP_X3,
-         std::make_shared<AsterixSubitemUnsigned>( 1, CommonConverter::NoneConverter ) ) );
+         std::make_shared<AsterixSubitemUnsigned>( 1, CommonConverter::NoneConverter::get() ) ) );
    sub_sub_item_094_x.push_back(
       subitem_t( Cat204ItemNames::I204_094_XP_X2,
-         std::make_shared<AsterixSubitemUnsigned>( 1, CommonConverter::NoneConverter ) ) );
+         std::make_shared<AsterixSubitemUnsigned>( 1, CommonConverter::NoneConverter::get() ) ) );
    sub_sub_item_094_x.push_back(
       subitem_t( Cat204ItemNames::I204_094_XP_X1,
-         std::make_shared<AsterixSubitemUnsigned>( 1, CommonConverter::NoneConverter ) ) );
+         std::make_shared<AsterixSubitemUnsigned>( 1, CommonConverter::NoneConverter::get() ) ) );
 
    // Add all sub sub items to the master sub item
    subitem_map_t mode5;
    mode5.push_back(
       subitem_t( Cat204ItemNames::I204_094_SUM,
-         std::make_shared<AsterixSubitemCompound>( 8, CommonConverter::NoneConverterBuffer,
+         std::make_shared<AsterixSubitemCompound>( 8, CommonConverter::NoneConverterBuffer::get(),
             sub_sub_item_094_sum ) ) );
    mode5.push_back(
       subitem_t( Cat204ItemNames::I204_094_PMN,
-         std::make_shared<AsterixSubitemCompound>( 32, CommonConverter::NoneConverterBuffer,
+         std::make_shared<AsterixSubitemCompound>( 32, CommonConverter::NoneConverterBuffer::get(),
             sub_sub_item_094_pmn ) ) );
    mode5.push_back(
       subitem_t( Cat204ItemNames::I204_094_POS,
-         std::make_shared<AsterixSubitemCompound>( 48, CommonConverter::NoneConverterBuffer,
+         std::make_shared<AsterixSubitemCompound>( 48, CommonConverter::NoneConverterBuffer::get(),
             sub_sub_item_094_pos ) ) );
    mode5.push_back(
       subitem_t( Cat204ItemNames::I204_094_GA,
-         std::make_shared<AsterixSubitemCompound>( 16, CommonConverter::NoneConverterBuffer,
+         std::make_shared<AsterixSubitemCompound>( 16, CommonConverter::NoneConverterBuffer::get(),
             sub_sub_item_094_ga ) ) );
    mode5.push_back(
       subitem_t( Cat204ItemNames::I204_094_EM1,
-         std::make_shared<AsterixSubitemCompound>( 16, CommonConverter::NoneConverterBuffer,
+         std::make_shared<AsterixSubitemCompound>( 16, CommonConverter::NoneConverterBuffer::get(),
             sub_sub_item_094_em1 ) ) );
    mode5.push_back(
       subitem_t( Cat204ItemNames::I204_094_TOS,
-         std::make_shared<AsterixSubitemUnsigned>( 16, CommonConverter::NoneConverter ) ) );
+         std::make_shared<AsterixSubitemUnsigned>( 16, CommonConverter::NoneConverter::get() ) ) );
    mode5.push_back(
       subitem_t( Cat204ItemNames::I204_094_XP,
-         std::make_shared<AsterixSubitemCompound>( 8, CommonConverter::NoneConverterBuffer,
+         std::make_shared<AsterixSubitemCompound>( 8, CommonConverter::NoneConverterBuffer::get(),
             sub_sub_item_094_x ) ) );
 
    // Sub item 101 compound sub items definitions
    subitem_map_t sub_sub_item_101_com;
    sub_sub_item_101_com.push_back(
       subitem_t( Cat204ItemNames::I204_101_COM_COM,
-         std::make_shared<AsterixSubitemUnsigned>( 3, CommonConverter::NoneConverter ) ) );
+         std::make_shared<AsterixSubitemUnsigned>( 3, CommonConverter::NoneConverter::get() ) ) );
    sub_sub_item_101_com.push_back(
       subitem_t( Cat204ItemNames::I204_101_COM_STAT,
-         std::make_shared<AsterixSubitemUnsigned>( 3, CommonConverter::NoneConverter ) ) );
+         std::make_shared<AsterixSubitemUnsigned>( 3, CommonConverter::NoneConverter::get() ) ) );
    sub_sub_item_101_com.push_back(
       subitem_t( Cat204ItemNames::I204_101_COM_SPARE1,
-         std::make_shared<AsterixSubitemUnsigned>( 2, CommonConverter::NoneConverter ) ) );
+         std::make_shared<AsterixSubitemUnsigned>( 2, CommonConverter::NoneConverter::get() ) ) );
    sub_sub_item_101_com.push_back(
       subitem_t( Cat204ItemNames::I204_101_COM_SCC,
-         std::make_shared<AsterixSubitemUnsigned>( 1, CommonConverter::NoneConverter ) ) );
+         std::make_shared<AsterixSubitemUnsigned>( 1, CommonConverter::NoneConverter::get() ) ) );
    sub_sub_item_101_com.push_back(
       subitem_t( Cat204ItemNames::I204_101_COM_ARC,
-         std::make_shared<AsterixSubitemUnsigned>( 1, CommonConverter::NoneConverter ) ) );
+         std::make_shared<AsterixSubitemUnsigned>( 1, CommonConverter::NoneConverter::get() ) ) );
    sub_sub_item_101_com.push_back(
       subitem_t( Cat204ItemNames::I204_101_COM_AIC,
-         std::make_shared<AsterixSubitemUnsigned>( 1, CommonConverter::NoneConverter ) ) );
+         std::make_shared<AsterixSubitemUnsigned>( 1, CommonConverter::NoneConverter::get() ) ) );
    sub_sub_item_101_com.push_back(
       subitem_t( Cat204ItemNames::I204_101_COM_B1A,
-         std::make_shared<AsterixSubitemUnsigned>( 1, CommonConverter::NoneConverter ) ) );
+         std::make_shared<AsterixSubitemUnsigned>( 1, CommonConverter::NoneConverter::get() ) ) );
    sub_sub_item_101_com.push_back(
       subitem_t( Cat204ItemNames::I204_101_COM_B1B,
-         std::make_shared<AsterixSubitemUnsigned>( 4, CommonConverter::NoneConverter ) ) );
+         std::make_shared<AsterixSubitemUnsigned>( 4, CommonConverter::NoneConverter::get() ) ) );
 
    subitem_map_t sub_sub_item_101_pos;
    sub_sub_item_101_pos.push_back(
       subitem_t( Cat204ItemNames::I204_101_POS_LAT,
-         std::make_shared<AsterixSubitemSigned>( 24, DoubleConverter::WGS84resolution23Bit ) ) );
+         std::make_shared<AsterixSubitemSigned>( 24, DoubleConverter::WGS84resolution23Bit::get() ) ) );
    sub_sub_item_101_pos.push_back(
       subitem_t( Cat204ItemNames::I204_101_POS_LNG,
-         std::make_shared<AsterixSubitemSigned>( 24, DoubleConverter::WGS84resolution23Bit ) ) );
+         std::make_shared<AsterixSubitemSigned>( 24, DoubleConverter::WGS84resolution23Bit::get() ) ) );
 
    subitem_map_t sub_sub_item_101_mb;
    sub_sub_item_101_mb.push_back(
       subitem_t( Cat204ItemNames::I204_101_MB_DATA,
-         std::make_shared<AsterixSubitemSigned>( 56, CommonConverter::NoneConverter ) ) );
+         std::make_shared<AsterixSubitemSigned>( 56, CommonConverter::NoneConverter::get() ) ) );
    sub_sub_item_101_mb.push_back(
       subitem_t( Cat204ItemNames::I204_101_MB_BDS1,
-         std::make_shared<AsterixSubitemSigned>( 4, CommonConverter::NoneConverter ) ) );
+         std::make_shared<AsterixSubitemSigned>( 4, CommonConverter::NoneConverter::get() ) ) );
    sub_sub_item_101_mb.push_back(
       subitem_t( Cat204ItemNames::I204_101_MB_BDS2,
-         std::make_shared<AsterixSubitemSigned>( 4, CommonConverter::NoneConverter ) ) );
+         std::make_shared<AsterixSubitemSigned>( 4, CommonConverter::NoneConverter::get() ) ) );
 
    // Add all sub sub items to the master sub item
    subitem_map_t aircraft_derived_data;
    aircraft_derived_data.push_back(
       subitem_t( Cat204ItemNames::I204_101_ADR,
-         std::make_shared<AsterixSubitemUnsigned>( 24, CommonConverter::NoneConverter ) ) );
+         std::make_shared<AsterixSubitemUnsigned>( 24, CommonConverter::NoneConverter::get() ) ) );
    aircraft_derived_data.push_back(
       subitem_t( Cat204ItemNames::I204_101_ID,
-         std::make_shared<AsterixSubitemUnsigned>( 48, StringConverter::to6BitChar ) ) );
+         std::make_shared<AsterixSubitemUnsigned>( 48, StringConverter::To6BitChar::get() ) ) );
    aircraft_derived_data.push_back(
       subitem_t( Cat204ItemNames::I204_101_COM,
-         std::make_shared<AsterixSubitemCompound>( 16, CommonConverter::NoneConverterBuffer,
+         std::make_shared<AsterixSubitemCompound>( 16, CommonConverter::NoneConverterBuffer::get(),
             sub_sub_item_101_com ) ) );
    aircraft_derived_data.push_back(
       subitem_t( Cat204ItemNames::I204_101_ACS,
-         std::make_shared<AsterixSubitemUnsigned>( 56, CommonConverter::NoneConverter ) ) );
+         std::make_shared<AsterixSubitemUnsigned>( 56, CommonConverter::NoneConverter::get() ) ) );
    aircraft_derived_data.push_back(
       subitem_t( Cat204ItemNames::I204_101_POS,
-         std::make_shared<AsterixSubitemCompound>( 48, CommonConverter::NoneConverterBuffer,
+         std::make_shared<AsterixSubitemCompound>( 48, CommonConverter::NoneConverterBuffer::get(),
             sub_sub_item_101_pos ) ) );
    aircraft_derived_data.push_back(
       subitem_t( Cat204ItemNames::I204_101_GAL,
-         std::make_shared<AsterixSubitemSigned>( 16, DoubleConverter::geoAltitudeFt ) ) );
+         std::make_shared<AsterixSubitemSigned>( 16, DoubleConverter::GeoAltitudeFt::get() ) ) );
    aircraft_derived_data.push_back(
       subitem_t( Cat204ItemNames::I204_101_MB,
-         std::make_shared<AsterixSubItemRep>( 64, CommonConverter::NoneConverterBuffer,
+         std::make_shared<AsterixSubItemRep>( 64, CommonConverter::NoneConverterBuffer::get(),
             sub_sub_item_101_mb ) ) );
 
    // Add all sub sub items to the master sub item
    subitem_map_t secondary_identity_information;
    secondary_identity_information.push_back(
       subitem_t( Cat204ItemNames::I204_130_CONF,
-         std::make_shared<AsterixSubitemUnsigned>( 8, CommonConverter::NoneConverter ) ) );
+         std::make_shared<AsterixSubitemUnsigned>( 8, CommonConverter::NoneConverter::get() ) ) );
    secondary_identity_information.push_back(
       subitem_t( Cat204ItemNames::I204_130_ACT,
-         std::make_shared<AsterixSubitemUnsigned>( 8, CommonConverter::NoneConverter ) ) );
+         std::make_shared<AsterixSubitemUnsigned>( 8, CommonConverter::NoneConverter::get() ) ) );
    secondary_identity_information.push_back(
       subitem_t( Cat204ItemNames::I204_130_TYP,
-         std::make_shared<AsterixSubitemUnsigned>( 8, CommonConverter::NoneConverter ) ) );
+         std::make_shared<AsterixSubitemUnsigned>( 8, CommonConverter::NoneConverter::get() ) ) );
    secondary_identity_information.push_back(
       subitem_t( Cat204ItemNames::I204_130_STYP,
-         std::make_shared<AsterixSubitemUnsigned>( 16, CommonConverter::NoneConverter ) ) );
+         std::make_shared<AsterixSubitemUnsigned>( 16, CommonConverter::NoneConverter::get() ) ) );
    secondary_identity_information.push_back(
       subitem_t( Cat204ItemNames::I204_130_NAT,
-         std::make_shared<AsterixSubitemUnsigned>( 8, CommonConverter::NoneConverter ) ) );
+         std::make_shared<AsterixSubitemUnsigned>( 8, CommonConverter::NoneConverter::get() ) ) );
 
    subitem_map_t indicators_block;
    indicators_block.push_back(
       subitem_t( Cat204ItemNames::I204_170_SPARE1,
-         std::make_shared<AsterixSubitemUnsigned>( 4, CommonConverter::NoneConverter ) ) );
+         std::make_shared<AsterixSubitemUnsigned>( 4, CommonConverter::NoneConverter::get() ) ) );
    indicators_block.push_back(
       subitem_t( Cat204ItemNames::I204_170_IFFC,
-         std::make_shared<AsterixSubitemUnsigned>( 1, CommonConverter::NoneConverter ) ) );
+         std::make_shared<AsterixSubitemUnsigned>( 1, CommonConverter::NoneConverter::get() ) ) );
    indicators_block.push_back(
       subitem_t( Cat204ItemNames::I204_170_IFF3,
-         std::make_shared<AsterixSubitemUnsigned>( 1, CommonConverter::NoneConverter ) ) );
+         std::make_shared<AsterixSubitemUnsigned>( 1, CommonConverter::NoneConverter::get() ) ) );
    indicators_block.push_back(
       subitem_t( Cat204ItemNames::I204_170_IFF2,
-         std::make_shared<AsterixSubitemUnsigned>( 1, CommonConverter::NoneConverter ) ) );
+         std::make_shared<AsterixSubitemUnsigned>( 1, CommonConverter::NoneConverter::get() ) ) );
    indicators_block.push_back(
       subitem_t( Cat204ItemNames::I204_170_IFF1,
-         std::make_shared<AsterixSubitemUnsigned>( 1, CommonConverter::NoneConverter ) ) );
+         std::make_shared<AsterixSubitemUnsigned>( 1, CommonConverter::NoneConverter::get() ) ) );
    indicators_block.push_back(
       subitem_t( Cat204ItemNames::I204_170_FIX,
-         std::make_shared<AsterixSubitemUnsigned>( 2, CommonConverter::NoneConverter ) ) );
+         std::make_shared<AsterixSubitemUnsigned>( 2, CommonConverter::NoneConverter::get() ) ) );
    indicators_block.push_back(
       subitem_t( Cat204ItemNames::I204_170_C2,
-         std::make_shared<AsterixSubitemUnsigned>( 2, CommonConverter::NoneConverter ) ) );
+         std::make_shared<AsterixSubitemUnsigned>( 2, CommonConverter::NoneConverter::get() ) ) );
    indicators_block.push_back(
       subitem_t( Cat204ItemNames::I204_170_JAM,
-         std::make_shared<AsterixSubitemUnsigned>( 2, CommonConverter::NoneConverter ) ) );
+         std::make_shared<AsterixSubitemUnsigned>( 2, CommonConverter::NoneConverter::get() ) ) );
    indicators_block.push_back(
       subitem_t( Cat204ItemNames::I204_170_EMER,
-         std::make_shared<AsterixSubitemUnsigned>( 2, CommonConverter::NoneConverter ) ) );
+         std::make_shared<AsterixSubitemUnsigned>( 2, CommonConverter::NoneConverter::get() ) ) );
    indicators_block.push_back(
       subitem_t( Cat204ItemNames::I204_170_ENG,
-         std::make_shared<AsterixSubitemUnsigned>( 2, CommonConverter::NoneConverter ) ) );
+         std::make_shared<AsterixSubitemUnsigned>( 2, CommonConverter::NoneConverter::get() ) ) );
    indicators_block.push_back(
       subitem_t( Cat204ItemNames::I204_170_EXER,
-         std::make_shared<AsterixSubitemUnsigned>( 2, CommonConverter::NoneConverter ) ) );
+         std::make_shared<AsterixSubitemUnsigned>( 2, CommonConverter::NoneConverter::get() ) ) );
    indicators_block.push_back(
       subitem_t( Cat204ItemNames::I204_170_INT,
-         std::make_shared<AsterixSubitemUnsigned>( 2, CommonConverter::NoneConverter ) ) );
+         std::make_shared<AsterixSubitemUnsigned>( 2, CommonConverter::NoneConverter::get() ) ) );
    indicators_block.push_back(
       subitem_t( Cat204ItemNames::I204_170_SPI,
-         std::make_shared<AsterixSubitemUnsigned>( 2, CommonConverter::NoneConverter ) ) );
+         std::make_shared<AsterixSubitemUnsigned>( 2, CommonConverter::NoneConverter::get() ) ) );
    indicators_block.push_back(
       subitem_t( Cat204ItemNames::I204_170_SIF,
-         std::make_shared<AsterixSubitemUnsigned>( 2, CommonConverter::NoneConverter ) ) );
+         std::make_shared<AsterixSubitemUnsigned>( 2, CommonConverter::NoneConverter::get() ) ) );
    indicators_block.push_back(
       subitem_t( Cat204ItemNames::I204_170_TN,
-         std::make_shared<AsterixSubitemUnsigned>( 2, CommonConverter::NoneConverter ) ) );
+         std::make_shared<AsterixSubitemUnsigned>( 2, CommonConverter::NoneConverter::get() ) ) );
    indicators_block.push_back(
       subitem_t( Cat204ItemNames::I204_170_SIM,
-         std::make_shared<AsterixSubitemUnsigned>( 2, CommonConverter::NoneConverter ) ) );
+         std::make_shared<AsterixSubitemUnsigned>( 2, CommonConverter::NoneConverter::get() ) ) );
    indicators_block.push_back(
       subitem_t( Cat204ItemNames::I204_170_FTEL,
-         std::make_shared<AsterixSubitemUnsigned>( 2, CommonConverter::NoneConverter ) ) );
+         std::make_shared<AsterixSubitemUnsigned>( 2, CommonConverter::NoneConverter::get() ) ) );
 
    subitem_map_t mission_weapon_engagement;
    mission_weapon_engagement.push_back(
       subitem_t( Cat204ItemNames::I204_620_SPARE1,
-         std::make_shared<AsterixSubitemUnsigned>( 1, CommonConverter::NoneConverter ) ) );
+         std::make_shared<AsterixSubitemUnsigned>( 1, CommonConverter::NoneConverter::get() ) ) );
    mission_weapon_engagement.push_back(
       subitem_t( Cat204ItemNames::I204_620_ENV,
-         std::make_shared<AsterixSubitemUnsigned>( 3, CommonConverter::NoneConverter ) ) );
+         std::make_shared<AsterixSubitemUnsigned>( 3, CommonConverter::NoneConverter::get() ) ) );
    mission_weapon_engagement.push_back(
       subitem_t( Cat204ItemNames::I204_620_ROLE,
-         std::make_shared<AsterixSubitemUnsigned>( 1, CommonConverter::NoneConverter ) ) );
+         std::make_shared<AsterixSubitemUnsigned>( 1, CommonConverter::NoneConverter::get() ) ) );
    mission_weapon_engagement.push_back(
       subitem_t( Cat204ItemNames::I204_620_TYPE,
-         std::make_shared<AsterixSubitemUnsigned>( 3, CommonConverter::NoneConverter ) ) );
+         std::make_shared<AsterixSubitemUnsigned>( 3, CommonConverter::NoneConverter::get() ) ) );
    mission_weapon_engagement.push_back(
       subitem_t( Cat204ItemNames::I204_620_CNTN,
-         std::make_shared<AsterixSubitemBytes>( 72, StringConverter::toASCII ) ) );
+         std::make_shared<AsterixSubitemBytes>( 72, StringConverter::ToASCII::get() ) ) );
    mission_weapon_engagement.push_back(
       subitem_t( Cat204ItemNames::I204_620_STS,
-         std::make_shared<AsterixSubitemUnsigned>( 8, CommonConverter::NoneConverter ) ) );
+         std::make_shared<AsterixSubitemUnsigned>( 8, CommonConverter::NoneConverter::get() ) ) );
    mission_weapon_engagement.push_back(
       subitem_t( Cat204ItemNames::I204_620_WS,
-         std::make_shared<AsterixSubitemUnsigned>( 8, CommonConverter::NoneConverter ) ) );
+         std::make_shared<AsterixSubitemUnsigned>( 8, CommonConverter::NoneConverter::get() ) ) );
 
    subitem_map_t target_identification;
    target_identification.push_back(
       subitem_t( Cat204ItemNames::I204_245_STI,
-         std::make_shared<AsterixSubitemUnsigned>( 2, CommonConverter::NoneConverter ) ) );
+         std::make_shared<AsterixSubitemUnsigned>( 2, CommonConverter::NoneConverter::get() ) ) );
    target_identification.push_back(
       subitem_t( Cat204ItemNames::I204_245_SPARE1,
-         std::make_shared<AsterixSubitemUnsigned>( 6, CommonConverter::NoneConverter ) ) );
+         std::make_shared<AsterixSubitemUnsigned>( 6, CommonConverter::NoneConverter::get() ) ) );
    target_identification.push_back(
       subitem_t( Cat204ItemNames::I204_245_ID,
-         std::make_shared<AsterixSubitemUnsigned>( 48, StringConverter::to6BitChar ) ) );
+         std::make_shared<AsterixSubitemUnsigned>( 48, StringConverter::To6BitChar::get() ) ) );
 
    subitem_map_t sensor_list;
    sensor_list.push_back(
       subitem_t( Cat204ItemNames::I204_630_SAC,
-         std::make_shared<AsterixSubitemUnsigned>( 8, CommonConverter::NoneConverter ) ) );
+         std::make_shared<AsterixSubitemUnsigned>( 8, CommonConverter::NoneConverter::get() ) ) );
    sensor_list.push_back(
       subitem_t( Cat204ItemNames::I204_630_SIC,
-         std::make_shared<AsterixSubitemUnsigned>( 8, CommonConverter::NoneConverter ) ) );
+         std::make_shared<AsterixSubitemUnsigned>( 8, CommonConverter::NoneConverter::get() ) ) );
 
    subitem_map_t resource_available;
    resource_available.push_back(
       subitem_t( Cat204ItemNames::I204_690_AV,
-         std::make_shared<AsterixSubitemUnsigned>( 8, CommonConverter::NoneConverter ) ) );
+         std::make_shared<AsterixSubitemUnsigned>( 8, CommonConverter::NoneConverter::get() ) ) );
 
    subitem_map_t track_size;
    track_size.push_back(
       subitem_t( Cat204ItemNames::I204_085_FORMAT,
-         std::make_shared<AsterixSubitemUnsigned>( 8, CommonConverter::NoneConverter ) ) );
+         std::make_shared<AsterixSubitemUnsigned>( 8, CommonConverter::NoneConverter::get() ) ) );
    track_size.push_back(
       subitem_t( Cat204ItemNames::I204_085_MAX,
-         std::make_shared<AsterixSubitemUnsigned>( 8, CommonConverter::NoneConverter ) ) );
+         std::make_shared<AsterixSubitemUnsigned>( 8, CommonConverter::NoneConverter::get() ) ) );
    track_size.push_back(
       subitem_t( Cat204ItemNames::I204_085_MIN,
-         std::make_shared<AsterixSubitemUnsigned>( 8, CommonConverter::NoneConverter ) ) );
+         std::make_shared<AsterixSubitemUnsigned>( 8, CommonConverter::NoneConverter::get() ) ) );
 
    subitem_map_t strobe_data;
    strobe_data.push_back(
       subitem_t( Cat204ItemNames::I204_400_SPARE1,
-         std::make_shared<AsterixSubitemUnsigned>( 7, CommonConverter::NoneConverter ) ) );
+         std::make_shared<AsterixSubitemUnsigned>( 7, CommonConverter::NoneConverter::get() ) ) );
    strobe_data.push_back(
       subitem_t( Cat204ItemNames::I204_400_SIM,
-         std::make_shared<AsterixSubitemUnsigned>( 1, CommonConverter::NoneConverter ) ) );
+         std::make_shared<AsterixSubitemUnsigned>( 1, CommonConverter::NoneConverter::get() ) ) );
    strobe_data.push_back(
       subitem_t( Cat204ItemNames::I204_400_DESC,
-         std::make_shared<AsterixSubitemUnsigned>( 3, CommonConverter::NoneConverter ) ) );
+         std::make_shared<AsterixSubitemUnsigned>( 3, CommonConverter::NoneConverter::get() ) ) );
    strobe_data.push_back(
       subitem_t( Cat204ItemNames::I204_400_ORI,
-         std::make_shared<AsterixSubitemUnsigned>( 1, CommonConverter::NoneConverter ) ) );
+         std::make_shared<AsterixSubitemUnsigned>( 1, CommonConverter::NoneConverter::get() ) ) );
    strobe_data.push_back(
       subitem_t( Cat204ItemNames::I204_400_ACCUR,
-         std::make_shared<AsterixSubitemUnsigned>( 4, CommonConverter::NoneConverter ) ) );
+         std::make_shared<AsterixSubitemUnsigned>( 4, CommonConverter::NoneConverter::get() ) ) );
    strobe_data.push_back(
       subitem_t( Cat204ItemNames::I204_400_ERANGE,
-         std::make_shared<AsterixSubitemUnsigned>( 16, UnsignedDoubleConverter::eRange ) ) );
+         std::make_shared<AsterixSubitemUnsigned>( 16, UnsignedDoubleConverter::ERange::get() ) ) );
    strobe_data.push_back(
       subitem_t( Cat204ItemNames::I204_400_AZIM,
-         std::make_shared<AsterixSubitemUnsigned>( 16, UnsignedDoubleConverter::direction16Bit ) ) );
+         std::make_shared<AsterixSubitemUnsigned>( 16, UnsignedDoubleConverter::Direction16Bit::get() ) ) );
    strobe_data.push_back(
       subitem_t( Cat204ItemNames::I204_400_AZIMW,
-         std::make_shared<AsterixSubitemUnsigned>( 16, UnsignedDoubleConverter::direction16Bit ) ) );
+         std::make_shared<AsterixSubitemUnsigned>( 16, UnsignedDoubleConverter::Direction16Bit::get() ) ) );
    strobe_data.push_back(
       subitem_t( Cat204ItemNames::I204_400_AZRATE,
-         std::make_shared<AsterixSubitemSigned>( 16, DoubleConverter::direction16Bit ) ) );
+         std::make_shared<AsterixSubitemSigned>( 16, DoubleConverter::Direction16Bit::get() ) ) );
    strobe_data.push_back(
       subitem_t( Cat204ItemNames::I204_400_ELEV,
-         std::make_shared<AsterixSubitemSigned>( 16, DoubleConverter::elevation16Bit ) ) );
+         std::make_shared<AsterixSubitemSigned>( 16, DoubleConverter::Elevation16Bit::get() ) ) );
 
    subitem_map_t acknowledgement_desiggnator;
    acknowledgement_desiggnator.push_back(
       subitem_t( Cat204ItemNames::I204_710_AD,
-         std::make_shared<AsterixSubitemUnsigned>( 8, CommonConverter::NoneConverter ) ) );
+         std::make_shared<AsterixSubitemUnsigned>( 8, CommonConverter::NoneConverter::get() ) ) );
 
    subitem_map_t track_filter_designator;
    track_filter_designator.push_back(
       subitem_t( Cat204ItemNames::I204_720_SS,
-         std::make_shared<AsterixSubitemUnsigned>( 1, CommonConverter::NoneConverter ) ) );
+         std::make_shared<AsterixSubitemUnsigned>( 1, CommonConverter::NoneConverter::get() ) ) );
    track_filter_designator.push_back(
       subitem_t( Cat204ItemNames::I204_720_RS,
-         std::make_shared<AsterixSubitemUnsigned>( 1, CommonConverter::NoneConverter ) ) );
+         std::make_shared<AsterixSubitemUnsigned>( 1, CommonConverter::NoneConverter::get() ) ) );
    track_filter_designator.push_back(
       subitem_t( Cat204ItemNames::I204_720_NTN,
-         std::make_shared<AsterixSubitemUnsigned>( 1, CommonConverter::NoneConverter ) ) );
+         std::make_shared<AsterixSubitemUnsigned>( 1, CommonConverter::NoneConverter::get() ) ) );
    track_filter_designator.push_back(
       subitem_t( Cat204ItemNames::I204_720_ID,
-         std::make_shared<AsterixSubitemUnsigned>( 1, CommonConverter::NoneConverter ) ) );
+         std::make_shared<AsterixSubitemUnsigned>( 1, CommonConverter::NoneConverter::get() ) ) );
    track_filter_designator.push_back(
       subitem_t( Cat204ItemNames::I204_720_RTT,
-         std::make_shared<AsterixSubitemUnsigned>( 1, CommonConverter::NoneConverter ) ) );
+         std::make_shared<AsterixSubitemUnsigned>( 1, CommonConverter::NoneConverter::get() ) ) );
    track_filter_designator.push_back(
       subitem_t( Cat204ItemNames::I204_720_SPARE,
-         std::make_shared<AsterixSubitemUnsigned>( 3, CommonConverter::NoneConverter ) ) );
+         std::make_shared<AsterixSubitemUnsigned>( 3, CommonConverter::NoneConverter::get() ) ) );
 
    subitem_map_t ntn_specifier;
    ntn_specifier.push_back(
       subitem_t( Cat204ItemNames::I204_730_SPARE1,
-         std::make_shared<AsterixSubitemUnsigned>( 3, CommonConverter::NoneConverter ) ) );
+         std::make_shared<AsterixSubitemUnsigned>( 3, CommonConverter::NoneConverter::get() ) ) );
    ntn_specifier.push_back(
       subitem_t( Cat204ItemNames::I204_730_ID,
-         std::make_shared<AsterixSubitemUnsigned>( 19, StringConverter::BitsToNATOtn19Bit ) ) );
+         std::make_shared<AsterixSubitemUnsigned>( 19, StringConverter::BitsToNATOtn19Bit::get() ) ) );
    ntn_specifier.push_back(
       subitem_t( Cat204ItemNames::I204_730_SPARE2,
-         std::make_shared<AsterixSubitemUnsigned>( 1, CommonConverter::NoneConverter ) ) );
+         std::make_shared<AsterixSubitemUnsigned>( 1, CommonConverter::NoneConverter::get() ) ) );
 
    subitem_map_t relayed_data_source_identifier;
    relayed_data_source_identifier.push_back(
       subitem_t( Cat204ItemNames::I204_740_SAC,
-         std::make_shared<AsterixSubitemUnsigned>( 8, CommonConverter::NoneConverter ) ) );
+         std::make_shared<AsterixSubitemUnsigned>( 8, CommonConverter::NoneConverter::get() ) ) );
    relayed_data_source_identifier.push_back(
       subitem_t( Cat204ItemNames::I204_740_SIC,
-         std::make_shared<AsterixSubitemUnsigned>( 8, CommonConverter::NoneConverter ) ) );
+         std::make_shared<AsterixSubitemUnsigned>( 8, CommonConverter::NoneConverter::get() ) ) );
 
    // Add all items
    subitems.insert( subitem_map_item_t( 1, sensor_identification ) );

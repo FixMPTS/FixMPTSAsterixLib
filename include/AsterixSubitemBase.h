@@ -29,11 +29,14 @@
 #ifndef ASTERIXSUBITEMBASE_H_
 #define ASTERIXSUBITEMBASE_H_
 
+#include "ItemConverterBase.h"
+
 //general includes
 #include <string>
 #include <vector>
-#include <functional>
+//#include <functional>
 #include <deque>
+#include <memory>
 
 class AsterixSubitemBase {
 protected:
@@ -48,11 +51,11 @@ protected:
    int length;
 
    //Variables storing the converter functions to get the encoded value from the raw value
-   typedef std::function<std::string( char*, unsigned int )> simpleConverter_T;
-   simpleConverter_T simple_converter;
+   //typedef std::function<std::string( char*, unsigned int )> simpleConverter_T;
+   std::shared_ptr<ItemConverterBase> converter;
 
    // More complex converter function
-   std::function<std::string( char*, unsigned int, double& dest_buffer )> double_conveter;
+   //std::function<std::string( char*, unsigned int, double& dest_buffer )> double_conveter;
 
 public:
    AsterixSubitemBase() = delete;
@@ -66,7 +69,7 @@ public:
     * @param converter_function The function to convert the raw value to the encoded one
     * @throw None
     */
-   AsterixSubitemBase( int length, simpleConverter_T converterFunction );
+   AsterixSubitemBase(int length, std::shared_ptr<ItemConverterBase> converter);
 
    /**
     * Initialise a new sub item object with specified length in bits and corresponding converter
@@ -77,8 +80,8 @@ public:
     * @param converter_function The function to convert the raw value to the encoded one
     * @throw None
     */
-   AsterixSubitemBase( int length,
-      std::function<std::string( char*, unsigned int, double& dest_buffer )> converterFunction );
+   //AsterixSubitemBase( int length,
+   //   std::function<std::string( char*, unsigned int, double& dest_buffer )> converterFunction );
 
    virtual ~AsterixSubitemBase();
 

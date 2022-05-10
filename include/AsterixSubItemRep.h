@@ -51,15 +51,8 @@ public:
     * @param length in bits specifies the length of the repeated subfield. The first byte which gives the
     * number of repetitions shall not be included in this number
     */
-   AsterixSubItemRep( int length,
-      std::function<std::string( char*, unsigned int )> converterFunction );
-
-   AsterixSubItemRep( int length,
-      std::function<std::string( char*, unsigned int, double& dest_buffer )> converterFunction );
-
-   AsterixSubItemRep( int length,
-      std::function<std::string( char*, unsigned int, double& dest_buffer )> converterFunction,
-      subitem_map_t subitem_list );
+   AsterixSubItemRep(int length, std::shared_ptr<ItemConverterBase> converter);
+   AsterixSubItemRep(int length, std::shared_ptr<ItemConverterBase> converter, subitem_map_t subitem_list);
 
    virtual ~AsterixSubItemRep();
 

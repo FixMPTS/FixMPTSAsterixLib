@@ -29,6 +29,7 @@
 #define ASTERIXCATEGORY002_H_
 
 #include "AsterixCategory.h"
+#include "SensorServiceRecordType.h"
 
 class AsterixCategory002: public AsterixCategory {
 private:
@@ -62,6 +63,35 @@ public:
     * @throws Not yet decided
     */
    void fillRecord(std::shared_ptr<ReportRecordType> record) override;
+
+   /**
+    * Encode the CAT 002 message based on the values provided
+    *
+    * @param record the record to take the values from. In case values are set via the dedicated setter those values
+    *    will get priority over those set in the record.
+    * @param items_to_be_served list of booleans indicating which values shall be served
+    * @return the binary representation of the message
+    */
+   std::vector<unsigned char> getEncodedMessage(SensorServiceRecordType record,
+      std::map<std::string, bool> items_to_be_served);
+
+   /**
+    * Setter for the various items. LSB calculation will be handled by the function
+    */
+   void setDataSource(unsigned short sac, unsigned short sic);
+   void setMessageType(SensorServiceRecordType::MESSAGETYPE type);
+   void setSectorNumber(unsigned short number);
+   void setTimeOfDay(double time);
+   void setAntennaRotationPeriod(double period);
+   void setDynamicWindow(double rho_start, double rho_end, double theta_start, double theta_end);
+   void setCollimationError(double range, double azimuth);
+   void setWarningError(unsigned int value);
+
+   /**
+    * TODO
+    */
+   void resetPlotCount();
+   void addPlotCount(bool antenna1, unsigned short identifier, unsigned short counter);
 };
 
 #endif /* ASTERIXCATEGORY002_H_ */

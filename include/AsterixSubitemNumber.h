@@ -62,11 +62,7 @@ protected:
    std::string getConvertedValue( char* value, unsigned int value_length );
 
 public:
-   AsterixSubitemNumber( int length,
-      std::function<std::string( char*, unsigned int )> converterFunction );
-   AsterixSubitemNumber( int length,
-      std::function<std::string( char*, unsigned int, double& dest_buffer )> converterFunction );
-
+   AsterixSubitemNumber(int length, std::shared_ptr<ItemConverterBase> converter);
    virtual ~AsterixSubitemNumber();
 
    virtual void decode( std::deque<char>& input_buffer, unsigned bit_position = 0 ) override = 0;

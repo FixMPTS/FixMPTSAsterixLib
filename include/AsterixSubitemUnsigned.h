@@ -37,25 +37,11 @@ public:
     *
     * @param length The length of the sub item in bits
     * @converter_function The converter function returning the converted value as string taking as
-    * input an unsigned long integer.
-    * @return None
-    * @throw None
-    */
-   AsterixSubitemUnsigned( int length,
-      std::function<std::string( char*, unsigned int )> converterFunction );
-
-   /**
-    * Initialise a new Asterix sub item object of length bits where the raw value is converted to the
-    * internal value by calling the converter function.
-    *
-    * @param length The length of the sub item in bits
-    * @converter_function The converter function returning the converted value as string taking as
     * input an unsigned long integer and an output buffer of doubles.
     * @return None
     * @throw None
     */
-   AsterixSubitemUnsigned( int length,
-      std::function<std::string( char*, unsigned int, double& dest_buffer )> converterFunction );
+   AsterixSubitemUnsigned(int length, std::shared_ptr<ItemConverterBase> converter);
 
    virtual ~AsterixSubitemUnsigned();
 

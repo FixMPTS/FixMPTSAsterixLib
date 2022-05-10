@@ -31,13 +31,17 @@
 #include "AsterixItemVariableLength.h"
 #include "AsterixItemRepetetive.h"
 #include "AsterixSubitemUnsigned.h"
+#include "AsterixSubitemBitNamed.h"
 #include "Cat002ItemNames.h"
+#include "AsterixEncodingHelper.h"
 
 // Converter
 #include "CommonConverter.h"
 #include "DoubleConverter.h"
 #include "UnsignedDoubleConverter.h"
 
+#include <cstdint>
+#include <cmath>
 AsterixCategory002::~AsterixCategory002() {
 }
 
@@ -80,65 +84,79 @@ void AsterixCategory002::setSubitems() {
    subitem_map_t sensor_identification;
    sensor_identification.push_back(
       subitem_t( Cat002ItemNames::I002_010_SAC,
-         std::make_shared<AsterixSubitemUnsigned>( 8, CommonConverter::NoneConverter ) ) );
+         std::make_shared<AsterixSubitemUnsigned>( 8, CommonConverter::NoneConverter::get() ) ) );
    sensor_identification.push_back(
       subitem_t( Cat002ItemNames::I002_010_SIC,
-         std::make_shared<AsterixSubitemUnsigned>( 8, CommonConverter::NoneConverter ) ) );
+         std::make_shared<AsterixSubitemUnsigned>( 8, CommonConverter::NoneConverter::get() ) ) );
 
    // Message Type
    subitem_map_t report_typr;
    report_typr.push_back(
       subitem_t( Cat002ItemNames::I002_000_TYP,
-         std::make_shared<AsterixSubitemUnsigned>( 8, CommonConverter::NoneConverter ) ) );
+         std::make_shared<AsterixSubitemUnsigned>( 8, CommonConverter::NoneConverter::get() ) ) );
 
    // Sector Number
    subitem_map_t sector_number;
    sector_number.push_back(
       subitem_t( Cat002ItemNames::I002_020_SCT,
-         std::make_shared<AsterixSubitemUnsigned>( 8, UnsignedDoubleConverter::circleSegment8Bit ) ) );
+         std::make_shared<AsterixSubitemUnsigned>( 8, UnsignedDoubleConverter::CircleSegment8Bit::get() ) ) );
 
    // Time of Day
    subitem_map_t time_of_day;
    time_of_day.push_back(
       subitem_t( Cat002ItemNames::I002_030_TOD,
-         std::make_shared<AsterixSubitemUnsigned>( 24, UnsignedDoubleConverter::fraction128th ) ) );
+         std::make_shared<AsterixSubitemUnsigned>( 24, UnsignedDoubleConverter::Fraction128th::get() ) ) );
 
    // Antenna Rotation Period
    subitem_map_t antenna_rotation;
    antenna_rotation.push_back(
       subitem_t( Cat002ItemNames::I002_041_ROT,
-         std::make_shared<AsterixSubitemUnsigned>( 16, UnsignedDoubleConverter::fraction128th ) ) );
+         std::make_shared<AsterixSubitemUnsigned>( 16, UnsignedDoubleConverter::Fraction128th::get() ) ) );
 
    // Station Configuration
    subitem_map_t station_configuration;
    station_configuration.push_back(
       subitem_t( Cat002ItemNames::I002_050_CNF,
-         std::make_shared<AsterixSubitemBase>( 8, CommonConverter::NoneConverter ) ) );
+         std::make_shared<AsterixSubitemBase>( 8, CommonConverter::NoneConverter::get() ) ) );
+
+   // Station Configuration
+   subitem_map_t plot_count;
+   plot_count.push_back(
+      subitem_t( Cat002ItemNames::I002_070_A,
+         std::make_shared<AsterixSubitemBitNamed>( 1, CommonConverter::NoneConverter::get(),
+            AsterixSubitemBitNamed::value_names_t( { { 0, "Antenna 1" }, { 1,
+               "Antenna 2" } } ) ) ) );
+   plot_count.push_back(
+      subitem_t( Cat002ItemNames::I002_070_ID,
+         std::make_shared<AsterixSubitemUnsigned>( 5, CommonConverter::NoneConverter::get() ) ) );
+   plot_count.push_back(
+      subitem_t( Cat002ItemNames::I002_070_CNT,
+         std::make_shared<AsterixSubitemUnsigned>( 10, CommonConverter::NoneConverter::get() ) ) );
 
    // Collimation Error
    subitem_map_t error;
    // Only 8 bit but spec calculates with 16 bit ???????
    error.push_back(
       subitem_t( Cat002ItemNames::I002_090_AZM,
-         std::make_shared<AsterixSubitemUnsigned>( 8, UnsignedDoubleConverter::circleSegment16Bit ) ) );
+         std::make_shared<AsterixSubitemUnsigned>( 8, UnsignedDoubleConverter::CircleSegment16Bit::get() ) ) );
    error.push_back(
       subitem_t( Cat002ItemNames::I002_090_RNG,
-         std::make_shared<AsterixSubitemUnsigned>( 8, DoubleConverter::fraction128th ) ) );
+         std::make_shared<AsterixSubitemUnsigned>( 8, DoubleConverter::Fraction128th::get() ) ) );
 
    // Dynamic Window
    subitem_map_t window;
    window.push_back(
-      subitem_t( Cat002ItemNames::I002_100_THE,
-         std::make_shared<AsterixSubitemUnsigned>( 16, UnsignedDoubleConverter::circleSegment16Bit ) ) );
-   window.push_back(
-      subitem_t( Cat002ItemNames::I002_100_THS,
-         std::make_shared<AsterixSubitemUnsigned>( 16, UnsignedDoubleConverter::circleSegment16Bit ) ) );
+      subitem_t( Cat002ItemNames::I002_100_RHS,
+         std::make_shared<AsterixSubitemUnsigned>( 16, DoubleConverter::Fraction128th::get() ) ) );
    window.push_back(
       subitem_t( Cat002ItemNames::I002_100_RHE,
-         std::make_shared<AsterixSubitemUnsigned>( 16, DoubleConverter::fraction128th ) ) );
+         std::make_shared<AsterixSubitemUnsigned>( 16, DoubleConverter::Fraction128th::get() ) ) );
    window.push_back(
-      subitem_t( Cat002ItemNames::I002_100_RHS,
-         std::make_shared<AsterixSubitemUnsigned>( 16, DoubleConverter::fraction128th ) ) );
+      subitem_t( Cat002ItemNames::I002_100_THS,
+         std::make_shared<AsterixSubitemUnsigned>( 16, UnsignedDoubleConverter::CircleSegment16Bit::get() ) ) );
+   window.push_back(
+      subitem_t( Cat002ItemNames::I002_100_THE,
+         std::make_shared<AsterixSubitemUnsigned>( 16, UnsignedDoubleConverter::CircleSegment16Bit::get() ) ) );
 
    // Add all items
    subitems.insert( subitem_map_item_t( 1, sensor_identification ) );
@@ -147,8 +165,9 @@ void AsterixCategory002::setSubitems() {
    subitems.insert( subitem_map_item_t( 4, time_of_day ) );
    subitems.insert( subitem_map_item_t( 5, antenna_rotation ) );
    subitems.insert( subitem_map_item_t( 6, station_configuration ) );
+   subitems.insert( subitem_map_item_t( 8, plot_count ) );
+   subitems.insert( subitem_map_item_t( 9, window ) );
    subitems.insert( subitem_map_item_t( 10, error ) );
-   subitems.insert( subitem_map_item_t( 11, window ) );
 }
 
 void AsterixCategory002::fillRecord(std::shared_ptr<ReportRecordType> record) {

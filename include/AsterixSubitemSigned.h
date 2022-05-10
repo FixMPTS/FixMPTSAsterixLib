@@ -32,11 +32,7 @@
 
 class AsterixSubitemSigned: public AsterixSubitemNumber {
 public:
-   AsterixSubitemSigned( int length,
-      std::function<std::string( char*, unsigned int )> converterFunction );
-   AsterixSubitemSigned( int length,
-      std::function<std::string( char*, unsigned int, double& dest_buffer )> converterFunction );
-
+   AsterixSubitemSigned(int length, std::shared_ptr<ItemConverterBase> converter);
    virtual ~AsterixSubitemSigned();
 
    virtual void decode( std::deque<char>& input_buffer, unsigned bit_position = 0 ) override;

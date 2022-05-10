@@ -93,180 +93,180 @@ void AsterixCategory244::setSubitems() {
    subitem_map_t trajectory_identifioer;
    trajectory_identifioer.push_back(
       subitem_t( Cat244ItemNames::I244_010_TID,
-         std::make_shared<AsterixSubitemUnsigned>( 16, CommonConverter::NoneConverter ) ) );
+         std::make_shared<AsterixSubitemUnsigned>( 16, CommonConverter::NoneConverter::get() ) ) );
 
    subitem_map_t time_of_day;
    time_of_day.push_back(
       subitem_t( Cat244ItemNames::I244_020_TOD,
-         std::make_shared<AsterixSubitemUnsigned>( 24, UnsignedDoubleConverter::fraction128th ) ) );
+         std::make_shared<AsterixSubitemUnsigned>( 24, UnsignedDoubleConverter::Fraction128th::get() ) ) );
 
    subitem_map_t position_wgs84;
    position_wgs84.push_back(
       subitem_t( Cat244ItemNames::I244_030_LAT,
-         std::make_shared<AsterixSubitemSigned>( 32, DoubleConverter::WGS8490degResolution31Bit ) ) );
+         std::make_shared<AsterixSubitemSigned>( 32, DoubleConverter::WGS8490degResolution31Bit::get() ) ) );
    position_wgs84.push_back(
       subitem_t( Cat244ItemNames::I244_030_LNG,
-         std::make_shared<AsterixSubitemSigned>( 32, DoubleConverter::WGS8490degResolution31Bit ) ) );
+         std::make_shared<AsterixSubitemSigned>( 32, DoubleConverter::WGS8490degResolution31Bit::get() ) ) );
 
    subitem_map_t geometric_altitude;
    geometric_altitude.push_back(
       subitem_t( Cat244ItemNames::I244_040_FL,
-         std::make_shared<AsterixSubitemUnsigned>( 16, DoubleConverter::geoAltitudeFt ) ) );
+         std::make_shared<AsterixSubitemUnsigned>( 16, DoubleConverter::GeoAltitudeFt::get() ) ) );
 
    subitem_map_t flight_level;
    flight_level.push_back(
       subitem_t( Cat244ItemNames::I244_045_ALT,
-         std::make_shared<AsterixSubitemUnsigned>( 16, DoubleConverter::fraction4th ) ) );
+         std::make_shared<AsterixSubitemUnsigned>( 16, DoubleConverter::Fraction4th::get() ) ) );
 
    subitem_map_t ground_Speed;
    ground_Speed.push_back(
       subitem_t( Cat244ItemNames::I244_050_GSP,
-         std::make_shared<AsterixSubitemUnsigned>( 16, UnsignedDoubleConverter::speedNMToKt ) ) );
+         std::make_shared<AsterixSubitemUnsigned>( 16, UnsignedDoubleConverter::SpeedNMToKt::get() ) ) );
 
    subitem_map_t air_speed;
    air_speed.push_back(
       subitem_t( Cat244ItemNames::I244_055_SPEED,
-         std::make_shared<AsterixSubitemUnsigned>( 16, UnsignedDoubleConverter::airspeed14Bit ) ) );
+         std::make_shared<AsterixSubitemUnsigned>( 16, UnsignedDoubleConverter::Airspeed14Bit::get() ) ) );
 
    subitem_map_t course;
    course.push_back(
       subitem_t( Cat244ItemNames::I244_060_TA,
-         std::make_shared<AsterixSubitemUnsigned>( 16, UnsignedDoubleConverter::direction16Bit ) ) );
+         std::make_shared<AsterixSubitemUnsigned>( 16, UnsignedDoubleConverter::Direction16Bit::get() ) ) );
 
    subitem_map_t magnetic_heading;
    magnetic_heading.push_back(
       subitem_t( Cat244ItemNames::I244_065_HDG,
-         std::make_shared<AsterixSubitemUnsigned>( 16, UnsignedDoubleConverter::direction16Bit ) ) );
+         std::make_shared<AsterixSubitemUnsigned>( 16, UnsignedDoubleConverter::Direction16Bit::get() ) ) );
 
    subitem_map_t vertical_rate;
    vertical_rate.push_back(
       subitem_t( Cat244ItemNames::I244_070_VR,
-         std::make_shared<AsterixSubitemSigned>( 16, DoubleConverter::geoAltitudeFt ) ) );
+         std::make_shared<AsterixSubitemSigned>( 16, DoubleConverter::GeoAltitudeFt::get() ) ) );
 
    subitem_map_t barometric_vertical_rate;
    barometric_vertical_rate.push_back(
       subitem_t( Cat244ItemNames::I244_075_VR,
-         std::make_shared<AsterixSubitemSigned>( 16, DoubleConverter::geoAltitudeFt ) ) );
+         std::make_shared<AsterixSubitemSigned>( 16, DoubleConverter::GeoAltitudeFt::get() ) ) );
 
    subitem_map_t accelerations;
    accelerations.push_back(
       subitem_t( Cat244ItemNames::I244_080_ALONG,
-         std::make_shared<AsterixSubitemSigned>( 16, DoubleConverter::groundVectorAcceleration ) ) );
+         std::make_shared<AsterixSubitemSigned>( 16, DoubleConverter::GroundVectorAcceleration::get() ) ) );
    accelerations.push_back(
       subitem_t( Cat244ItemNames::I244_080_ACROSS,
-         std::make_shared<AsterixSubitemSigned>( 16, DoubleConverter::groundVectorAcceleration ) ) );
+         std::make_shared<AsterixSubitemSigned>( 16, DoubleConverter::GroundVectorAcceleration::get() ) ) );
    accelerations.push_back(
       subitem_t( Cat244ItemNames::I244_080_VERTICAL,
-         std::make_shared<AsterixSubitemSigned>( 16, DoubleConverter::groundVectorAcceleration ) ) );
+         std::make_shared<AsterixSubitemSigned>( 16, DoubleConverter::GroundVectorAcceleration::get() ) ) );
 
    subitem_map_t turn_rate;
    turn_rate.push_back(
       subitem_t( Cat244ItemNames::I244_095_RATE,
-         std::make_shared<AsterixSubitemSigned>( 8, DoubleConverter::fraction8th ) ) );
+         std::make_shared<AsterixSubitemSigned>( 8, DoubleConverter::Fraction8th::get() ) ) );
 
    subitem_map_t ads_b_profile;
    ads_b_profile.push_back(
       subitem_t( Cat244ItemNames::I244_100_ALT,
-         std::make_shared<AsterixSubitemSigned>( 16, UnsignedDoubleConverter::fraction10th ) ) );
+         std::make_shared<AsterixSubitemSigned>( 16, UnsignedDoubleConverter::Fraction10th::get() ) ) );
    ads_b_profile.push_back(
       subitem_t( Cat244ItemNames::I244_100_LAT,
-         std::make_shared<AsterixSubitemSigned>( 24, DoubleConverter::WGS84resolution23Bit ) ) );
+         std::make_shared<AsterixSubitemSigned>( 24, DoubleConverter::WGS84resolution23Bit::get() ) ) );
    ads_b_profile.push_back(
       subitem_t( Cat244ItemNames::I244_100_LNG,
-         std::make_shared<AsterixSubitemSigned>( 24, DoubleConverter::WGS84resolution23Bit ) ) );
+         std::make_shared<AsterixSubitemSigned>( 24, DoubleConverter::WGS84resolution23Bit::get() ) ) );
    ads_b_profile.push_back(
       subitem_t( Cat244ItemNames::I244_100_TTA,
-         std::make_shared<AsterixSubitemUnsigned>( 1, CommonConverter::NoneConverter ) ) );
+         std::make_shared<AsterixSubitemUnsigned>( 1, CommonConverter::NoneConverter::get() ) ) );
    ads_b_profile.push_back(
       subitem_t( Cat244ItemNames::I244_100_TTG,
-         std::make_shared<AsterixSubitemUnsigned>( 15, UnsignedDoubleConverter::speedVelToKt ) ) );
+         std::make_shared<AsterixSubitemUnsigned>( 15, UnsignedDoubleConverter::SpeedVelToKt::get() ) ) );
    ads_b_profile.push_back(
       subitem_t( Cat244ItemNames::I244_100_TCA,
-         std::make_shared<AsterixSubitemUnsigned>( 1, CommonConverter::NoneConverter ) ) );
+         std::make_shared<AsterixSubitemUnsigned>( 1, CommonConverter::NoneConverter::get() ) ) );
    ads_b_profile.push_back(
       subitem_t( Cat244ItemNames::I244_100_NC,
-         std::make_shared<AsterixSubitemUnsigned>( 1, CommonConverter::NoneConverter ) ) );
+         std::make_shared<AsterixSubitemUnsigned>( 1, CommonConverter::NoneConverter::get() ) ) );
    ads_b_profile.push_back(
       subitem_t( Cat244ItemNames::I244_100_TCN,
-         std::make_shared<AsterixSubitemUnsigned>( 6, CommonConverter::NoneConverter ) ) );
+         std::make_shared<AsterixSubitemUnsigned>( 6, CommonConverter::NoneConverter::get() ) ) );
 
    subitem_map_t selected_altitude;
    selected_altitude.push_back(
       subitem_t( Cat244ItemNames::I244_115_V,
-         std::make_shared<AsterixSubitemUnsigned>( 1, CommonConverter::NoneConverter ) ) );
+         std::make_shared<AsterixSubitemUnsigned>( 1, CommonConverter::NoneConverter::get() ) ) );
    selected_altitude.push_back(
       subitem_t( Cat244ItemNames::I244_115_FL,
-         std::make_shared<AsterixSubitemSigned>( 15, DoubleConverter::fraction4th ) ) );
+         std::make_shared<AsterixSubitemSigned>( 15, DoubleConverter::Fraction4th::get() ) ) );
 
    subitem_map_t aircraft_address;
    aircraft_address.push_back(
       subitem_t( Cat244ItemNames::I244_120_ADR,
-         std::make_shared<AsterixSubitemUnsigned>( 24, CommonConverter::NoneConverter ) ) );
+         std::make_shared<AsterixSubitemUnsigned>( 24, CommonConverter::NoneConverter::get() ) ) );
 
    subitem_map_t mode_3A_code;
    mode_3A_code.push_back(
       subitem_t( Cat244ItemNames::I244_130_V,
-         std::make_shared<AsterixSubitemUnsigned>( 1, CommonConverter::NoneConverter ) ) );
+         std::make_shared<AsterixSubitemUnsigned>( 1, CommonConverter::NoneConverter::get() ) ) );
    mode_3A_code.push_back(
       subitem_t( Cat244ItemNames::I244_130_SPARE,
-         std::make_shared<AsterixSubitemUnsigned>( 3, CommonConverter::NoneConverter ) ) );
+         std::make_shared<AsterixSubitemUnsigned>( 3, CommonConverter::NoneConverter::get() ) ) );
    mode_3A_code.push_back(
       subitem_t( Cat244ItemNames::I244_130_CODE,
-         std::make_shared<AsterixSubitemUnsigned>( 12, CommonConverter::NoneConverter ) ) );
+         std::make_shared<AsterixSubitemUnsigned>( 12, CommonConverter::NoneConverter::get() ) ) );
 
    subitem_map_t target_id;
    target_id.push_back(
       subitem_t( Cat244ItemNames::I244_140_TID,
-         std::make_shared<AsterixSubitemUnsigned>( 48, StringConverter::to6BitChar ) ) );
+         std::make_shared<AsterixSubitemUnsigned>( 48, StringConverter::To6BitChar::get() ) ) );
 
    subitem_map_t aicraft_type;
    aicraft_type.push_back(
       subitem_t( Cat244ItemNames::I244_150_ACT,
-         std::make_shared<AsterixSubitemBytes>( 32, StringConverter::toASCII ) ) );
+         std::make_shared<AsterixSubitemBytes>( 32, StringConverter::ToASCII::get() ) ) );
 
    subitem_map_t adsb_emitter_cat;
    adsb_emitter_cat.push_back(
       subitem_t( Cat244ItemNames::I244_160_ECAT,
-         std::make_shared<AsterixSubitemUnsigned>( 8, CommonConverter::NoneConverter ) ) );
+         std::make_shared<AsterixSubitemUnsigned>( 8, CommonConverter::NoneConverter::get() ) ) );
 
    subitem_map_t target_status;
    target_status.push_back(
       subitem_t( Cat244ItemNames::I244_170_TS,
-         std::make_shared<AsterixSubitemUnsigned>( 8, CommonConverter::NoneConverter ) ) );
+         std::make_shared<AsterixSubitemUnsigned>( 8, CommonConverter::NoneConverter::get() ) ) );
 
    subitem_map_t accuracy;
    accuracy.push_back(
       subitem_t( Cat244ItemNames::I244_180_NAC,
-         std::make_shared<AsterixSubitemUnsigned>( 4, CommonConverter::NoneConverter ) ) );
+         std::make_shared<AsterixSubitemUnsigned>( 4, CommonConverter::NoneConverter::get() ) ) );
    accuracy.push_back(
       subitem_t( Cat244ItemNames::I244_180_SPARE1,
-         std::make_shared<AsterixSubitemUnsigned>( 3, CommonConverter::NoneConverter ) ) );
+         std::make_shared<AsterixSubitemUnsigned>( 3, CommonConverter::NoneConverter::get() ) ) );
    accuracy.push_back(
       subitem_t( Cat244ItemNames::I244_180_NIC,
-         std::make_shared<AsterixSubitemUnsigned>( 4, CommonConverter::NoneConverter ) ) );
+         std::make_shared<AsterixSubitemUnsigned>( 4, CommonConverter::NoneConverter::get() ) ) );
    accuracy.push_back(
       subitem_t( Cat244ItemNames::I244_180_B,
-         std::make_shared<AsterixSubitemUnsigned>( 1, CommonConverter::NoneConverter ) ) );
+         std::make_shared<AsterixSubitemUnsigned>( 1, CommonConverter::NoneConverter::get() ) ) );
    accuracy.push_back(
       subitem_t( Cat244ItemNames::I244_180_SIL,
-         std::make_shared<AsterixSubitemUnsigned>( 2, CommonConverter::NoneConverter ) ) );
+         std::make_shared<AsterixSubitemUnsigned>( 2, CommonConverter::NoneConverter::get() ) ) );
    accuracy.push_back(
       subitem_t( Cat244ItemNames::I244_180_SPARE2,
-         std::make_shared<AsterixSubitemUnsigned>( 2, CommonConverter::NoneConverter ) ) );
+         std::make_shared<AsterixSubitemUnsigned>( 2, CommonConverter::NoneConverter::get() ) ) );
 
    subitem_map_t link_status;
    link_status.push_back(
       subitem_t( Cat244ItemNames::I244_190_ES,
-         std::make_shared<AsterixSubitemUnsigned>( 1, CommonConverter::NoneConverter ) ) );
+         std::make_shared<AsterixSubitemUnsigned>( 1, CommonConverter::NoneConverter::get() ) ) );
    link_status.push_back(
       subitem_t( Cat244ItemNames::I244_190_VDL4,
-         std::make_shared<AsterixSubitemUnsigned>( 1, CommonConverter::NoneConverter ) ) );
+         std::make_shared<AsterixSubitemUnsigned>( 1, CommonConverter::NoneConverter::get() ) ) );
    link_status.push_back(
       subitem_t( Cat244ItemNames::I244_190_UAT,
-         std::make_shared<AsterixSubitemUnsigned>( 1, CommonConverter::NoneConverter ) ) );
+         std::make_shared<AsterixSubitemUnsigned>( 1, CommonConverter::NoneConverter::get() ) ) );
    link_status.push_back(
       subitem_t( Cat244ItemNames::I244_190_SPARE,
-         std::make_shared<AsterixSubitemUnsigned>( 5, CommonConverter::NoneConverter ) ) );
+         std::make_shared<AsterixSubitemUnsigned>( 5, CommonConverter::NoneConverter::get() ) ) );
 
    // Add all items
    subitems.insert( subitem_map_item_t( 1, trajectory_identifioer ) );

@@ -241,556 +241,556 @@ void AsterixCategory011::setSubitems() {
    subitem_map_t sensor_identification;
    sensor_identification.push_back(
       subitem_t( Cat011ItemNames::I011_010_SAC,
-         std::make_shared<AsterixSubitemUnsigned>( 8, CommonConverter::NoneConverter ) ) );
+         std::make_shared<AsterixSubitemUnsigned>( 8, CommonConverter::NoneConverter::get() ) ) );
    sensor_identification.push_back(
       subitem_t( Cat011ItemNames::I011_010_SIC,
-         std::make_shared<AsterixSubitemUnsigned>( 8, CommonConverter::NoneConverter ) ) );
+         std::make_shared<AsterixSubitemUnsigned>( 8, CommonConverter::NoneConverter::get() ) ) );
 
    subitem_map_t message_type;
    message_type.push_back(
       subitem_t( Cat011ItemNames::I011_000_TYP,
-         std::make_shared<AsterixSubitemUnsigned>( 8, CommonConverter::NoneConverter ) ) );
+         std::make_shared<AsterixSubitemUnsigned>( 8, CommonConverter::NoneConverter::get() ) ) );
 
    subitem_map_t service_identification;
    service_identification.push_back(
       subitem_t( Cat011ItemNames::I011_015_SID,
-         std::make_shared<AsterixSubitemUnsigned>( 8, CommonConverter::NoneConverter ) ) );
+         std::make_shared<AsterixSubitemUnsigned>( 8, CommonConverter::NoneConverter::get() ) ) );
 
    subitem_map_t time_of_track_information;
    time_of_track_information.push_back(
       subitem_t( Cat011ItemNames::I011_140_TOD,
-         std::make_shared<AsterixSubitemUnsigned>( 24, UnsignedDoubleConverter::fraction128th ) ) );
+         std::make_shared<AsterixSubitemUnsigned>( 24, UnsignedDoubleConverter::Fraction128th::get() ) ) );
 
    subitem_map_t position_wgs84;
    position_wgs84.push_back(
       subitem_t( Cat011ItemNames::I011_041_LAT,
-         std::make_shared<AsterixSubitemSigned>( 32, DoubleConverter::WGS84resolution31Bit ) ) );
+         std::make_shared<AsterixSubitemSigned>( 32, DoubleConverter::WGS84resolution31Bit::get() ) ) );
    position_wgs84.push_back(
       subitem_t( Cat011ItemNames::I011_041_LNG,
-         std::make_shared<AsterixSubitemSigned>( 32, DoubleConverter::WGS84resolution31Bit ) ) );
+         std::make_shared<AsterixSubitemSigned>( 32, DoubleConverter::WGS84resolution31Bit::get() ) ) );
 
    subitem_map_t position_cartesian;
    position_cartesian.push_back(
       subitem_t( Cat011ItemNames::I011_042_X,
-         std::make_shared<AsterixSubitemSigned>( 16, CommonConverter::NoneConverter ) ) );
+         std::make_shared<AsterixSubitemSigned>( 16, CommonConverter::NoneConverter::get() ) ) );
    position_cartesian.push_back(
       subitem_t( Cat011ItemNames::I011_042_Y,
-         std::make_shared<AsterixSubitemSigned>( 16, CommonConverter::NoneConverter ) ) );
+         std::make_shared<AsterixSubitemSigned>( 16, CommonConverter::NoneConverter::get() ) ) );
 
    subitem_map_t calculated_track_velocity;
    calculated_track_velocity.push_back(
       subitem_t( Cat011ItemNames::I011_202_VX,
-         std::make_shared<AsterixSubitemSigned>( 16, DoubleConverter::fraction4th ) ) );
+         std::make_shared<AsterixSubitemSigned>( 16, DoubleConverter::Fraction4th::get() ) ) );
    calculated_track_velocity.push_back(
       subitem_t( Cat011ItemNames::I011_202_VY,
-         std::make_shared<AsterixSubitemSigned>( 16, DoubleConverter::fraction4th ) ) );
+         std::make_shared<AsterixSubitemSigned>( 16, DoubleConverter::Fraction4th::get() ) ) );
 
    subitem_map_t calculated_accelaeration;
    calculated_accelaeration.push_back(
       subitem_t( Cat011ItemNames::I011_210_AX,
-         std::make_shared<AsterixSubitemSigned>( 8, DoubleConverter::fraction4th ) ) );
+         std::make_shared<AsterixSubitemSigned>( 8, DoubleConverter::Fraction4th::get() ) ) );
    calculated_accelaeration.push_back(
       subitem_t( Cat011ItemNames::I011_210_AY,
-         std::make_shared<AsterixSubitemSigned>( 8, DoubleConverter::fraction4th ) ) );
+         std::make_shared<AsterixSubitemSigned>( 8, DoubleConverter::Fraction4th::get() ) ) );
 
    subitem_map_t mode_3a_code_oct;
    mode_3a_code_oct.push_back(
       subitem_t( Cat011ItemNames::I011_060_SPARE,
-         std::make_shared<AsterixSubitemSigned>( 4, CommonConverter::NoneConverter ) ) );
+         std::make_shared<AsterixSubitemSigned>( 4, CommonConverter::NoneConverter::get() ) ) );
    mode_3a_code_oct.push_back(
       subitem_t( Cat011ItemNames::I011_060_CODE,
-         std::make_shared<AsterixSubitemSigned>( 12, CommonConverter::NoneConverter ) ) );
+         std::make_shared<AsterixSubitemSigned>( 12, CommonConverter::NoneConverter::get() ) ) );
 
    subitem_map_t target_id;
    target_id.push_back(
       subitem_t( Cat011ItemNames::I011_245_STI,
-         std::make_shared<AsterixSubitemUnsigned>( 2, CommonConverter::NoneConverter ) ) );
+         std::make_shared<AsterixSubitemUnsigned>( 2, CommonConverter::NoneConverter::get() ) ) );
    target_id.push_back(
       subitem_t( Cat011ItemNames::I011_245_SPARE,
-         std::make_shared<AsterixSubitemUnsigned>( 6, CommonConverter::NoneConverter ) ) );
+         std::make_shared<AsterixSubitemUnsigned>( 6, CommonConverter::NoneConverter::get() ) ) );
    target_id.push_back(
       subitem_t( Cat011ItemNames::I011_245_ID,
-         std::make_shared<AsterixSubitemUnsigned>( 48, StringConverter::to6BitChar ) ) );
+         std::make_shared<AsterixSubitemUnsigned>( 48, StringConverter::To6BitChar::get() ) ) );
 
    subitem_map_t mode_s_data;
    subitem_map_t sub_sub_item_380_mbs;
    sub_sub_item_380_mbs.push_back(
       subitem_t( Cat011ItemNames::I011_380_MBS_DATA,
-         std::make_shared<AsterixSubitemUnsigned>( 56, CommonConverter::NoneConverter ) ) );
+         std::make_shared<AsterixSubitemUnsigned>( 56, CommonConverter::NoneConverter::get() ) ) );
    sub_sub_item_380_mbs.push_back(
       subitem_t( Cat011ItemNames::I011_380_MBS_BDS1,
-         std::make_shared<AsterixSubitemUnsigned>( 4, CommonConverter::NoneConverter ) ) );
+         std::make_shared<AsterixSubitemUnsigned>( 4, CommonConverter::NoneConverter::get() ) ) );
    sub_sub_item_380_mbs.push_back(
       subitem_t( Cat011ItemNames::I011_380_MBS_BDS2,
-         std::make_shared<AsterixSubitemUnsigned>( 4, CommonConverter::NoneConverter ) ) );
+         std::make_shared<AsterixSubitemUnsigned>( 4, CommonConverter::NoneConverter::get() ) ) );
 
    subitem_map_t sub_sub_item_380_acas;
    sub_sub_item_380_acas.push_back(
       subitem_t( Cat011ItemNames::I011_380_ACAS_COM,
-         std::make_shared<AsterixSubitemUnsigned>( 3, CommonConverter::NoneConverter ) ) );
+         std::make_shared<AsterixSubitemUnsigned>( 3, CommonConverter::NoneConverter::get() ) ) );
    sub_sub_item_380_acas.push_back(
       subitem_t( Cat011ItemNames::I011_380_ACAS_STAT,
-         std::make_shared<AsterixSubitemUnsigned>( 4, CommonConverter::NoneConverter ) ) );
+         std::make_shared<AsterixSubitemUnsigned>( 4, CommonConverter::NoneConverter::get() ) ) );
    sub_sub_item_380_acas.push_back(
       subitem_t( Cat011ItemNames::I011_380_ACAS_SPARE,
-         std::make_shared<AsterixSubitemUnsigned>( 1, CommonConverter::NoneConverter ) ) );
+         std::make_shared<AsterixSubitemUnsigned>( 1, CommonConverter::NoneConverter::get() ) ) );
    sub_sub_item_380_acas.push_back(
       subitem_t( Cat011ItemNames::I011_380_ACAS_SSC,
-         std::make_shared<AsterixSubitemUnsigned>( 1, CommonConverter::NoneConverter ) ) );
+         std::make_shared<AsterixSubitemUnsigned>( 1, CommonConverter::NoneConverter::get() ) ) );
    sub_sub_item_380_acas.push_back(
       subitem_t( Cat011ItemNames::I011_380_ACAS_ARC,
-         std::make_shared<AsterixSubitemUnsigned>( 1, CommonConverter::NoneConverter ) ) );
+         std::make_shared<AsterixSubitemUnsigned>( 1, CommonConverter::NoneConverter::get() ) ) );
    sub_sub_item_380_acas.push_back(
       subitem_t( Cat011ItemNames::I011_380_ACAS_AIC,
-         std::make_shared<AsterixSubitemUnsigned>( 1, CommonConverter::NoneConverter ) ) );
+         std::make_shared<AsterixSubitemUnsigned>( 1, CommonConverter::NoneConverter::get() ) ) );
    sub_sub_item_380_acas.push_back(
       subitem_t( Cat011ItemNames::I011_380_ACAS_B1A,
-         std::make_shared<AsterixSubitemUnsigned>( 1, CommonConverter::NoneConverter ) ) );
+         std::make_shared<AsterixSubitemUnsigned>( 1, CommonConverter::NoneConverter::get() ) ) );
    sub_sub_item_380_acas.push_back(
       subitem_t( Cat011ItemNames::I011_380_ACAS_B1B,
-         std::make_shared<AsterixSubitemUnsigned>( 4, CommonConverter::NoneConverter ) ) );
+         std::make_shared<AsterixSubitemUnsigned>( 4, CommonConverter::NoneConverter::get() ) ) );
    sub_sub_item_380_acas.push_back(
       subitem_t( Cat011ItemNames::I011_380_ACAS_AC,
-         std::make_shared<AsterixSubitemUnsigned>( 1, CommonConverter::NoneConverter ) ) );
+         std::make_shared<AsterixSubitemUnsigned>( 1, CommonConverter::NoneConverter::get() ) ) );
    sub_sub_item_380_acas.push_back(
       subitem_t( Cat011ItemNames::I011_380_ACAS_MN,
-         std::make_shared<AsterixSubitemUnsigned>( 1, CommonConverter::NoneConverter ) ) );
+         std::make_shared<AsterixSubitemUnsigned>( 1, CommonConverter::NoneConverter::get() ) ) );
    sub_sub_item_380_acas.push_back(
       subitem_t( Cat011ItemNames::I011_380_ACAS_DC,
-         std::make_shared<AsterixSubitemUnsigned>( 1, CommonConverter::NoneConverter ) ) );
+         std::make_shared<AsterixSubitemUnsigned>( 1, CommonConverter::NoneConverter::get() ) ) );
    sub_sub_item_380_acas.push_back(
       subitem_t( Cat011ItemNames::I011_380_ACAS_SPARE,
-         std::make_shared<AsterixSubitemUnsigned>( 5, CommonConverter::NoneConverter ) ) );
+         std::make_shared<AsterixSubitemUnsigned>( 5, CommonConverter::NoneConverter::get() ) ) );
 
    // Add all items to the Mode S Data Compound sub item
    mode_s_data.push_back(
       subitem_t( Cat011ItemNames::I011_380_MBS,
-         std::make_shared<AsterixSubItemRep>( 64, CommonConverter::NoneConverterBuffer,
+         std::make_shared<AsterixSubItemRep>( 64, CommonConverter::NoneConverterBuffer::get(),
             sub_sub_item_380_mbs ) ) );
    mode_s_data.push_back(
       subitem_t( Cat011ItemNames::I011_380_ADDR,
-         std::make_shared<AsterixSubitemUnsigned>( 24, CommonConverter::NoneConverter ) ) );
+         std::make_shared<AsterixSubitemUnsigned>( 24, CommonConverter::NoneConverter::get() ) ) );
    mode_s_data.push_back(
       subitem_t( Cat011ItemNames::I011_380_ACAS,
-         std::make_shared<AsterixSubitemCompound>( 24, CommonConverter::NoneConverterBuffer,
+         std::make_shared<AsterixSubitemCompound>( 24, CommonConverter::NoneConverterBuffer::get(),
             sub_sub_item_380_acas ) ) );
    mode_s_data.push_back(
       subitem_t( Cat011ItemNames::I011_380_ACT,
-         std::make_shared<AsterixSubitemBytes>( 32, StringConverter::toASCII ) ) );
+         std::make_shared<AsterixSubitemBytes>( 32, StringConverter::ToASCII::get() ) ) );
    mode_s_data.push_back(
       subitem_t( Cat011ItemNames::I011_380_EC,
-         std::make_shared<AsterixSubitemUnsigned>( 8, CommonConverter::NoneConverter ) ) );
+         std::make_shared<AsterixSubitemUnsigned>( 8, CommonConverter::NoneConverter::get() ) ) );
    mode_s_data.push_back(
       subitem_t( Cat011ItemNames::I011_380_AT,
-         std::make_shared<AsterixSubitemUnsigned>( 8, CommonConverter::NoneConverter ) ) );
+         std::make_shared<AsterixSubitemUnsigned>( 8, CommonConverter::NoneConverter::get() ) ) );
 
    subitem_map_t track_number;
    track_number.push_back(
       subitem_t( Cat011ItemNames::I011_161_SPARE,
-         std::make_shared<AsterixSubitemUnsigned>( 1, CommonConverter::NoneConverter ) ) );
+         std::make_shared<AsterixSubitemUnsigned>( 1, CommonConverter::NoneConverter::get() ) ) );
    track_number.push_back(
       subitem_t( Cat011ItemNames::I011_161_TRK,
-         std::make_shared<AsterixSubitemUnsigned>( 15, CommonConverter::NoneConverter ) ) );
+         std::make_shared<AsterixSubitemUnsigned>( 15, CommonConverter::NoneConverter::get() ) ) );
 
    subitem_map_t track_status;
    track_status.push_back(
       subitem_t( Cat011ItemNames::I011_170_MON,
-         std::make_shared<AsterixSubitemUnsigned>( 1, CommonConverter::NoneConverter ) ) );
+         std::make_shared<AsterixSubitemUnsigned>( 1, CommonConverter::NoneConverter::get() ) ) );
    track_status.push_back(
       subitem_t( Cat011ItemNames::I011_170_GBS,
-         std::make_shared<AsterixSubitemUnsigned>( 1, CommonConverter::NoneConverter ) ) );
+         std::make_shared<AsterixSubitemUnsigned>( 1, CommonConverter::NoneConverter::get() ) ) );
    track_status.push_back(
       subitem_t( Cat011ItemNames::I011_170_MRH,
-         std::make_shared<AsterixSubitemUnsigned>( 1, CommonConverter::NoneConverter ) ) );
+         std::make_shared<AsterixSubitemUnsigned>( 1, CommonConverter::NoneConverter::get() ) ) );
    track_status.push_back(
       subitem_t( Cat011ItemNames::I011_170_SRC,
-         std::make_shared<AsterixSubitemUnsigned>( 3, CommonConverter::NoneConverter ) ) );
+         std::make_shared<AsterixSubitemUnsigned>( 3, CommonConverter::NoneConverter::get() ) ) );
    track_status.push_back(
       subitem_t( Cat011ItemNames::I011_170_CNF,
-         std::make_shared<AsterixSubitemUnsigned>( 1, CommonConverter::NoneConverter ) ) );
+         std::make_shared<AsterixSubitemUnsigned>( 1, CommonConverter::NoneConverter::get() ) ) );
    track_status.push_back(
       subitem_t( Cat011ItemNames::I011_170_SIM,
-         std::make_shared<AsterixSubitemUnsigned>( 1, CommonConverter::NoneConverter ) ) );
+         std::make_shared<AsterixSubitemUnsigned>( 1, CommonConverter::NoneConverter::get() ) ) );
    track_status.push_back(
       subitem_t( Cat011ItemNames::I011_170_TSE,
-         std::make_shared<AsterixSubitemUnsigned>( 1, CommonConverter::NoneConverter ) ) );
+         std::make_shared<AsterixSubitemUnsigned>( 1, CommonConverter::NoneConverter::get() ) ) );
    track_status.push_back(
       subitem_t( Cat011ItemNames::I011_170_TSB,
-         std::make_shared<AsterixSubitemUnsigned>( 1, CommonConverter::NoneConverter ) ) );
+         std::make_shared<AsterixSubitemUnsigned>( 1, CommonConverter::NoneConverter::get() ) ) );
    track_status.push_back(
       subitem_t( Cat011ItemNames::I011_170_FRI,
-         std::make_shared<AsterixSubitemUnsigned>( 2, CommonConverter::NoneConverter ) ) );
+         std::make_shared<AsterixSubitemUnsigned>( 2, CommonConverter::NoneConverter::get() ) ) );
    track_status.push_back(
       subitem_t( Cat011ItemNames::I011_170_ME,
-         std::make_shared<AsterixSubitemUnsigned>( 1, CommonConverter::NoneConverter ) ) );
+         std::make_shared<AsterixSubitemUnsigned>( 1, CommonConverter::NoneConverter::get() ) ) );
    track_status.push_back(
       subitem_t( Cat011ItemNames::I011_170_MI,
-         std::make_shared<AsterixSubitemUnsigned>( 1, CommonConverter::NoneConverter ) ) );
+         std::make_shared<AsterixSubitemUnsigned>( 1, CommonConverter::NoneConverter::get() ) ) );
    track_status.push_back(
       subitem_t( Cat011ItemNames::I011_170_AMA,
-         std::make_shared<AsterixSubitemUnsigned>( 1, CommonConverter::NoneConverter ) ) );
+         std::make_shared<AsterixSubitemUnsigned>( 1, CommonConverter::NoneConverter::get() ) ) );
    track_status.push_back(
       subitem_t( Cat011ItemNames::I011_170_SPI,
-         std::make_shared<AsterixSubitemUnsigned>( 1, CommonConverter::NoneConverter ) ) );
+         std::make_shared<AsterixSubitemUnsigned>( 1, CommonConverter::NoneConverter::get() ) ) );
    track_status.push_back(
       subitem_t( Cat011ItemNames::I011_170_CST,
-         std::make_shared<AsterixSubitemUnsigned>( 1, CommonConverter::NoneConverter ) ) );
+         std::make_shared<AsterixSubitemUnsigned>( 1, CommonConverter::NoneConverter::get() ) ) );
    track_status.push_back(
       subitem_t( Cat011ItemNames::I011_170_FPC,
-         std::make_shared<AsterixSubitemUnsigned>( 1, CommonConverter::NoneConverter ) ) );
+         std::make_shared<AsterixSubitemUnsigned>( 1, CommonConverter::NoneConverter::get() ) ) );
    track_status.push_back(
       subitem_t( Cat011ItemNames::I011_170_AFF,
-         std::make_shared<AsterixSubitemUnsigned>( 1, CommonConverter::NoneConverter ) ) );
+         std::make_shared<AsterixSubitemUnsigned>( 1, CommonConverter::NoneConverter::get() ) ) );
    track_status.push_back(
       subitem_t( Cat011ItemNames::I011_170_SPARE,
-         std::make_shared<AsterixSubitemUnsigned>( 3, CommonConverter::NoneConverter ) ) );
+         std::make_shared<AsterixSubitemUnsigned>( 3, CommonConverter::NoneConverter::get() ) ) );
    track_status.push_back(
       subitem_t( Cat011ItemNames::I011_170_PSR,
-         std::make_shared<AsterixSubitemUnsigned>( 1, CommonConverter::NoneConverter ) ) );
+         std::make_shared<AsterixSubitemUnsigned>( 1, CommonConverter::NoneConverter::get() ) ) );
    track_status.push_back(
       subitem_t( Cat011ItemNames::I011_170_SSR,
-         std::make_shared<AsterixSubitemUnsigned>( 1, CommonConverter::NoneConverter ) ) );
+         std::make_shared<AsterixSubitemUnsigned>( 1, CommonConverter::NoneConverter::get() ) ) );
    track_status.push_back(
       subitem_t( Cat011ItemNames::I011_170_MDS,
-         std::make_shared<AsterixSubitemUnsigned>( 1, CommonConverter::NoneConverter ) ) );
+         std::make_shared<AsterixSubitemUnsigned>( 1, CommonConverter::NoneConverter::get() ) ) );
    track_status.push_back(
       subitem_t( Cat011ItemNames::I011_170_ADS,
-         std::make_shared<AsterixSubitemUnsigned>( 1, CommonConverter::NoneConverter ) ) );
+         std::make_shared<AsterixSubitemUnsigned>( 1, CommonConverter::NoneConverter::get() ) ) );
    track_status.push_back(
       subitem_t( Cat011ItemNames::I011_170_SUC,
-         std::make_shared<AsterixSubitemUnsigned>( 1, CommonConverter::NoneConverter ) ) );
+         std::make_shared<AsterixSubitemUnsigned>( 1, CommonConverter::NoneConverter::get() ) ) );
    track_status.push_back(
       subitem_t( Cat011ItemNames::I011_170_ACC,
-         std::make_shared<AsterixSubitemUnsigned>( 1, CommonConverter::NoneConverter ) ) );
+         std::make_shared<AsterixSubitemUnsigned>( 1, CommonConverter::NoneConverter::get() ) ) );
 
    subitem_map_t track_update_ages;
    track_update_ages.push_back(
       subitem_t( Cat011ItemNames::I011_290_PSR,
-         std::make_shared<AsterixSubitemUnsigned>( 8, DoubleConverter::fraction4th ) ) );
+         std::make_shared<AsterixSubitemUnsigned>( 8, DoubleConverter::Fraction4th::get() ) ) );
    track_update_ages.push_back(
       subitem_t( Cat011ItemNames::I011_290_SSR,
-         std::make_shared<AsterixSubitemUnsigned>( 8, DoubleConverter::fraction4th ) ) );
+         std::make_shared<AsterixSubitemUnsigned>( 8, DoubleConverter::Fraction4th::get() ) ) );
    track_update_ages.push_back(
       subitem_t( Cat011ItemNames::I011_290_MDA,
-         std::make_shared<AsterixSubitemUnsigned>( 8, DoubleConverter::fraction4th ) ) );
+         std::make_shared<AsterixSubitemUnsigned>( 8, DoubleConverter::Fraction4th::get() ) ) );
    track_update_ages.push_back(
       subitem_t( Cat011ItemNames::I011_290_MFL,
-         std::make_shared<AsterixSubitemUnsigned>( 8, DoubleConverter::fraction4th ) ) );
+         std::make_shared<AsterixSubitemUnsigned>( 8, DoubleConverter::Fraction4th::get() ) ) );
    track_update_ages.push_back(
       subitem_t( Cat011ItemNames::I011_290_MDS,
-         std::make_shared<AsterixSubitemUnsigned>( 8, DoubleConverter::fraction4th ) ) );
+         std::make_shared<AsterixSubitemUnsigned>( 8, DoubleConverter::Fraction4th::get() ) ) );
    track_update_ages.push_back(
       subitem_t( Cat011ItemNames::I011_290_ADS,
-         std::make_shared<AsterixSubitemUnsigned>( 16, DoubleConverter::fraction4th ) ) );
+         std::make_shared<AsterixSubitemUnsigned>( 16, DoubleConverter::Fraction4th::get() ) ) );
    track_update_ages.push_back(
       subitem_t( Cat011ItemNames::I011_290_ADB,
-         std::make_shared<AsterixSubitemUnsigned>( 8, DoubleConverter::fraction4th ) ) );
+         std::make_shared<AsterixSubitemUnsigned>( 8, DoubleConverter::Fraction4th::get() ) ) );
    track_update_ages.push_back(
       subitem_t( Cat011ItemNames::I011_290_MD1,
-         std::make_shared<AsterixSubitemUnsigned>( 8, DoubleConverter::fraction4th ) ) );
+         std::make_shared<AsterixSubitemUnsigned>( 8, DoubleConverter::Fraction4th::get() ) ) );
    track_update_ages.push_back(
       subitem_t( Cat011ItemNames::I011_290_MD2,
-         std::make_shared<AsterixSubitemUnsigned>( 8, DoubleConverter::fraction4th ) ) );
+         std::make_shared<AsterixSubitemUnsigned>( 8, DoubleConverter::Fraction4th::get() ) ) );
    track_update_ages.push_back(
       subitem_t( Cat011ItemNames::I011_290_LOP,
-         std::make_shared<AsterixSubitemUnsigned>( 8, DoubleConverter::fraction4th ) ) );
+         std::make_shared<AsterixSubitemUnsigned>( 8, DoubleConverter::Fraction4th::get() ) ) );
    track_update_ages.push_back(
       subitem_t( Cat011ItemNames::I011_290_TRK,
-         std::make_shared<AsterixSubitemUnsigned>( 8, DoubleConverter::fraction4th ) ) );
+         std::make_shared<AsterixSubitemUnsigned>( 8, DoubleConverter::Fraction4th::get() ) ) );
    track_update_ages.push_back(
       subitem_t( Cat011ItemNames::I011_290_MUL,
-         std::make_shared<AsterixSubitemUnsigned>( 8, DoubleConverter::fraction4th ) ) );
+         std::make_shared<AsterixSubitemUnsigned>( 8, DoubleConverter::Fraction4th::get() ) ) );
 
    subitem_map_t phase_of_flight;
    phase_of_flight.push_back(
       subitem_t( Cat011ItemNames::I011_430_FLS,
-         std::make_shared<AsterixSubitemUnsigned>( 8, CommonConverter::NoneConverter ) ) );
+         std::make_shared<AsterixSubitemUnsigned>( 8, CommonConverter::NoneConverter::get() ) ) );
 
    subitem_map_t measure_fl;
    measure_fl.push_back(
       subitem_t( Cat011ItemNames::I011_090_FL,
-         std::make_shared<AsterixSubitemSigned>( 16, DoubleConverter::fraction4th ) ) );
+         std::make_shared<AsterixSubitemSigned>( 16, DoubleConverter::Fraction4th::get() ) ) );
 
    subitem_map_t calculated_geo_alt;
    calculated_geo_alt.push_back(
       subitem_t( Cat011ItemNames::I011_093_QNH,
-         std::make_shared<AsterixSubitemUnsigned>( 1, CommonConverter::NoneConverter ) ) );
+         std::make_shared<AsterixSubitemUnsigned>( 1, CommonConverter::NoneConverter::get() ) ) );
    calculated_geo_alt.push_back(
       subitem_t( Cat011ItemNames::I011_093_ALT,
-         std::make_shared<AsterixSubitemSigned>( 15, DoubleConverter::fraction4th ) ) );
+         std::make_shared<AsterixSubitemSigned>( 15, DoubleConverter::Fraction4th::get() ) ) );
 
    subitem_map_t baro_alt;
    baro_alt.push_back(
       subitem_t( Cat011ItemNames::I011_092_FL,
-         std::make_shared<AsterixSubitemSigned>( 16, DoubleConverter::geoAltitudeFt ) ) );
+         std::make_shared<AsterixSubitemSigned>( 16, DoubleConverter::GeoAltitudeFt::get() ) ) );
 
    subitem_map_t rate_cd;
    rate_cd.push_back(
       subitem_t( Cat011ItemNames::I011_215_CD,
-         std::make_shared<AsterixSubitemSigned>( 16, DoubleConverter::geoAltitudeFt ) ) );
+         std::make_shared<AsterixSubitemSigned>( 16, DoubleConverter::GeoAltitudeFt::get() ) ) );
 
    subitem_map_t target_size;
    target_size.push_back(
       subitem_t( Cat011ItemNames::I011_270_L,
-         std::make_shared<AsterixSubitemUnsigned>( 7, CommonConverter::NoneConverter ) ) );
+         std::make_shared<AsterixSubitemUnsigned>( 7, CommonConverter::NoneConverter::get() ) ) );
    target_size.push_back(
       subitem_t( Cat011ItemNames::I011_270_O,
-         std::make_shared<AsterixSubitemUnsigned>( 7, UnsignedDoubleConverter::direction128th ) ) );
+         std::make_shared<AsterixSubitemUnsigned>( 7, UnsignedDoubleConverter::Direction128th::get() ) ) );
    target_size.push_back(
       subitem_t( Cat011ItemNames::I011_270_W,
-         std::make_shared<AsterixSubitemUnsigned>( 7, CommonConverter::NoneConverter ) ) );
+         std::make_shared<AsterixSubitemUnsigned>( 7, CommonConverter::NoneConverter::get() ) ) );
 
    subitem_map_t flight_plan_data;
 
    subitem_map_t sub_sub_item_390_tag;
    sub_sub_item_390_tag.push_back(
       subitem_t( Cat011ItemNames::I011_390_TAG_SAC,
-         std::make_shared<AsterixSubitemUnsigned>( 8, CommonConverter::NoneConverter ) ) );
+         std::make_shared<AsterixSubitemUnsigned>( 8, CommonConverter::NoneConverter::get() ) ) );
    sub_sub_item_390_tag.push_back(
       subitem_t( Cat011ItemNames::I011_390_TAG_SIC,
-         std::make_shared<AsterixSubitemUnsigned>( 8, CommonConverter::NoneConverter ) ) );
+         std::make_shared<AsterixSubitemUnsigned>( 8, CommonConverter::NoneConverter::get() ) ) );
 
    subitem_map_t sub_sub_item_390_ifi;
    sub_sub_item_390_ifi.push_back(
       subitem_t( Cat011ItemNames::I011_390_IFI_TYP,
-         std::make_shared<AsterixSubitemUnsigned>( 2, CommonConverter::NoneConverter ) ) );
+         std::make_shared<AsterixSubitemUnsigned>( 2, CommonConverter::NoneConverter::get() ) ) );
    sub_sub_item_390_ifi.push_back(
       subitem_t( Cat011ItemNames::I011_390_IFI_SPARE,
-         std::make_shared<AsterixSubitemUnsigned>( 3, CommonConverter::NoneConverter ) ) );
+         std::make_shared<AsterixSubitemUnsigned>( 3, CommonConverter::NoneConverter::get() ) ) );
    sub_sub_item_390_ifi.push_back(
       subitem_t( Cat011ItemNames::I011_390_IFI_NBR,
-         std::make_shared<AsterixSubitemUnsigned>( 27, CommonConverter::NoneConverter ) ) );
+         std::make_shared<AsterixSubitemUnsigned>( 27, CommonConverter::NoneConverter::get() ) ) );
 
    subitem_map_t sub_sub_item_390_fct;
    sub_sub_item_390_fct.push_back(
       subitem_t( Cat011ItemNames::I011_390_FCT_GAT,
-         std::make_shared<AsterixSubitemUnsigned>( 2, CommonConverter::NoneConverter ) ) );
+         std::make_shared<AsterixSubitemUnsigned>( 2, CommonConverter::NoneConverter::get() ) ) );
    sub_sub_item_390_fct.push_back(
       subitem_t( Cat011ItemNames::I011_390_FCT_FR1,
-         std::make_shared<AsterixSubitemUnsigned>( 2, CommonConverter::NoneConverter ) ) );
+         std::make_shared<AsterixSubitemUnsigned>( 2, CommonConverter::NoneConverter::get() ) ) );
    sub_sub_item_390_fct.push_back(
       subitem_t( Cat011ItemNames::I011_390_FCT_RVSM,
-         std::make_shared<AsterixSubitemUnsigned>( 2, CommonConverter::NoneConverter ) ) );
+         std::make_shared<AsterixSubitemUnsigned>( 2, CommonConverter::NoneConverter::get() ) ) );
    sub_sub_item_390_fct.push_back(
       subitem_t( Cat011ItemNames::I011_390_FCT_HPR,
-         std::make_shared<AsterixSubitemUnsigned>( 1, CommonConverter::NoneConverter ) ) );
+         std::make_shared<AsterixSubitemUnsigned>( 1, CommonConverter::NoneConverter::get() ) ) );
    sub_sub_item_390_fct.push_back(
       subitem_t( Cat011ItemNames::I011_390_FCT_SPARE,
-         std::make_shared<AsterixSubitemUnsigned>( 1, CommonConverter::NoneConverter ) ) );
+         std::make_shared<AsterixSubitemUnsigned>( 1, CommonConverter::NoneConverter::get() ) ) );
 
    subitem_map_t sub_sub_item_390_rds;
    sub_sub_item_390_rds.push_back(
       subitem_t( Cat011ItemNames::I011_390_RDS_NU1,
-         std::make_shared<AsterixSubitemBytes>( 8, StringConverter::toASCII ) ) );
+         std::make_shared<AsterixSubitemBytes>( 8, StringConverter::ToASCII::get() ) ) );
    sub_sub_item_390_rds.push_back(
       subitem_t( Cat011ItemNames::I011_390_RDS_NU2,
-         std::make_shared<AsterixSubitemBytes>( 8, StringConverter::toASCII ) ) );
+         std::make_shared<AsterixSubitemBytes>( 8, StringConverter::ToASCII::get() ) ) );
    sub_sub_item_390_rds.push_back(
       subitem_t( Cat011ItemNames::I011_390_RDS_LTR,
-         std::make_shared<AsterixSubitemBytes>( 8, StringConverter::toASCII ) ) );
+         std::make_shared<AsterixSubitemBytes>( 8, StringConverter::ToASCII::get() ) ) );
 
    subitem_map_t sub_sub_item_390_ctl;
    sub_sub_item_390_ctl.push_back(
       subitem_t( Cat011ItemNames::I011_390_CTL_C,
-         std::make_shared<AsterixSubitemUnsigned>( 8, CommonConverter::NoneConverter ) ) );
+         std::make_shared<AsterixSubitemUnsigned>( 8, CommonConverter::NoneConverter::get() ) ) );
    sub_sub_item_390_ctl.push_back(
       subitem_t( Cat011ItemNames::I011_390_CTL_P,
-         std::make_shared<AsterixSubitemUnsigned>( 8, CommonConverter::NoneConverter ) ) );
+         std::make_shared<AsterixSubitemUnsigned>( 8, CommonConverter::NoneConverter::get() ) ) );
 
    subitem_map_t sub_sub_item_390_tod;
    sub_sub_item_390_tod.push_back(
       subitem_t( Cat011ItemNames::I011_390_TOD_TYP,
-         std::make_shared<AsterixSubitemUnsigned>( 5, CommonConverter::NoneConverter ) ) );
+         std::make_shared<AsterixSubitemUnsigned>( 5, CommonConverter::NoneConverter::get() ) ) );
    sub_sub_item_390_tod.push_back(
       subitem_t( Cat011ItemNames::I011_390_TOD_DAY,
-         std::make_shared<AsterixSubitemUnsigned>( 2, CommonConverter::NoneConverter ) ) );
+         std::make_shared<AsterixSubitemUnsigned>( 2, CommonConverter::NoneConverter::get() ) ) );
    sub_sub_item_390_tod.push_back(
       subitem_t( Cat011ItemNames::I011_390_TOD_SPARE1,
-         std::make_shared<AsterixSubitemUnsigned>( 4, CommonConverter::NoneConverter ) ) );
+         std::make_shared<AsterixSubitemUnsigned>( 4, CommonConverter::NoneConverter::get() ) ) );
    sub_sub_item_390_tod.push_back(
       subitem_t( Cat011ItemNames::I011_390_TOD_HOR,
-         std::make_shared<AsterixSubitemUnsigned>( 5, CommonConverter::NoneConverter ) ) );
+         std::make_shared<AsterixSubitemUnsigned>( 5, CommonConverter::NoneConverter::get() ) ) );
    sub_sub_item_390_tod.push_back(
       subitem_t( Cat011ItemNames::I011_390_TOD_SPARE2,
-         std::make_shared<AsterixSubitemUnsigned>( 2, CommonConverter::NoneConverter ) ) );
+         std::make_shared<AsterixSubitemUnsigned>( 2, CommonConverter::NoneConverter::get() ) ) );
    sub_sub_item_390_tod.push_back(
       subitem_t( Cat011ItemNames::I011_390_TOD_TMIN,
-         std::make_shared<AsterixSubitemUnsigned>( 6, CommonConverter::NoneConverter ) ) );
+         std::make_shared<AsterixSubitemUnsigned>( 6, CommonConverter::NoneConverter::get() ) ) );
    sub_sub_item_390_tod.push_back(
       subitem_t( Cat011ItemNames::I011_390_TOD_AVS,
-         std::make_shared<AsterixSubitemUnsigned>( 1, CommonConverter::NoneConverter ) ) );
+         std::make_shared<AsterixSubitemUnsigned>( 1, CommonConverter::NoneConverter::get() ) ) );
    sub_sub_item_390_tod.push_back(
       subitem_t( Cat011ItemNames::I011_390_TOD_SPARE3,
-         std::make_shared<AsterixSubitemUnsigned>( 1, CommonConverter::NoneConverter ) ) );
+         std::make_shared<AsterixSubitemUnsigned>( 1, CommonConverter::NoneConverter::get() ) ) );
    sub_sub_item_390_tod.push_back(
       subitem_t( Cat011ItemNames::I011_390_TOD_SEC,
-         std::make_shared<AsterixSubitemUnsigned>( 6, CommonConverter::NoneConverter ) ) );
+         std::make_shared<AsterixSubitemUnsigned>( 6, CommonConverter::NoneConverter::get() ) ) );
 
    subitem_map_t sub_sub_item_390_sts;
    sub_sub_item_390_sts.push_back(
       subitem_t( Cat011ItemNames::I011_390_STS_EMP,
-         std::make_shared<AsterixSubitemUnsigned>( 2, CommonConverter::NoneConverter ) ) );
+         std::make_shared<AsterixSubitemUnsigned>( 2, CommonConverter::NoneConverter::get() ) ) );
    sub_sub_item_390_sts.push_back(
       subitem_t( Cat011ItemNames::I011_390_STS_AVL,
-         std::make_shared<AsterixSubitemUnsigned>( 2, CommonConverter::NoneConverter ) ) );
+         std::make_shared<AsterixSubitemUnsigned>( 2, CommonConverter::NoneConverter::get() ) ) );
    sub_sub_item_390_sts.push_back(
       subitem_t( Cat011ItemNames::I011_390_STS_SPARE,
-         std::make_shared<AsterixSubitemUnsigned>( 4, CommonConverter::NoneConverter ) ) );
+         std::make_shared<AsterixSubitemUnsigned>( 4, CommonConverter::NoneConverter::get() ) ) );
 
 
    // Add all flight plan sub-sub items
    flight_plan_data.push_back(
       subitem_t( Cat011ItemNames::I011_390_TAG,
-         std::make_shared<AsterixSubitemCompound>( 16, CommonConverter::NoneConverterBuffer,
+         std::make_shared<AsterixSubitemCompound>( 16, CommonConverter::NoneConverterBuffer::get(),
             sub_sub_item_390_tag ) ) );
    flight_plan_data.push_back(
       subitem_t( Cat011ItemNames::I011_390_CSN,
-         std::make_shared<AsterixSubitemBytes>( 56, StringConverter::toASCII ) ) );
+         std::make_shared<AsterixSubitemBytes>( 56, StringConverter::ToASCII::get() ) ) );
    flight_plan_data.push_back(
       subitem_t( Cat011ItemNames::I011_390_IFI,
-         std::make_shared<AsterixSubitemCompound>( 32, CommonConverter::NoneConverterBuffer,
+         std::make_shared<AsterixSubitemCompound>( 32, CommonConverter::NoneConverterBuffer::get(),
             sub_sub_item_390_ifi ) ) );
    flight_plan_data.push_back(
       subitem_t( Cat011ItemNames::I011_390_FCT,
-         std::make_shared<AsterixSubitemCompound>( 8, CommonConverter::NoneConverterBuffer,
+         std::make_shared<AsterixSubitemCompound>( 8, CommonConverter::NoneConverterBuffer::get(),
             sub_sub_item_390_fct ) ) );
    flight_plan_data.push_back(
       subitem_t( Cat011ItemNames::I011_390_TAC,
-         std::make_shared<AsterixSubitemBytes>( 32, StringConverter::toASCII ) ) );
+         std::make_shared<AsterixSubitemBytes>( 32, StringConverter::ToASCII::get() ) ) );
    flight_plan_data.push_back(
       subitem_t( Cat011ItemNames::I011_390_WTC,
-         std::make_shared<AsterixSubitemBytes>( 8, StringConverter::toASCII ) ) );
+         std::make_shared<AsterixSubitemBytes>( 8, StringConverter::ToASCII::get() ) ) );
    flight_plan_data.push_back(
       subitem_t( Cat011ItemNames::I011_390_DEP,
-         std::make_shared<AsterixSubitemBytes>( 32, StringConverter::toASCII ) ) );
+         std::make_shared<AsterixSubitemBytes>( 32, StringConverter::ToASCII::get() ) ) );
    flight_plan_data.push_back(
       subitem_t( Cat011ItemNames::I011_390_DST,
-         std::make_shared<AsterixSubitemBytes>( 32, StringConverter::toASCII ) ) );
+         std::make_shared<AsterixSubitemBytes>( 32, StringConverter::ToASCII::get() ) ) );
    flight_plan_data.push_back(
       subitem_t( Cat011ItemNames::I011_390_RDS,
-         std::make_shared<AsterixSubitemCompound>( 24, CommonConverter::NoneConverterBuffer,
+         std::make_shared<AsterixSubitemCompound>( 24, CommonConverter::NoneConverterBuffer::get(),
             sub_sub_item_390_rds ) ) );
    flight_plan_data.push_back(
       subitem_t( Cat011ItemNames::I011_390_CFL,
-         std::make_shared<AsterixSubitemUnsigned>( 16, DoubleConverter::fraction4th ) ) );
+         std::make_shared<AsterixSubitemUnsigned>( 16, DoubleConverter::Fraction4th::get() ) ) );
    flight_plan_data.push_back(
       subitem_t( Cat011ItemNames::I011_390_CTL,
-         std::make_shared<AsterixSubitemCompound>( 16, CommonConverter::NoneConverterBuffer,
+         std::make_shared<AsterixSubitemCompound>( 16, CommonConverter::NoneConverterBuffer::get(),
             sub_sub_item_390_ctl ) ) );
    flight_plan_data.push_back(
       subitem_t( Cat011ItemNames::I011_390_TOD,
-         std::make_shared<AsterixSubItemRep>( 32, CommonConverter::NoneConverterBuffer,
+         std::make_shared<AsterixSubItemRep>( 32, CommonConverter::NoneConverterBuffer::get(),
             sub_sub_item_390_tod ) ) );
    flight_plan_data.push_back(
       subitem_t( Cat011ItemNames::I011_390_AST,
-         std::make_shared<AsterixSubitemBytes>( 48, StringConverter::toASCII ) ) );
+         std::make_shared<AsterixSubitemBytes>( 48, StringConverter::ToASCII::get() ) ) );
    flight_plan_data.push_back(
       subitem_t( Cat011ItemNames::I011_390_STS,
-         std::make_shared<AsterixSubitemCompound>( 8, CommonConverter::NoneConverterBuffer,
+         std::make_shared<AsterixSubitemCompound>( 8, CommonConverter::NoneConverterBuffer::get(),
             sub_sub_item_390_sts ) ) );
 
    subitem_map_t vehicle_fleet;
    vehicle_fleet.push_back(
       subitem_t( Cat011ItemNames::I011_300_VFI,
-         std::make_shared<AsterixSubitemUnsigned>( 8, CommonConverter::NoneConverter ) ) );
+         std::make_shared<AsterixSubitemUnsigned>( 8, CommonConverter::NoneConverter::get() ) ) );
 
    subitem_map_t preprogrammed_msg;
    preprogrammed_msg.push_back(
       subitem_t( Cat011ItemNames::I011_310_TRB,
-         std::make_shared<AsterixSubitemUnsigned>( 1, CommonConverter::NoneConverter ) ) );
+         std::make_shared<AsterixSubitemUnsigned>( 1, CommonConverter::NoneConverter::get() ) ) );
    preprogrammed_msg.push_back(
       subitem_t( Cat011ItemNames::I011_310_MSG,
-         std::make_shared<AsterixSubitemUnsigned>( 7, CommonConverter::NoneConverter ) ) );
+         std::make_shared<AsterixSubitemUnsigned>( 7, CommonConverter::NoneConverter::get() ) ) );
 
    subitem_map_t estimated_acc;
    subitem_map_t sub_sub_item_500_apc;
    sub_sub_item_500_apc.push_back(
       subitem_t( Cat011ItemNames::I011_500_APC_X,
-         std::make_shared<AsterixSubitemUnsigned>( 8, DoubleConverter::fraction4th ) ) );
+         std::make_shared<AsterixSubitemUnsigned>( 8, DoubleConverter::Fraction4th::get() ) ) );
    sub_sub_item_500_apc.push_back(
       subitem_t( Cat011ItemNames::I011_500_APC_Y,
-         std::make_shared<AsterixSubitemUnsigned>( 8, DoubleConverter::fraction4th ) ) );
+         std::make_shared<AsterixSubitemUnsigned>( 8, DoubleConverter::Fraction4th::get() ) ) );
 
    subitem_map_t sub_sub_item_500_apw;
    sub_sub_item_500_apw.push_back(
       subitem_t( Cat011ItemNames::I011_500_APW_LAT,
-         std::make_shared<AsterixSubitemUnsigned>( 16, DoubleConverter::WGS84resolution31Bit ) ) );
+         std::make_shared<AsterixSubitemUnsigned>( 16, DoubleConverter::WGS84resolution31Bit::get() ) ) );
    sub_sub_item_500_apw.push_back(
       subitem_t( Cat011ItemNames::I011_500_APW_LNG,
-         std::make_shared<AsterixSubitemUnsigned>( 16, DoubleConverter::WGS84resolution31Bit ) ) );
+         std::make_shared<AsterixSubitemUnsigned>( 16, DoubleConverter::WGS84resolution31Bit::get() ) ) );
 
    subitem_map_t sub_sub_item_500_avc;
    sub_sub_item_500_avc.push_back(
       subitem_t( Cat011ItemNames::I011_500_AVC_X,
-         std::make_shared<AsterixSubitemUnsigned>( 8, UnsignedDoubleConverter::fraction10th ) ) );
+         std::make_shared<AsterixSubitemUnsigned>( 8, UnsignedDoubleConverter::Fraction10th::get() ) ) );
    sub_sub_item_500_avc.push_back(
       subitem_t( Cat011ItemNames::I011_500_AVC_Y,
-         std::make_shared<AsterixSubitemUnsigned>( 8, UnsignedDoubleConverter::fraction10th ) ) );
+         std::make_shared<AsterixSubitemUnsigned>( 8, UnsignedDoubleConverter::Fraction10th::get() ) ) );
 
    subitem_map_t sub_sub_item_500_aac;
    sub_sub_item_500_aac.push_back(
       subitem_t( Cat011ItemNames::I011_500_AAC_X,
-         std::make_shared<AsterixSubitemUnsigned>( 8, UnsignedDoubleConverter::fraction100th ) ) );
+         std::make_shared<AsterixSubitemUnsigned>( 8, UnsignedDoubleConverter::Fraction100th::get() ) ) );
    sub_sub_item_500_aac.push_back(
       subitem_t( Cat011ItemNames::I011_500_AAC_Y,
-         std::make_shared<AsterixSubitemUnsigned>( 8, UnsignedDoubleConverter::fraction100th ) ) );
+         std::make_shared<AsterixSubitemUnsigned>( 8, UnsignedDoubleConverter::Fraction100th::get() ) ) );
 
    // Add all estimated accuracies to the sub item
    estimated_acc.push_back(
       subitem_t( Cat011ItemNames::I011_500_APC,
-         std::make_shared<AsterixSubitemCompound>( 16, CommonConverter::NoneConverterBuffer,
+         std::make_shared<AsterixSubitemCompound>( 16, CommonConverter::NoneConverterBuffer::get(),
             sub_sub_item_500_apc ) ) );
    estimated_acc.push_back(
       subitem_t( Cat011ItemNames::I011_500_APW,
-         std::make_shared<AsterixSubitemCompound>( 32, CommonConverter::NoneConverterBuffer,
+         std::make_shared<AsterixSubitemCompound>( 32, CommonConverter::NoneConverterBuffer::get(),
             sub_sub_item_500_apw ) ) );
    estimated_acc.push_back(
       subitem_t( Cat011ItemNames::I011_500_ATH,
-         std::make_shared<AsterixSubitemUnsigned>( 16, DoubleConverter::fraction4th ) ) );
+         std::make_shared<AsterixSubitemUnsigned>( 16, DoubleConverter::Fraction4th::get() ) ) );
    estimated_acc.push_back(
       subitem_t( Cat011ItemNames::I011_500_AVC,
-         std::make_shared<AsterixSubitemCompound>( 16, CommonConverter::NoneConverterBuffer,
+         std::make_shared<AsterixSubitemCompound>( 16, CommonConverter::NoneConverterBuffer::get(),
             sub_sub_item_500_avc ) ) );
    estimated_acc.push_back(
       subitem_t( Cat011ItemNames::I011_500_ARC,
-         std::make_shared<AsterixSubitemUnsigned>( 8, UnsignedDoubleConverter::fraction10th ) ) );
+         std::make_shared<AsterixSubitemUnsigned>( 8, UnsignedDoubleConverter::Fraction10th::get() ) ) );
    estimated_acc.push_back(
       subitem_t( Cat011ItemNames::I011_500_AAC,
-         std::make_shared<AsterixSubitemCompound>( 16, CommonConverter::NoneConverterBuffer,
+         std::make_shared<AsterixSubitemCompound>( 16, CommonConverter::NoneConverterBuffer::get(),
             sub_sub_item_500_aac ) ) );
 
    subitem_map_t allert_msg;
    allert_msg.push_back(
       subitem_t( Cat011ItemNames::I011_600_ACK,
-         std::make_shared<AsterixSubitemUnsigned>( 1, CommonConverter::NoneConverter ) ) );
+         std::make_shared<AsterixSubitemUnsigned>( 1, CommonConverter::NoneConverter::get() ) ) );
    allert_msg.push_back(
       subitem_t( Cat011ItemNames::I011_600_SVR,
-         std::make_shared<AsterixSubitemUnsigned>( 2, CommonConverter::NoneConverter ) ) );
+         std::make_shared<AsterixSubitemUnsigned>( 2, CommonConverter::NoneConverter::get() ) ) );
    allert_msg.push_back(
       subitem_t( Cat011ItemNames::I011_600_SPARE,
-         std::make_shared<AsterixSubitemUnsigned>( 5, CommonConverter::NoneConverter ) ) );
+         std::make_shared<AsterixSubitemUnsigned>( 5, CommonConverter::NoneConverter::get() ) ) );
    allert_msg.push_back(
       subitem_t( Cat011ItemNames::I011_600_AT,
-         std::make_shared<AsterixSubitemUnsigned>( 8, CommonConverter::NoneConverter ) ) );
+         std::make_shared<AsterixSubitemUnsigned>( 8, CommonConverter::NoneConverter::get() ) ) );
    allert_msg.push_back(
       subitem_t( Cat011ItemNames::I011_600_AN,
-         std::make_shared<AsterixSubitemUnsigned>( 8, CommonConverter::NoneConverter ) ) );
+         std::make_shared<AsterixSubitemUnsigned>( 8, CommonConverter::NoneConverter::get() ) ) );
 
    subitem_map_t alert_trk;
    alert_trk.push_back(
       subitem_t( Cat011ItemNames::I011_605_SPARE,
-         std::make_shared<AsterixSubitemUnsigned>( 4, CommonConverter::NoneConverter ) ) );
+         std::make_shared<AsterixSubitemUnsigned>( 4, CommonConverter::NoneConverter::get() ) ) );
    alert_trk.push_back(
       subitem_t( Cat011ItemNames::I011_605_TRK,
-         std::make_shared<AsterixSubitemUnsigned>( 12, CommonConverter::NoneConverter ) ) );
+         std::make_shared<AsterixSubitemUnsigned>( 12, CommonConverter::NoneConverter::get() ) ) );
 
    subitem_map_t holtbar_status;
    holtbar_status.push_back(
       subitem_t( Cat011ItemNames::I011_610_BKN,
-         std::make_shared<AsterixSubitemUnsigned>( 4, CommonConverter::NoneConverter ) ) );
+         std::make_shared<AsterixSubitemUnsigned>( 4, CommonConverter::NoneConverter::get() ) ) );
    holtbar_status.push_back(
       subitem_t( Cat011ItemNames::I011_610_BKI,
-         std::make_shared<AsterixSubitemUnsigned>( 12, CommonConverter::NoneConverter ) ) );
+         std::make_shared<AsterixSubitemUnsigned>( 12, CommonConverter::NoneConverter::get() ) ) );
 
    // Add all items
    subitems.insert( subitem_map_item_t( 1, sensor_identification ) );

@@ -34,11 +34,7 @@
 class AsterixSubitemBytes: public AsterixSubitemBase {
 
 public:
-   AsterixSubitemBytes( int length,
-      std::function<std::string( char*, unsigned int )> converterFunction );
-   AsterixSubitemBytes( int length,
-      std::function<std::string( char*, unsigned int, double& dest_buffer )> converterFunction );
-
+   AsterixSubitemBytes(int length, std::shared_ptr<ItemConverterBase> converter);
    virtual ~AsterixSubitemBytes();
 
    virtual void decode( std::deque<char>& input_buffer, unsigned bit_position = 0 ) override;

@@ -32,6 +32,7 @@
 #include "AsterixSubitemUnsigned.h"
 #include "AsterixSubitemBitNamed.h"
 #include "Cat001ItemNames.h"
+#include "AsterixEncodingHelper.h"
 
 // Converter
 #include "CommonConverter.h"
@@ -41,6 +42,7 @@
 
 #include "DetectionEntry.h"
 
+#include <bitset>
 AsterixCategory001::AsterixCategory001() :
    AsterixCategory( 1 ) {
    // Init the calling Asterix Category
@@ -90,281 +92,281 @@ void AsterixCategory001::setSubitems() {
    subitem_map_t sensor_identification;
    sensor_identification.push_back(
       subitem_t( Cat001ItemNames::I001_010_SAC,
-         std::make_shared<AsterixSubitemUnsigned>( 8, CommonConverter::NoneConverter ) ) );
+         std::make_shared<AsterixSubitemUnsigned>( 8, CommonConverter::NoneConverter::get() ) ) );
    sensor_identification.push_back(
       subitem_t( Cat001ItemNames::I001_010_SIC,
-         std::make_shared<AsterixSubitemUnsigned>( 8, CommonConverter::NoneConverter ) ) );
+         std::make_shared<AsterixSubitemUnsigned>( 8, CommonConverter::NoneConverter::get() ) ) );
 
    // Target Report descriptor
    subitem_map_t target_report_descriptor;
    target_report_descriptor.push_back(
       subitem_t( Cat001ItemNames::I001_020_TYP,
-         std::make_shared<AsterixSubitemBitNamed>( 1, CommonConverter::NoneConverter,
+         std::make_shared<AsterixSubitemBitNamed>( 1, CommonConverter::NoneConverter::get(),
             AsterixSubitemBitNamed::value_names_t( { { 0, "Plot" }, { 1, "Track" } } ) ) ) );
    target_report_descriptor.push_back(
       subitem_t( Cat001ItemNames::I001_020_SIM,
-         std::make_shared<AsterixSubitemBitNamed>( 1, CommonConverter::NoneConverter,
+         std::make_shared<AsterixSubitemBitNamed>( 1, CommonConverter::NoneConverter::get(),
             AsterixSubitemBitNamed::value_names_t( { { 0, "Actual Plot" },
                { 1, "Simulated Plot" } } ) ) ) );
    target_report_descriptor.push_back(
       subitem_t( Cat001ItemNames::I001_020_DET,
-         std::make_shared<AsterixSubitemBitNamed>( 2, CommonConverter::NoneConverter,
+         std::make_shared<AsterixSubitemBitNamed>( 2, CommonConverter::NoneConverter::get(),
             AsterixSubitemBitNamed::value_names_t( { { 0, "No Detection" }, { 1, "PSR" }, { 2,
                "SSR" }, { 3, "CMB" } } ) ) ) );
    target_report_descriptor.push_back(
       subitem_t( Cat001ItemNames::I001_020_ANT,
-         std::make_shared<AsterixSubitemBitNamed>( 1, CommonConverter::NoneConverter,
+         std::make_shared<AsterixSubitemBitNamed>( 1, CommonConverter::NoneConverter::get(),
             AsterixSubitemBitNamed::value_names_t(
                { { 0, "Antenna 1" }, { 1, "Antenna 2" } } ) ) ) );
    target_report_descriptor.push_back(
       subitem_t( Cat001ItemNames::I001_020_SPI,
-         std::make_shared<AsterixSubitemBitNamed>( 1, CommonConverter::NoneConverter,
+         std::make_shared<AsterixSubitemBitNamed>( 1, CommonConverter::NoneConverter::get(),
             AsterixSubitemBitNamed::value_names_t(
                { { 0, "Default" }, { 1, "SPI set" } } ) ) ) );
    target_report_descriptor.push_back(
       subitem_t( Cat001ItemNames::I001_020_RAB,
-         std::make_shared<AsterixSubitemBitNamed>( 1, CommonConverter::NoneConverter,
+         std::make_shared<AsterixSubitemBitNamed>( 1, CommonConverter::NoneConverter::get(),
             AsterixSubitemBitNamed::value_names_t(
                { { 0, "Default" }, { 1, "RAB set" } } ) ) ) );
    target_report_descriptor.push_back(
       subitem_t( Cat001ItemNames::I001_020_TST,
-         std::make_shared<AsterixSubitemBitNamed>( 1, CommonConverter::NoneConverter,
+         std::make_shared<AsterixSubitemBitNamed>( 1, CommonConverter::NoneConverter::get(),
             AsterixSubitemBitNamed::value_names_t(
                { { 0, "Default" }, { 1, "Test Target" } } ) ) ) );
    target_report_descriptor.push_back(
       subitem_t( Cat001ItemNames::I001_020_DS1,
-         std::make_shared<AsterixSubitemBitNamed>( 2, CommonConverter::NoneConverter,
+         std::make_shared<AsterixSubitemBitNamed>( 2, CommonConverter::NoneConverter::get(),
             AsterixSubitemBitNamed::value_names_t( { { 0, "Default" }, { 1, "Code 7500" }, { 2,
                "Code 7600" }, { 3, "Code 7700" } } ) ) ) );
    target_report_descriptor.push_back(
       subitem_t( Cat001ItemNames::I001_020_ME,
-         std::make_shared<AsterixSubitemBitNamed>( 1, CommonConverter::NoneConverter,
+         std::make_shared<AsterixSubitemBitNamed>( 1, CommonConverter::NoneConverter::get(),
             AsterixSubitemBitNamed::value_names_t( { { 0, "Default" },
                { 1, "Military Emergency" } } ) ) ) );
    target_report_descriptor.push_back(
       subitem_t( Cat001ItemNames::I001_020_MI,
-         std::make_shared<AsterixSubitemBitNamed>( 1, CommonConverter::NoneConverter,
+         std::make_shared<AsterixSubitemBitNamed>( 1, CommonConverter::NoneConverter::get(),
             AsterixSubitemBitNamed::value_names_t( { { 0, "Default" }, { 1,
                "Military Identification" } } ) ) ) );
 
    subitem_map_t track_plot_number;
    track_plot_number.push_back(
       subitem_t( Cat001ItemNames::I001_161_TPN,
-         std::make_shared<AsterixSubitemUnsigned>( 16, CommonConverter::NoneConverter ) ) );
+         std::make_shared<AsterixSubitemUnsigned>( 16, CommonConverter::NoneConverter::get() ) ) );
 
    //Measured Position in Polar Coordinates
    subitem_map_t measure_pos_polar;
    measure_pos_polar.push_back(
       subitem_t( Cat001ItemNames::I001_040_RHO,
-         std::make_shared<AsterixSubitemUnsigned>( 16, DoubleConverter::fraction128th ) ) );
+         std::make_shared<AsterixSubitemUnsigned>( 16, DoubleConverter::Fraction128th::get() ) ) );
    measure_pos_polar.push_back(
       subitem_t( Cat001ItemNames::I001_040_THETA,
-         std::make_shared<AsterixSubitemUnsigned>( 16, UnsignedDoubleConverter::circleSegment16Bit ) ) );
+         std::make_shared<AsterixSubitemUnsigned>( 16, UnsignedDoubleConverter::CircleSegment16Bit::get() ) ) );
 
    //Calculated Position in Cartesian Coordinates
    subitem_map_t measure_pos_cart;
    measure_pos_cart.push_back(
       subitem_t( Cat001ItemNames::I001_042_Y,
-         std::make_shared<AsterixSubitemBase>( 16, CommonConverter::NoneConverter ) ) );
+         std::make_shared<AsterixSubitemBase>( 16, CommonConverter::NoneConverter::get() ) ) );
    measure_pos_cart.push_back(
       subitem_t( Cat001ItemNames::I001_042_X,
-         std::make_shared<AsterixSubitemBase>( 16, CommonConverter::NoneConverter ) ) );
+         std::make_shared<AsterixSubitemBase>( 16, CommonConverter::NoneConverter::get() ) ) );
 
    //Calculated Track Velocity in Polar Coordinates
    subitem_map_t calc_vel_polar;
    calc_vel_polar.push_back(
       subitem_t( Cat001ItemNames::I001_200_GS,
-         std::make_shared<AsterixSubitemUnsigned>( 16, UnsignedDoubleConverter::speedNMToKt ) ) );
+         std::make_shared<AsterixSubitemUnsigned>( 16, UnsignedDoubleConverter::SpeedNMToKt::get() ) ) );
    calc_vel_polar.push_back(
       subitem_t( Cat001ItemNames::I001_200_HEAD,
-         std::make_shared<AsterixSubitemUnsigned>( 16, UnsignedDoubleConverter::circleSegment16Bit ) ) );
+         std::make_shared<AsterixSubitemUnsigned>( 16, UnsignedDoubleConverter::CircleSegment16Bit::get() ) ) );
 
    //Mode 3A Code
    subitem_map_t mode_3a_code;
    mode_3a_code.push_back(
       subitem_t( Cat001ItemNames::I001_070_V,
-         std::make_shared<AsterixSubitemUnsigned>( 1, CommonConverter::NoneConverter ) ) ); // valid flag
+         std::make_shared<AsterixSubitemUnsigned>( 1, CommonConverter::NoneConverter::get() ) ) ); // valid flag
    mode_3a_code.push_back(
       subitem_t( Cat001ItemNames::I001_070_G,
-         std::make_shared<AsterixSubitemUnsigned>( 1, CommonConverter::NoneConverter ) ) ); // garbled flag
+         std::make_shared<AsterixSubitemUnsigned>( 1, CommonConverter::NoneConverter::get() ) ) ); // garbled flag
    mode_3a_code.push_back(
       subitem_t( Cat001ItemNames::I001_070_L,
-         std::make_shared<AsterixSubitemUnsigned>( 1, CommonConverter::NoneConverter ) ) ); //locally tracked flag
+         std::make_shared<AsterixSubitemUnsigned>( 1, CommonConverter::NoneConverter::get() ) ) ); //locally tracked flag
    mode_3a_code.push_back(
       subitem_t( Cat001ItemNames::I001_070_SPARE,
-         std::make_shared<AsterixSubitemUnsigned>( 1, CommonConverter::NoneConverter ) ) ); // Not used
+         std::make_shared<AsterixSubitemUnsigned>( 1, CommonConverter::NoneConverter::get() ) ) ); // Not used
    mode_3a_code.push_back(
       subitem_t( Cat001ItemNames::I001_070_CODE,
-         std::make_shared<AsterixSubitemUnsigned>( 12, CommonConverter::NoneConverter ) ) ); // code in octal representation
+         std::make_shared<AsterixSubitemUnsigned>( 12, CommonConverter::NoneConverter::get() ) ) ); // code in octal representation
 
    //Mode C Code
    subitem_map_t mode_c_code;
    mode_c_code.push_back(
       subitem_t( Cat001ItemNames::I001_090_V,
-         std::make_shared<AsterixSubitemUnsigned>( 1, CommonConverter::NoneConverter ) ) ); // valid flag
+         std::make_shared<AsterixSubitemUnsigned>( 1, CommonConverter::NoneConverter::get() ) ) ); // valid flag
    mode_c_code.push_back(
       subitem_t( Cat001ItemNames::I001_090_G,
-         std::make_shared<AsterixSubitemUnsigned>( 1, CommonConverter::NoneConverter ) ) ); // garbled flag
+         std::make_shared<AsterixSubitemUnsigned>( 1, CommonConverter::NoneConverter::get() ) ) ); // garbled flag
    mode_c_code.push_back(
       subitem_t( Cat001ItemNames::I001_090_CODE,
-         std::make_shared<AsterixSubitemUnsigned>( 14, IntegerConverter::lBitsToQuarter ) ) ); // code in binary representation
+         std::make_shared<AsterixSubitemUnsigned>( 14, IntegerConverter::LBitsToQuarter::get() ) ) ); // code in binary representation
 
    //Truncated Time of Day
    subitem_map_t tod;
    tod.push_back(
       subitem_t( Cat001ItemNames::I001_141_TOD,
-         std::make_shared<AsterixSubitemUnsigned>( 16, UnsignedDoubleConverter::fraction128th ) ) ); // Time since midnight in s
+         std::make_shared<AsterixSubitemUnsigned>( 16, UnsignedDoubleConverter::Fraction128th::get() ) ) ); // Time since midnight in s
 
    //Radar Plot Characteristics
    subitem_map_t radar_plot_char;
    radar_plot_char.push_back(
       subitem_t( Cat001ItemNames::I001_130_CHAR,
-         std::make_shared<AsterixSubitemBase>( 8, CommonConverter::NoneConverter ) ) ); // Application dependent
+         std::make_shared<AsterixSubitemBase>( 8, CommonConverter::NoneConverter::get() ) ) ); // Application dependent
 
    //Received Power
    subitem_map_t received_power;
    received_power.push_back(
       subitem_t( Cat001ItemNames::I001_131_POW,
-         std::make_shared<AsterixSubitemBase>( 8, CommonConverter::NoneConverter ) ) );
+         std::make_shared<AsterixSubitemBase>( 8, CommonConverter::NoneConverter::get() ) ) );
 
    //Measured Radial Doppler Speed
    subitem_map_t dopppler_speed;
    dopppler_speed.push_back(
       subitem_t( Cat001ItemNames::I001_120_DS,
-         std::make_shared<AsterixSubitemBase>( 8, CommonConverter::NoneConverter ) ) );
+         std::make_shared<AsterixSubitemBase>( 8, CommonConverter::NoneConverter::get() ) ) );
 
    //Track Status
    subitem_map_t track_status;
    track_status.push_back(
       subitem_t( Cat001ItemNames::I001_170_CON,
-         std::make_shared<AsterixSubitemBitNamed>( 1, CommonConverter::NoneConverter,
+         std::make_shared<AsterixSubitemBitNamed>( 1, CommonConverter::NoneConverter::get(),
             AsterixSubitemBitNamed::value_names_t(
                { { 0, "Confirmed" }, { 1, "Tentative" } } ) ) ) );
    track_status.push_back(
       subitem_t( Cat001ItemNames::I001_170_RAD,
-         std::make_shared<AsterixSubitemBitNamed>( 1, CommonConverter::NoneConverter,
+         std::make_shared<AsterixSubitemBitNamed>( 1, CommonConverter::NoneConverter::get(),
             AsterixSubitemBitNamed::value_names_t(
                { { 0, "Primary" }, { 1, "SSR CMB" } } ) ) ) );
    track_status.push_back(
       subitem_t( Cat001ItemNames::I001_170_MAN,
-         std::make_shared<AsterixSubitemBitNamed>( 1, CommonConverter::NoneConverter,
+         std::make_shared<AsterixSubitemBitNamed>( 1, CommonConverter::NoneConverter::get(),
             AsterixSubitemBitNamed::value_names_t( { { 0, "Default" }, { 1,
                "Aircraft manoeuvring" } } ) ) ) );
    track_status.push_back(
       subitem_t( Cat001ItemNames::I001_170_DOU,
-         std::make_shared<AsterixSubitemBitNamed>( 1, CommonConverter::NoneConverter,
+         std::make_shared<AsterixSubitemBitNamed>( 1, CommonConverter::NoneConverter::get(),
             AsterixSubitemBitNamed::value_names_t(
                { { 0, "Default" }, { 1, "Doubtful" } } ) ) ) );
    track_status.push_back(
-      subitem_t( Cat001ItemNames::I001_170_RDCP,
-         std::make_shared<AsterixSubitemBitNamed>( 1, CommonConverter::NoneConverter,
+      subitem_t( Cat001ItemNames::I001_170_RDPC,
+         std::make_shared<AsterixSubitemBitNamed>( 1, CommonConverter::NoneConverter::get(),
             AsterixSubitemBitNamed::value_names_t(
                { { 0, "RDP Chain 1" }, { 1, "RDP Chain 2" } } ) ) ) );
    track_status.push_back(
       subitem_t( Cat001ItemNames::I001_170_SPARE,
-         std::make_shared<AsterixSubitemBase>( 1, CommonConverter::NoneConverter ) ) );
+         std::make_shared<AsterixSubitemBase>( 1, CommonConverter::NoneConverter::get() ) ) );
    track_status.push_back(
       subitem_t( Cat001ItemNames::I001_170_GHO,
-         std::make_shared<AsterixSubitemBitNamed>( 1, CommonConverter::NoneConverter,
+         std::make_shared<AsterixSubitemBitNamed>( 1, CommonConverter::NoneConverter::get(),
             AsterixSubitemBitNamed::value_names_t( { { 0, "Default" }, { 1, "Ghost" } } ) ) ) );
    track_status.push_back(
       subitem_t( Cat001ItemNames::I001_170_TRE,
-         std::make_shared<AsterixSubitemBitNamed>( 1, CommonConverter::NoneConverter,
+         std::make_shared<AsterixSubitemBitNamed>( 1, CommonConverter::NoneConverter::get(),
             AsterixSubitemBitNamed::value_names_t(
                { { 0, "Default" }, { 1, "Last Report" } } ) ) ) );
    track_status.push_back(
       subitem_t( Cat001ItemNames::I001_170_SPARE,
-         std::make_shared<AsterixSubitemBase>( 7, CommonConverter::NoneConverter ) ) );
+         std::make_shared<AsterixSubitemBase>( 7, CommonConverter::NoneConverter::get() ) ) );
 
    //Track Quality
    subitem_map_t track_quality;
    track_quality.push_back(
       subitem_t( Cat001ItemNames::I001_210_QL,
-         std::make_shared<AsterixSubitemUnsigned>( 7, CommonConverter::NoneConverter ) ) ); // Quality indicator
+         std::make_shared<AsterixSubitemUnsigned>( 7, CommonConverter::NoneConverter::get() ) ) ); // Quality indicator
 
    //Mode 2 Code
    subitem_map_t mode_2_code;
    mode_2_code.push_back(
       subitem_t( Cat001ItemNames::I001_050_CODE,
-         std::make_shared<AsterixSubitemBase>( 12, CommonConverter::NoneConverter ) ) ); // code in octal representation
+         std::make_shared<AsterixSubitemBase>( 12, CommonConverter::NoneConverter::get() ) ) ); // code in octal representation
    mode_2_code.push_back(
       subitem_t( Cat001ItemNames::I001_050_SPARE,
-         std::make_shared<AsterixSubitemBase>( 1, CommonConverter::NoneConverter ) ) ); // Not used
+         std::make_shared<AsterixSubitemBase>( 1, CommonConverter::NoneConverter::get() ) ) ); // Not used
    mode_2_code.push_back(
       subitem_t( Cat001ItemNames::I001_050_L,
-         std::make_shared<AsterixSubitemBase>( 1, CommonConverter::NoneConverter ) ) ); //locally tracked flag
+         std::make_shared<AsterixSubitemBase>( 1, CommonConverter::NoneConverter::get() ) ) ); //locally tracked flag
    mode_2_code.push_back(
       subitem_t( Cat001ItemNames::I001_050_G,
-         std::make_shared<AsterixSubitemBase>( 1, CommonConverter::NoneConverter ) ) ); // garbled flag
+         std::make_shared<AsterixSubitemBase>( 1, CommonConverter::NoneConverter::get() ) ) ); // garbled flag
    mode_2_code.push_back(
       subitem_t( Cat001ItemNames::I001_050_V,
-         std::make_shared<AsterixSubitemBase>( 1, CommonConverter::NoneConverter ) ) ); // valid flag
+         std::make_shared<AsterixSubitemBase>( 1, CommonConverter::NoneConverter::get() ) ) ); // valid flag
 
    //Mode-3/A Code Confidence Indicator
    subitem_map_t m3a_conf_ind;
    m3a_conf_ind.push_back(
       subitem_t( Cat001ItemNames::I001_080_QX,
-         std::make_shared<AsterixSubitemBase>( 12, CommonConverter::NoneConverter ) ) ); // Quality per M3A Code bit
+         std::make_shared<AsterixSubitemBase>( 12, CommonConverter::NoneConverter::get() ) ) ); // Quality per M3A Code bit
    m3a_conf_ind.push_back(
       subitem_t( Cat001ItemNames::I001_080_SPARE,
-         std::make_shared<AsterixSubitemBase>( 4, CommonConverter::NoneConverter ) ) ); // Not used
+         std::make_shared<AsterixSubitemBase>( 4, CommonConverter::NoneConverter::get() ) ) ); // Not used
 
    //Mode-C Code and Code Confidence Indicator
    subitem_map_t mc_conf_ind;
    mc_conf_ind.push_back(
       subitem_t( Cat001ItemNames::I001_100_QX,
-         std::make_shared<AsterixSubitemBase>( 12, CommonConverter::NoneConverter ) ) ); // Quality per MC Code bit
+         std::make_shared<AsterixSubitemBase>( 12, CommonConverter::NoneConverter::get() ) ) ); // Quality per MC Code bit
    mc_conf_ind.push_back(
       subitem_t( Cat001ItemNames::I001_100_SPARE,
-         std::make_shared<AsterixSubitemBase>( 4, CommonConverter::NoneConverter ) ) ); // Not used
+         std::make_shared<AsterixSubitemBase>( 4, CommonConverter::NoneConverter::get() ) ) ); // Not used
    mc_conf_ind.push_back(
       subitem_t( Cat001ItemNames::I001_100_CODE,
-         std::make_shared<AsterixSubitemBase>( 12, CommonConverter::NoneConverter ) ) ); // code in gray representation
+         std::make_shared<AsterixSubitemBase>( 12, CommonConverter::NoneConverter::get() ) ) ); // code in gray representation
    mc_conf_ind.push_back(
       subitem_t( Cat001ItemNames::I001_100_SPARE,
-         std::make_shared<AsterixSubitemBase>( 2, CommonConverter::NoneConverter ) ) ); // Not used
+         std::make_shared<AsterixSubitemBase>( 2, CommonConverter::NoneConverter::get() ) ) ); // Not used
    mc_conf_ind.push_back(
       subitem_t( Cat001ItemNames::I001_100_G,
-         std::make_shared<AsterixSubitemBase>( 1, CommonConverter::NoneConverter ) ) ); // garbled flag
+         std::make_shared<AsterixSubitemBase>( 1, CommonConverter::NoneConverter::get() ) ) ); // garbled flag
    mc_conf_ind.push_back(
       subitem_t( Cat001ItemNames::I001_100_V,
-         std::make_shared<AsterixSubitemBase>( 1, CommonConverter::NoneConverter ) ) ); // valid flag
+         std::make_shared<AsterixSubitemBase>( 1, CommonConverter::NoneConverter::get() ) ) ); // valid flag
 
    // Mode-2 Code Confidence Indicator
    subitem_map_t m2_conf_ind;
    m2_conf_ind.push_back(
       subitem_t( Cat001ItemNames::I001_060_QX,
-         std::make_shared<AsterixSubitemBase>( 12, CommonConverter::NoneConverter ) ) ); // Quality per M2 Code bit
+         std::make_shared<AsterixSubitemBase>( 12, CommonConverter::NoneConverter::get() ) ) ); // Quality per M2 Code bit
    m2_conf_ind.push_back(
       subitem_t( Cat001ItemNames::I001_060_SPARE,
-         std::make_shared<AsterixSubitemBase>( 4, CommonConverter::NoneConverter ) ) ); // Not used
+         std::make_shared<AsterixSubitemBase>( 4, CommonConverter::NoneConverter::get() ) ) ); // Not used
 
    //Warning/Error Conditions
    subitem_map_t warning_err;
    warning_err.push_back(
       subitem_t( Cat001ItemNames::I001_030_ME,
-         std::make_shared<AsterixSubitemBase>( 8, CommonConverter::NoneConverter ) ) );
+         std::make_shared<AsterixSubitemBase>( 8, CommonConverter::NoneConverter::get() ) ) );
 
    //Presence of X-Pulse
    subitem_map_t x_pulse;
    x_pulse.push_back(
       subitem_t( Cat001ItemNames::I001_150_XA,
-         std::make_shared<AsterixSubitemBase>( 1, CommonConverter::NoneConverter ) ) ); // Mode 3A impulse
+         std::make_shared<AsterixSubitemBase>( 1, CommonConverter::NoneConverter::get() ) ) ); // Mode 3A impulse
    x_pulse.push_back(
       subitem_t( Cat001ItemNames::I001_150_SPARE,
-         std::make_shared<AsterixSubitemBase>( 1, CommonConverter::NoneConverter ) ) ); // Not used
+         std::make_shared<AsterixSubitemBase>( 1, CommonConverter::NoneConverter::get() ) ) ); // Not used
    x_pulse.push_back(
       subitem_t( Cat001ItemNames::I001_150_XC,
-         std::make_shared<AsterixSubitemBase>( 1, CommonConverter::NoneConverter ) ) ); // Mode C impulse
+         std::make_shared<AsterixSubitemBase>( 1, CommonConverter::NoneConverter::get() ) ) ); // Mode C impulse
    x_pulse.push_back(
       subitem_t( Cat001ItemNames::I001_150_SPARE,
-         std::make_shared<AsterixSubitemBase>( 2, CommonConverter::NoneConverter ) ) ); // Not used
+         std::make_shared<AsterixSubitemBase>( 2, CommonConverter::NoneConverter::get() ) ) ); // Not used
    x_pulse.push_back(
       subitem_t( Cat001ItemNames::I001_150_X2,
-         std::make_shared<AsterixSubitemBase>( 1, CommonConverter::NoneConverter ) ) ); // Mode 2 impulse
+         std::make_shared<AsterixSubitemBase>( 1, CommonConverter::NoneConverter::get() ) ) ); // Mode 2 impulse
    x_pulse.push_back(
       subitem_t( Cat001ItemNames::I001_150_SPARE,
-         std::make_shared<AsterixSubitemBase>( 2, CommonConverter::NoneConverter ) ) ); // Not used
+         std::make_shared<AsterixSubitemBase>( 2, CommonConverter::NoneConverter::get() ) ) ); // Not used
 
    //Add all the sub items to the category sub item map
    subitems.insert( subitem_map_item_t( 1, sensor_identification ) );

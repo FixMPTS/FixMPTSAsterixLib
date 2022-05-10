@@ -92,77 +92,77 @@ void AsterixCategory065::setSubitems() {
    subitem_map_t sensor_identification;
    sensor_identification.push_back(
       subitem_t( Cat065ItemNames::I065_010_SAC,
-         std::make_shared<AsterixSubitemUnsigned>( 8, CommonConverter::NoneConverter ) ) );
+         std::make_shared<AsterixSubitemUnsigned>( 8, CommonConverter::NoneConverter::get() ) ) );
    sensor_identification.push_back(
       subitem_t( Cat065ItemNames::I065_010_SIC,
-         std::make_shared<AsterixSubitemUnsigned>( 8, CommonConverter::NoneConverter ) ) );
+         std::make_shared<AsterixSubitemUnsigned>( 8, CommonConverter::NoneConverter::get() ) ) );
 
    subitem_map_t message_type;
    message_type.push_back(
       subitem_t( Cat065ItemNames::I065_000_TYP,
-         std::make_shared<AsterixSubitemUnsigned>( 8, CommonConverter::NoneConverter ) ) );
+         std::make_shared<AsterixSubitemUnsigned>( 8, CommonConverter::NoneConverter::get() ) ) );
 
    subitem_map_t service_identification;
    service_identification.push_back(
       subitem_t( Cat065ItemNames::I065_015_SID,
-         std::make_shared<AsterixSubitemUnsigned>( 8, CommonConverter::NoneConverter ) ) );
+         std::make_shared<AsterixSubitemUnsigned>( 8, CommonConverter::NoneConverter::get() ) ) );
 
    subitem_map_t time_of_mesage;
    time_of_mesage.push_back(
       subitem_t( Cat065ItemNames::I065_030_TOD,
-         std::make_shared<AsterixSubitemUnsigned>( 24, UnsignedDoubleConverter::fraction128th ) ) );
+         std::make_shared<AsterixSubitemUnsigned>( 24, UnsignedDoubleConverter::Fraction128th::get() ) ) );
 
    subitem_map_t batch_number;
    batch_number.push_back(
       subitem_t( Cat065ItemNames::I065_020_BTN,
-         std::make_shared<AsterixSubitemUnsigned>( 8, CommonConverter::NoneConverter ) ) );
+         std::make_shared<AsterixSubitemUnsigned>( 8, CommonConverter::NoneConverter::get() ) ) );
 
    subitem_map_t sdps_configuration;
    sdps_configuration.push_back(
       subitem_t( Cat065ItemNames::I065_040_NOGO,
-         std::make_shared<AsterixSubitemBitNamed>( 2, CommonConverter::NoneConverter,
+         std::make_shared<AsterixSubitemBitNamed>( 2, CommonConverter::NoneConverter::get(),
             AsterixSubitemBitNamed::value_names_t( { { 0, "Operational" }, { 1, "Degraded" }, {
                2, "Not Connected" }, { 3, "Unknowen" } } ) ) ) );
    sdps_configuration.push_back(
       subitem_t( Cat065ItemNames::I065_040_OVL,
-         std::make_shared<AsterixSubitemUnsigned>( 1, CommonConverter::NoneConverter ) ) );
+         std::make_shared<AsterixSubitemUnsigned>( 1, CommonConverter::NoneConverter::get() ) ) );
    sdps_configuration.push_back(
       subitem_t( Cat065ItemNames::I065_040_TSV,
-         std::make_shared<AsterixSubitemUnsigned>( 1, CommonConverter::NoneConverter ) ) );
+         std::make_shared<AsterixSubitemUnsigned>( 1, CommonConverter::NoneConverter::get() ) ) );
    sdps_configuration.push_back(
       subitem_t( Cat065ItemNames::I065_040_PSS,
-         std::make_shared<AsterixSubitemBitNamed>( 2, CommonConverter::NoneConverter,
+         std::make_shared<AsterixSubitemBitNamed>( 2, CommonConverter::NoneConverter::get(),
             AsterixSubitemBitNamed::value_names_t( { { 0, "Not Applicable" }, { 1, "SDPS 1" }, {
                2, "SDPS 2" }, { 3, "SDPS 3" } } ) ) ) );
    sdps_configuration.push_back(
       subitem_t( Cat065ItemNames::I065_040_STTN,
-         std::make_shared<AsterixSubitemUnsigned>( 1, CommonConverter::NoneConverter ) ) );
+         std::make_shared<AsterixSubitemUnsigned>( 1, CommonConverter::NoneConverter::get() ) ) );
    sdps_configuration.push_back(
       subitem_t( Cat065ItemNames::I065_040_SPARE,
-         std::make_shared<AsterixSubitemUnsigned>( 1, CommonConverter::NoneConverter ) ) );
+         std::make_shared<AsterixSubitemUnsigned>( 1, CommonConverter::NoneConverter::get() ) ) );
 
    subitem_map_t service_status_report;
    service_status_report.push_back(
       subitem_t( Cat065ItemNames::I065_050_REPORT,
-         std::make_shared<AsterixSubitemUnsigned>( 8, CommonConverter::NoneConverter ) ) );
+         std::make_shared<AsterixSubitemUnsigned>( 8, CommonConverter::NoneConverter::get() ) ) );
 
    subitem_map_t reserved_expansion;
    subitem_map_t sub_sub_item_re_srp;
    sub_sub_item_re_srp.push_back(
       subitem_t( Cat065ItemNames::I065_RE_SRP_LAT,
-         std::make_shared<AsterixSubitemSigned>( 32, DoubleConverter::WGS84resolution30Bit ) ) );
+         std::make_shared<AsterixSubitemSigned>( 32, DoubleConverter::WGS84resolution30Bit::get() ) ) );
    sub_sub_item_re_srp.push_back(
       subitem_t( Cat065ItemNames::I065_RE_SRP_LNG,
-         std::make_shared<AsterixSubitemSigned>( 32, DoubleConverter::WGS84resolution30Bit ) ) );
+         std::make_shared<AsterixSubitemSigned>( 32, DoubleConverter::WGS84resolution30Bit::get() ) ) );
 
    // Add all items to the reserved expansion sub item
    reserved_expansion.push_back(
       subitem_t( Cat065ItemNames::I065_RE_SRP,
-         std::make_shared<AsterixSubitemCompound>( 64, StringConverter::BitsToNATOtn19Bit,
+         std::make_shared<AsterixSubitemCompound>( 64, StringConverter::BitsToNATOtn19Bit::get(),
             sub_sub_item_re_srp ) ) );
    reserved_expansion.push_back(
       subitem_t( Cat065ItemNames::I065_RE_ARL,
-         std::make_shared<AsterixSubitemUnsigned>( 16, CommonConverter::NoneConverter ) ) );
+         std::make_shared<AsterixSubitemUnsigned>( 16, CommonConverter::NoneConverter::get() ) ) );
 
    // Add all items
    subitems.insert( subitem_map_item_t( 1, sensor_identification ) );

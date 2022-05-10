@@ -327,6 +327,10 @@ std::string AsterixCategory::getValue( std::string name ) {
    return unrolled_values.at( name );
 }
 
+void AsterixCategory::setValue(std::string name, std::string value) {
+   unrolled_values[name] = value;
+}
+
 bool AsterixCategory::isItemPresent( std::string item_name ) {
    return (unrolled_values.find( item_name ) != unrolled_values.end());
 }

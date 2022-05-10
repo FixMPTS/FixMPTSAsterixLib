@@ -53,23 +53,7 @@ public:
     * @param names A list of unsigned integers and their corresponding verbal representation
     * @throw None
     */
-   AsterixSubitemBitNamed( int length,
-      std::function<std::string(char*, unsigned int)> converterFunction, value_names_t names);
-
-   /**
-    * Initialise a new named sub item object by providing the converter function and names of the item.
-    * The provided converter function must return a string and have an integer and a double
-    * buffer as parameter.
-    *
-    * @param length The length of the item in bits
-    * @param converter_function The function to be called to convert the raw input to the required
-    * unsigned integer output.
-    * @param names A list of unsigned integers and their corresponding verbal representation
-    * @return None
-    * @throw None
-    */
-   AsterixSubitemBitNamed( int length,
-      std::function<std::string(char*, unsigned int, double &dest_buffer)> converterFunction, value_names_t names);
+   AsterixSubitemBitNamed(int length, std::shared_ptr<ItemConverterBase> converter, value_names_t names);
    virtual ~AsterixSubitemBitNamed();
 
    /**

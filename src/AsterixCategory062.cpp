@@ -114,7 +114,7 @@ std::vector<unsigned char> AsterixCategory062::getEncodedMessage(std::shared_ptr
       // Reset the FSPEC for this item
       fspec[item.first] = false;
 
-      if( item.second == Cat062ItemNames::I062_010 ) { // Mandatory. Maybe force transmission of this item
+      if( item.second == Cat062ItemNames::I062_010 ) { // Mandatory.
          std::vector<unsigned char> sac_sic = AsterixEncodingHelper::encodeSACSIC16Bit(
          non_track_related_values[Cat062ItemNames::I062_010_SAC],
          non_track_related_values[Cat062ItemNames::I062_010_SIC] );

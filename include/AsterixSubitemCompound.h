@@ -42,14 +42,6 @@ private:
    std::map<std::string, std::string> unrolled_values;
 
 public:
-   /**
-    * Construct a new compound sub item.
-    *
-    * @param length the length without the starting fspec in bits. Not used for this item
-    * @param converter function used to translate the raw value with the correct resolution
-    */
-   AsterixSubitemCompound( int length,
-      std::function<std::string( char*, unsigned int )> converterFunction );
 
    /**
     * Construct a new compound sub item.
@@ -57,18 +49,8 @@ public:
     * @param length the length without the starting fspec in bits. Not used for this item
     * @param converter function used to translate the raw value with the correct resolution
     */
-   AsterixSubitemCompound( int length,
-      std::function<std::string( char*, unsigned int, double& dest_buffer )> converterFunction );
-
-   /**
-    * Construct a new compound sub item.
-    *
-    * @param length the length without the starting fspec in bits. Not used for this item
-    * @param converter function used to translate the raw value with the correct resolution
-    */
-   AsterixSubitemCompound( int length,
-      std::function<std::string( char*, unsigned int, double& dest_buffer )> converterFunction,
-      subitem_map_t subitem_list );
+   AsterixSubitemCompound(int length, std::shared_ptr<ItemConverterBase> converter, subitem_map_t subitem_list =
+      subitem_map_t());
 
    virtual ~AsterixSubitemCompound();
 

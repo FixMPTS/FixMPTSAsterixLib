@@ -97,6 +97,12 @@ public:
     * @throw None
     */
    void fillRecord(std::shared_ptr<ReportRecordType> record) override;
+
+   /**
+    * TODO
+    */
+   std::vector<unsigned char> getEncodedMessage(std::shared_ptr<ReportRecordType> record,
+      std::map<std::string, bool> items_to_be_served);
 };
 
 #endif /* ASTERIXCATEGORY001_H_ */

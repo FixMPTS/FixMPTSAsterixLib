@@ -233,6 +233,19 @@ public:
    std::string getValue( std::string name );
 
    /**
+    * Set the value of the corresponding item to be used during encoding.
+    *
+    * NOTE: Only items not provided by the encoding input type are used for
+    * encoding the message.
+    *
+    * NOTE 2: Existiing values will be overwriten.
+    *
+    * @param name the name of the item
+    * @param the (raw) value of the item without any LSB or category related calculations applied.
+    */
+   void setValue(std::string name, std::string value);
+
+   /**
     * Check if the item in question was contained in the message.
     *
     * @param item_name the name of the item to look for
