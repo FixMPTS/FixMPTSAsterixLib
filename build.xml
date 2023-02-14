@@ -30,7 +30,6 @@
 				<echo message="Compiling @{cppfile}" />
 				<cc outtype="static" subsystem="console" objdir="${objects.dir}" rebuild="true" debug="true">
 					<compiler refid="compilelibxml2" />
-					<compilerarg value="-fPIC" />
 					<fileset file="@{cppfile}" />
 					<includepath>
 						<!-- Add top level include directory -->
@@ -53,7 +52,6 @@
 				<echo message="Compiling @{cppfile}" />
 				<cc outtype="static" subsystem="console" objdir="${objects.dir}" rebuild="true" debug="false">
 					<compiler refid="compilelibxml2" />
-					<compilerarg value="-fPIC" />
 					<fileset file="@{cppfile}" />
 					<includepath>
                   <path location="." />

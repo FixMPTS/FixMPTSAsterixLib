@@ -39,6 +39,7 @@
       <!-- Enforce warning free build -->
       <compilerarg value="-Werror" />
       <compilerarg value="-fPIC" />
+      <compilerarg value="-g" />
       <!-- <compilerarg value="-rdynamic"/> -->
       <includepath>
          <path location="${common.project.dir.include}" />
