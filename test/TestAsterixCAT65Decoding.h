@@ -37,6 +37,10 @@ CPPUNIT_TEST_SUITE( TestAsterixCAT65Decoding );
 
    //Define the test testCAT034
    CPPUNIT_TEST( testCAT065 );
+   CPPUNIT_TEST (testCAT065EnAndDecodingSDPS);
+   CPPUNIT_TEST (testCAT065EnAndDecodingEoBatch);
+   CPPUNIT_TEST (testCAT065EnAndDecodingService);
+   CPPUNIT_TEST (testCAT065EnAndDecodingError);
    CPPUNIT_TEST_SUITE_END()
    ;
 
@@ -45,9 +49,29 @@ public:
    virtual void tearDown() override;
 
    /**
-    * TEst case for a complete Asterix CAT 65 message decoding
+    * Test case for a complete Asterix CAT 65 message decoding
     */
    void testCAT065();
+
+   /**
+    * Test encoding and decoding of SDPS status messages
+    */
+   void testCAT065EnAndDecodingSDPS();
+
+   /**
+    * Test encoding and decoding of end of batch messages
+    */
+   void testCAT065EnAndDecodingEoBatch();
+
+   /**
+    * Test encoding and decoding of service Status messages
+    */
+   void testCAT065EnAndDecodingService();
+
+   /**
+    * Test error handling during encoding and decoding
+    */
+   void testCAT065EnAndDecodingError();
 };
 
 #endif /* TESTASTERIXCAT65DECODING_H_ */

@@ -49,7 +49,8 @@ void TestAsterixCAT02Encoding::testCAT002Mandatory() {
    record.setSensorIdentifier( 100, 101 );
    record.setMessageType( 3 );
 
-   std::vector<unsigned char> msg = cat.getEncodedMessage( record, items_to_be_served );
+   std::vector<char> msg = cat.getEncodedMessage( record, items_to_be_served );
+   CPPUNIT_ASSERT( msg.size() == 7 );
 
    // Test the FSPEC
    CPPUNIT_ASSERT( std::to_string( msg[0] ) == "2" ); // Category
@@ -58,6 +59,7 @@ void TestAsterixCAT02Encoding::testCAT002Mandatory() {
    CPPUNIT_ASSERT( std::to_string( msg[2] ) == "7" ); // length
 
    std::bitset<8> fspec_byte( (unsigned int) msg[3] );
+
    CPPUNIT_ASSERT( fspec_byte.to_string() == "11000000" ); // first fspec byte
 
    CPPUNIT_ASSERT( std::to_string( msg[4] ) == "100" ); // SAC
@@ -77,7 +79,8 @@ void TestAsterixCAT02Encoding::testCAT002Mandatory() {
    cat2.setDataSource( 104, 105 );
    cat2.setMessageType( SensorServiceRecordType::MESSAGETYPE::START_BLIND_ZONE );
 
-   std::vector<unsigned char> msg2 = cat2.getEncodedMessage( record2, items_to_be_served );
+   std::vector<char> msg2 = cat2.getEncodedMessage( record2, items_to_be_served );
+   CPPUNIT_ASSERT( msg2.size() == 7 );
    std::bitset<8> fspec_byte2( (unsigned int) msg2[3] );
    CPPUNIT_ASSERT( fspec_byte2.to_string() == "11000000" ); // first fspec byte
 
@@ -125,7 +128,8 @@ void TestAsterixCAT02Encoding::testCAT002Common() {
    cat.setDynamicWindow( 12.4, 24.5, 354.1, 400 );
    cat.setCollimationError( 3.1, 0.2 );
 
-   std::vector<unsigned char> msg = cat.getEncodedMessage( record, items_to_be_served );
+   std::vector<char> msg = cat.getEncodedMessage( record, items_to_be_served );
+   CPPUNIT_ASSERT( msg.size() == 29 );
 
    // Test the FSPEC
    CPPUNIT_ASSERT( std::to_string( msg[0] ) == "2" ); // Category
@@ -143,26 +147,25 @@ void TestAsterixCAT02Encoding::testCAT002Common() {
 
    CPPUNIT_ASSERT( std::to_string( msg[7] ) == "7" ); // MSG type
    CPPUNIT_ASSERT( std::to_string( msg[8] ) == "125" ); // Sector number
-
    // I002/030 Time of day
-   uint64_t tod = (unsigned int) msg[9];
+   uint64_t tod = (unsigned char) msg[9];
    tod <<= 8;
-   tod |= ((unsigned int) msg[10] & 0xff);
+   tod |= ((unsigned char) msg[10] & 0xff);
    tod <<= 8;
-   tod |= ((unsigned int) msg[11] & 0xff);
+   tod |= ((unsigned char) msg[11] & 0xff);
    CPPUNIT_ASSERT( tod == 1580160 );
 
    // I002/041 Antenna Rotation Period
-   uint16_t rotation = (unsigned int) msg[12];
+   uint16_t rotation = (unsigned char) msg[12];
    rotation <<= 8;
-   rotation |= ((unsigned int) msg[13] & 0xff);
+   rotation |= ((unsigned char) msg[13] & 0xff);
    CPPUNIT_ASSERT( rotation == 2995 );
 
    //I002/070 Plot Count Values
    CPPUNIT_ASSERT( std::to_string( msg[14] ) == "2" );
-   std::bitset<16> first_plot_count( (unsigned int) msg[15] );
+   std::bitset<16> first_plot_count( (unsigned char) msg[15] );
    first_plot_count <<= 8;
-   first_plot_count |= ((unsigned int) msg[16] & 0xff);
+   first_plot_count |= ((unsigned char) msg[16] & 0xff);
    CPPUNIT_ASSERT( first_plot_count[15] == 0 ); // Antenna
    std::bitset<5> ident1( first_plot_count.to_string(), 1, 5 );
    std::bitset<10> count1( first_plot_count.to_string(), 6, 10 );
@@ -192,13 +195,13 @@ void TestAsterixCAT02Encoding::testCAT002Common() {
    theta_end |= ((unsigned) msg[26] & 0xff);
    CPPUNIT_ASSERT( rho_start.to_ulong() == 1587 );
    CPPUNIT_ASSERT( rho_end.to_ulong() == 3136 );
-   CPPUNIT_ASSERT( theta_start.to_ulong() == 64381 );
+   CPPUNIT_ASSERT( theta_start.to_ulong() == 64382 );
    CPPUNIT_ASSERT( theta_end.to_ulong() == 7191 );
 
    //I002/090 Collimation Error
    std::bitset<8> range_error( (unsigned int) msg[27] );
    std::bitset<8> azimuth_error( (unsigned int) msg[28] );
-   CPPUNIT_ASSERT( range_error.to_ulong() == 140 );
+   CPPUNIT_ASSERT( range_error.to_ulong() == 141 );
    CPPUNIT_ASSERT( azimuth_error.to_ulong() == 36 );
 }
 
@@ -230,16 +233,15 @@ void TestAsterixCAT02Encoding::testCAT002EnAndDecoding() {
    pc1.setCounter( 258 );
    record.addPlotCount( pc1 );
 
-   cat.setDynamicWindow( 12.4, 24.5, 354.1, 400 );
-   cat.setCollimationError( 3.1, 0.2 );
+   cat.setDynamicWindow( 12.4, 24.5, 354.1, 355.5 );
+   cat.setCollimationError( 1.1, 0.2 );
 
-   std::vector<unsigned char> msg = cat.getEncodedMessage( record, items_to_be_served );
+   std::vector<char> msg = cat.getEncodedMessage( record, items_to_be_served );
 
    std::deque<char> input = std::deque<char>();
    input.insert( input.end(), msg.begin() + 3, msg.end() ); // discard category and length bytes
 
    AsterixCategory002 decodedCat = AsterixCategory002( msg.size(), input );
-   decodedCat.decode();
 
    CPPUNIT_ASSERT( std::to_string( std::get<0>( record.getSensorId() ) ) ==
       decodedCat.getValue( Cat002ItemNames::I002_010_SAC ) );
@@ -266,11 +268,13 @@ void TestAsterixCAT02Encoding::testCAT002EnAndDecoding() {
    float the = std::atof( decodedCat.getValue( Cat002ItemNames::I002_100_THE ).c_str() );
    CPPUNIT_ASSERT( rhs > 12.38 && rhs < 12.41 );
    CPPUNIT_ASSERT( rhe > 24.48 && rhe < 24.51 );
-   CPPUNIT_ASSERT( ths > 353.64 && ths < 353.66 );
-   CPPUNIT_ASSERT( the > 39.48 && the < 39.51 );
+
+   CPPUNIT_ASSERT( ths > 353.65 && ths < 353.67 );
+   CPPUNIT_ASSERT( the > 355.0 && the < 355.51 );
 
    float col_azim = std::atof( decodedCat.getValue( Cat002ItemNames::I002_090_AZM ).c_str() );
    float col_rng = std::atof( decodedCat.getValue( Cat002ItemNames::I002_090_RNG ).c_str() );
-   CPPUNIT_ASSERT( col_azim > 0.76 && col_azim < 0.78 );
-   CPPUNIT_ASSERT( col_rng > 0.28 && col_rng < 0.29 );
+
+   CPPUNIT_ASSERT( col_azim > 0.196 && col_azim < 0.21 );
+   CPPUNIT_ASSERT( col_rng > 1.09 && col_rng < 1.2 );
 }

@@ -75,11 +75,11 @@ void TestAsterixCAT10Decoding::testCAT010Report() {
    CPPUNIT_ASSERT( cat010_message->getValue( Cat010ItemNames::I010_020_DCR ) == "0" );
    CPPUNIT_ASSERT( cat010_message->getValue( Cat010ItemNames::I010_020_CHN ) == "1" );
    CPPUNIT_ASSERT( cat010_message->getValue( Cat010ItemNames::I010_020_GBS ) == "1" );
-   CPPUNIT_ASSERT( cat010_message->getValue( Cat010ItemNames::I010_020_CBT ) == "0" );
+   CPPUNIT_ASSERT( cat010_message->getValue( Cat010ItemNames::I010_020_CRT ) == "0" );
    CPPUNIT_ASSERT( cat010_message->getValue( Cat010ItemNames::I010_020_SIM ) == "0" );
    CPPUNIT_ASSERT( cat010_message->getValue( Cat010ItemNames::I010_020_TST ) == "0" );
    CPPUNIT_ASSERT( cat010_message->getValue( Cat010ItemNames::I010_020_RAB ) == "0" );
-   CPPUNIT_ASSERT( cat010_message->getValue( Cat010ItemNames::I010_020_LOOP ) == "0" );
+   CPPUNIT_ASSERT( cat010_message->getValue( Cat010ItemNames::I010_020_LOP ) == "0" );
    CPPUNIT_ASSERT( cat010_message->getValue( Cat010ItemNames::I010_020_TOT ) == "1" );
 
    CPPUNIT_ASSERT( cat010_message->getValue( Cat010ItemNames::I010_140_TOD ) == "513.992188" );

@@ -59,9 +59,8 @@ void TestAsterixCAT63Decoding::testCAT063() {
    int remaining_length = sizeof(astx_block);
 
    std::deque<char> message( astx_block, astx_block + sizeof(astx_block) / sizeof(char) );
-   AsterixCategory063* cat063_message = new AsterixCategory063( remaining_length, message );
-
-   //cat063_message->printMessage();
+   std::shared_ptr<AsterixCategory063> cat063_message = std::make_shared<AsterixCategory063>( remaining_length,
+      message );
 
    CPPUNIT_ASSERT( cat063_message->getFspecString() == "11111111111000" );
 
@@ -99,5 +98,67 @@ void TestAsterixCAT63Decoding::testCAT063() {
    CPPUNIT_ASSERT( cat063_message->getValue( Cat063ItemNames::I063_091_PAB ) == "25.043335" );
 
    CPPUNIT_ASSERT( cat063_message->getValue( Cat063ItemNames::I063_092_PEB ) == "0.527344" );
+}
+
+void TestAsterixCAT63Decoding::testCAT063EnAndDecoding() {
+   AsterixCategory063 cat;
+   SensorServiceRecordType record;
+   std::map<std::string, bool> items_to_be_served;
+   items_to_be_served[Cat063ItemNames::I063_010] = true;
+   items_to_be_served[Cat063ItemNames::I063_015] = true;
+   items_to_be_served[Cat063ItemNames::I063_030] = true;
+   items_to_be_served[Cat063ItemNames::I063_050] = true;
+   items_to_be_served[Cat063ItemNames::I063_060] = true;
+   items_to_be_served[Cat063ItemNames::I063_070] = true;
+   items_to_be_served[Cat063ItemNames::I063_080] = true;
+   items_to_be_served[Cat063ItemNames::I063_081] = true;
+   items_to_be_served[Cat063ItemNames::I063_090] = true;
+   items_to_be_served[Cat063ItemNames::I063_091] = true;
+   items_to_be_served[Cat063ItemNames::I063_092] = true;
+
+   // set up the data
+   cat.setSourceId( 200, 10 );
+   record.setSensorIdentifier( 200, 2 );
+   record.setMessageType( 3 );
+   record.setTimeOfDay( 234.4 );
+   cat.setSensorConfiguration( AsterixCategory063::SENSOR_CONFIGURATION::SSR, 1 );
+   cat.setSensorConfiguration( AsterixCategory063::SENSOR_CONFIGURATION::CON, 1 );
+   cat.setSensorConfiguration( AsterixCategory063::SENSOR_CONFIGURATION::PSR, 0 );
+   cat.setSensorConfiguration( AsterixCategory063::SENSOR_CONFIGURATION::TSV, 1 );
+   cat.setTimestampingBias( 4 );
+   cat.setSSRRangeGainBias( 0.3, 10 );
+   cat.setSSRAzimuthBias( 12 );
+   cat.setPSRRangeGainBias( 0.21, 2 );
+   cat.setPSRAzimuthBias( 6 );
+   cat.setPSRElevationBias( 7.1 );
+
+   std::vector<char> msg = cat.getEncodedMessage( record, items_to_be_served );
+
+   // Check the encoded and decoded result
+   std::deque<char> input = std::deque<char>();
+   input.insert( input.end(), msg.begin() + 3, msg.end() ); // discard category and length bytes
+
+   AsterixCategory063 decoded_cat = AsterixCategory063( msg.size(), input );
+
+   CPPUNIT_ASSERT( decoded_cat.getValue( Cat063ItemNames::I063_010_SAC ) == "200" );
+   CPPUNIT_ASSERT( decoded_cat.getValue( Cat063ItemNames::I063_010_SIC ) == "10" );
+   CPPUNIT_ASSERT( std::to_string( record.getMessageType() ) == decoded_cat.getValue( Cat063ItemNames::I063_015_SID ) );
+   float tod = std::atof( decoded_cat.getValue( Cat063ItemNames::I063_030_TOD ).c_str() );
+   CPPUNIT_ASSERT( tod >= (record.getTimeOfDay() - 0.1) && tod <= (record.getTimeOfDay() + 0.1) );
+   CPPUNIT_ASSERT( decoded_cat.getValue( Cat063ItemNames::I063_050_SAC ) == "200" );
+   CPPUNIT_ASSERT( decoded_cat.getValue( Cat063ItemNames::I063_050_SIC ) == "2" );
+
+   CPPUNIT_ASSERT( decoded_cat.getValue( Cat063ItemNames::I063_060_SSR ) == "1" );
+   CPPUNIT_ASSERT( decoded_cat.getValue( Cat063ItemNames::I063_060_CON ) == "1" );
+   CPPUNIT_ASSERT( decoded_cat.getValue( Cat063ItemNames::I063_060_PSR ) == "0" );
+   CPPUNIT_ASSERT( decoded_cat.getValue( Cat063ItemNames::I063_060_TSV ) == "1" );
+   CPPUNIT_ASSERT( decoded_cat.getValue( Cat063ItemNames::I063_070_TSB ) == "4" );
+   CPPUNIT_ASSERT( decoded_cat.getValue( Cat063ItemNames::I063_080_SRB ) == "10.000000" );
+   CPPUNIT_ASSERT( decoded_cat.getValue( Cat063ItemNames::I063_080_SRG ) == "0.300000" );
+   CPPUNIT_ASSERT( decoded_cat.getValue( Cat063ItemNames::I063_081_SAB ) == "12.002563" );
+   CPPUNIT_ASSERT( decoded_cat.getValue( Cat063ItemNames::I063_090_PRG ) == "0.210000" );
+   CPPUNIT_ASSERT( decoded_cat.getValue( Cat063ItemNames::I063_090_PRB ) == "2.000000" );
+   CPPUNIT_ASSERT( decoded_cat.getValue( Cat063ItemNames::I063_091_PAB ) == "5.998535" );
+   CPPUNIT_ASSERT( decoded_cat.getValue( Cat063ItemNames::I063_092_PEB ) == "7.102661" );
 }
 

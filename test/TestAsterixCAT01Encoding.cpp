@@ -182,7 +182,6 @@ void TestAsterixCAT01Encoding::testCAT001Common() {
    std::bitset<8> tod_1( (unsigned int) msg[27] );
    std::bitset<8> tod_2( (unsigned int) msg[28] );
    std::bitset<16> tod( tod_1.to_string() + tod_2.to_string() );
-   std::cout << "CAT 001 TOD " << tod.to_ullong() << std::endl;
    CPPUNIT_ASSERT( tod.to_ullong() == 31744 );
 
    // I001/170, Track Status

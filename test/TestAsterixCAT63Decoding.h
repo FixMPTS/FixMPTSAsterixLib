@@ -36,7 +36,8 @@ class TestAsterixCAT63Decoding: public CppUnit::TestFixture {
 CPPUNIT_TEST_SUITE( TestAsterixCAT63Decoding );
 
    //Define the test testCAT034
-   CPPUNIT_TEST( testCAT063 );
+   CPPUNIT_TEST (testCAT063);
+   CPPUNIT_TEST (testCAT063EnAndDecoding);
    CPPUNIT_TEST_SUITE_END()
    ;
 
@@ -48,6 +49,11 @@ public:
     * Test case for Asterix CAT 63 messages
     */
    void testCAT063();
+
+   /**
+    * Test encoding and decoding of messages
+    */
+   void testCAT063EnAndDecoding();
 };
 
 #endif /* TESTASTERIXCAT63DECODING_H_ */

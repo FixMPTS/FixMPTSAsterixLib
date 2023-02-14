@@ -84,5 +84,155 @@ void TestAsterixCAT65Decoding::testCAT065() {
    CPPUNIT_ASSERT( cat065_message->getValue( Cat065ItemNames::I065_RE_SRP_LAT ) == "47.618590" );
    CPPUNIT_ASSERT( cat065_message->getValue( Cat065ItemNames::I065_RE_SRP_LNG ) == "9.409594" );
    CPPUNIT_ASSERT( cat065_message->getValue( Cat065ItemNames::I065_RE_ARL ) == "17473" );
+}
 
+void TestAsterixCAT65Decoding::testCAT065EnAndDecodingSDPS() {
+   AsterixCategory065 cat;
+   SensorServiceRecordType record;
+   std::map<std::string, bool> items_to_be_served; // none set -> only mandatory items served
+
+   // Setup the message
+   cat.setDataSourceId( 200, 10 );
+   cat.setBatchNumber( 21 );
+   cat.setSDPSConfiguration( AsterixCategory065::SDPS_CONFIGURATION::OVL, 1 );
+   cat.setSDPSConfiguration( AsterixCategory065::SDPS_CONFIGURATION::NOGO, 0 );
+   cat.setSDPSConfiguration( AsterixCategory065::SDPS_CONFIGURATION::STTN, 1 );
+   cat.setReLatLng( 40.3, 13.87 );
+   cat.setReport( 2 );
+   cat.setSrp( 4 );
+   cat.setArl( 6 );
+   cat.setMessageType( 1 );
+   cat.setServiceIdentification( 33 );
+   record.setSensorIdentifier( 200, 2 );
+   record.setTimeOfDay( 2341.3 );
+
+   std::vector<char> msg = cat.getEncodedMessage( record, items_to_be_served );
+
+   // Check the encoded and decoded result
+   std::deque<char> input = std::deque<char>();
+   input.insert( input.end(), msg.begin() + 3, msg.end() ); // discard category and length bytes
+
+   AsterixCategory065 decoded_cat = AsterixCategory065( msg.size(), input );
+   CPPUNIT_ASSERT( decoded_cat.getValue( Cat065ItemNames::I065_010_SAC ) == "200" );
+   CPPUNIT_ASSERT( decoded_cat.getValue( Cat065ItemNames::I065_010_SIC ) == "10" );
+   CPPUNIT_ASSERT( decoded_cat.getValue( Cat065ItemNames::I065_000_TYP ) == "1" );
+   CPPUNIT_ASSERT( decoded_cat.getValue( Cat065ItemNames::I065_015_SID ) == "33" );
+   double tod = std::atof( decoded_cat.getValue( Cat065ItemNames::I065_030_TOD ).c_str() );
+   CPPUNIT_ASSERT( tod > 2341.29 && tod < 2341.31 );
+   CPPUNIT_ASSERT( decoded_cat.getValue( Cat065ItemNames::I065_040_NOGO ) == "0" );
+   CPPUNIT_ASSERT( decoded_cat.getValue( Cat065ItemNames::I065_040_OVL ) == "1" );
+   CPPUNIT_ASSERT( decoded_cat.getValue( Cat065ItemNames::I065_040_STTN ) == "1" );
+
+   // Although the batch number is set it is not part of the message
+   if( decoded_cat.isItemPresent( Cat065ItemNames::I065_020_BTN ) ) {
+      CPPUNIT_ASSERT( false );
+   }
+
+   if( decoded_cat.isItemPresent( Cat065ItemNames::I065_050_REPORT ) ) {
+      CPPUNIT_ASSERT( false );
+   }
+}
+
+void TestAsterixCAT65Decoding::testCAT065EnAndDecodingEoBatch() {
+   AsterixCategory065 cat;
+   SensorServiceRecordType record;
+   std::map<std::string, bool> items_to_be_served; // none set -> only mandatory items served
+
+   // Setup the message
+   cat.setDataSourceId( 200, 21 );
+   cat.setBatchNumber( 13 );
+   cat.setMessageType( 2 );
+   cat.setServiceIdentification( 78 );
+   cat.setSDPSConfiguration( AsterixCategory065::SDPS_CONFIGURATION::PSS, 1 );
+
+   record.setSensorIdentifier( 200, 22 );
+   record.setTimeOfDay( 502.7 );
+
+   std::vector<char> msg = cat.getEncodedMessage( record, items_to_be_served );
+
+   // Check the encoded and decoded result
+   std::deque<char> input = std::deque<char>();
+   input.insert( input.end(), msg.begin() + 3, msg.end() ); // discard category and length bytes
+
+   AsterixCategory065 decoded_cat = AsterixCategory065( msg.size(), input );
+
+   CPPUNIT_ASSERT( decoded_cat.getValue( Cat065ItemNames::I065_010_SAC ) == "200" );
+   CPPUNIT_ASSERT( decoded_cat.getValue( Cat065ItemNames::I065_010_SIC ) == "21" );
+   CPPUNIT_ASSERT( decoded_cat.getValue( Cat065ItemNames::I065_000_TYP ) == "2" );
+   CPPUNIT_ASSERT( decoded_cat.getValue( Cat065ItemNames::I065_020_BTN ) == "13" );
+   double tod = std::atof( decoded_cat.getValue( Cat065ItemNames::I065_030_TOD ).c_str() );
+   CPPUNIT_ASSERT( tod > 502.69 && tod < 502.71 );
+   CPPUNIT_ASSERT( decoded_cat.getValue( Cat065ItemNames::I065_015_SID ) == "78" );
+
+   // Verify the items not supposed to be encoded in the message are indeed not there
+   if( decoded_cat.isItemPresent( Cat065ItemNames::I065_040_PSS ) ) {
+      CPPUNIT_ASSERT( false );
+   }
+
+   if( decoded_cat.isItemPresent( Cat065ItemNames::I065_050_REPORT ) ) {
+      CPPUNIT_ASSERT( false );
+   }
+}
+
+void TestAsterixCAT65Decoding::testCAT065EnAndDecodingService() {
+   AsterixCategory065 cat;
+   SensorServiceRecordType record;
+   std::map<std::string, bool> items_to_be_served; // none set -> only mandatory items served
+
+   // Setup the message
+   cat.setDataSourceId( 200, 31 );
+   cat.setMessageType( 3 );
+   cat.setServiceIdentification( 4 );
+   cat.setBatchNumber( 13 );
+   cat.setSDPSConfiguration( AsterixCategory065::SDPS_CONFIGURATION::OVL, 1 );
+   cat.setReport( 2 );
+
+   record.setTimeOfDay( 3021.0 );
+
+   std::vector<char> msg = cat.getEncodedMessage( record, items_to_be_served );
+
+   // Check the encoded and decoded result
+   std::deque<char> input = std::deque<char>();
+   input.insert( input.end(), msg.begin() + 3, msg.end() ); // discard category and length bytes
+
+   AsterixCategory065 decoded_cat = AsterixCategory065( msg.size(), input );
+
+   CPPUNIT_ASSERT( decoded_cat.getValue( Cat065ItemNames::I065_010_SAC ) == "200" );
+   CPPUNIT_ASSERT( decoded_cat.getValue( Cat065ItemNames::I065_010_SIC ) == "31" );
+   CPPUNIT_ASSERT( decoded_cat.getValue( Cat065ItemNames::I065_000_TYP ) == "3" );
+   double tod = std::atof( decoded_cat.getValue( Cat065ItemNames::I065_030_TOD ).c_str() );
+   CPPUNIT_ASSERT( tod > 3020.9 && tod < 3021.1 );
+   CPPUNIT_ASSERT( decoded_cat.getValue( Cat065ItemNames::I065_050_REPORT ) == "2" );
+   CPPUNIT_ASSERT( decoded_cat.getValue( Cat065ItemNames::I065_015_SID ) == "4" );
+
+   // Verify the items not supposed to be encoded in the message are indeed not there
+   if( decoded_cat.isItemPresent( Cat065ItemNames::I065_020_BTN ) ) {
+      CPPUNIT_ASSERT( false );
+   }
+
+   if( decoded_cat.isItemPresent( Cat065ItemNames::I065_040_OVL ) ) {
+      CPPUNIT_ASSERT( false );
+   }
+}
+
+void TestAsterixCAT65Decoding::testCAT065EnAndDecodingError() {
+   AsterixCategory065 cat;
+   SensorServiceRecordType record;
+   std::map<std::string, bool> items_to_be_served; // none set -> only mandatory items served
+
+   // Setup the message
+   cat.setDataSourceId( 200, 31 );
+   cat.setMessageType( 4 );
+
+   bool error_raised = false;
+   try {
+      std::deque<char> input = std::deque<char>();
+      std::vector<char> msg = cat.getEncodedMessage( record, items_to_be_served );
+      input.insert( input.end(), msg.begin() + 3, msg.end() ); // discard category and length bytes
+
+      AsterixCategory065 decoded_cat = AsterixCategory065( msg.size(), input );
+   } catch( EncodingError &e ) {
+      error_raised = true;
+   }
+   CPPUNIT_ASSERT( error_raised );
 }
