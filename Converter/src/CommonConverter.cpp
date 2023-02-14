@@ -37,7 +37,7 @@ std::shared_ptr<ItemConverterBase> NoneConverter::get() {
    return instance;
 }
 uint64_t NoneConverter::toExternal(std::string value, unsigned int value_length) {
-   return 0; // TODO implement
+   return std::atoll( value.c_str() );
 }
 std::string NoneConverter::fromExternal(char *value, unsigned int value_length) {
    long int value_converted = std::stoll( value );
@@ -55,7 +55,7 @@ std::shared_ptr<ItemConverterBase> NoneConverterBuffer::get() {
    return instance;
 }
 uint64_t NoneConverterBuffer::toExternal(std::string value, unsigned int value_length) {
-   return 0; // TODO implement
+   return std::atoll( value.c_str() );
 }
 std::string NoneConverterBuffer::fromExternal(char *value, unsigned int value_length) {
    unsigned long int value_converted = reinterpret_cast<unsigned long int>( &value );

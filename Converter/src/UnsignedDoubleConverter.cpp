@@ -41,7 +41,7 @@ std::shared_ptr<ItemConverterBase> UnsignedDoubleConverter::CircleSegment8Bit::g
    return instance;
 }
 uint64_t UnsignedDoubleConverter::CircleSegment8Bit::toExternal(std::string value, unsigned int value_length) {
-   return 0; // TODO implement
+   return std::round( std::atof( value.c_str() ) / 1.41 );
 }
 std::string UnsignedDoubleConverter::CircleSegment8Bit::fromExternal(char *value, unsigned int value_length) {
    unsigned long int value_converted = std::stoull( value );
@@ -59,7 +59,7 @@ std::shared_ptr<ItemConverterBase> UnsignedDoubleConverter::CircleSegment16Bit::
    return instance;
 }
 uint64_t UnsignedDoubleConverter::CircleSegment16Bit::toExternal(std::string value, unsigned int value_length) {
-   return 0; // TODO implement
+   return std::round( std::atof( value.c_str() ) / 0.0055 );
 }
 std::string UnsignedDoubleConverter::CircleSegment16Bit::fromExternal(char *value, unsigned int value_length) {
    unsigned long int value_converted = std::stoull( value );
@@ -113,7 +113,7 @@ std::shared_ptr<ItemConverterBase> UnsignedDoubleConverter::Direction16Bit::get(
    return instance;
 }
 uint64_t UnsignedDoubleConverter::Direction16Bit::toExternal(std::string value, unsigned int value_length) {
-   return 0; // TODO implement
+   return std::round( std::atof( value.c_str() ) / (360.0 / pow( 2, 16 )) );
 }
 std::string UnsignedDoubleConverter::Direction16Bit::fromExternal(char *value, unsigned int value_length) {
    unsigned long int value_converted = std::stoull( value );
@@ -240,7 +240,7 @@ std::shared_ptr<ItemConverterBase> UnsignedDoubleConverter::Fraction128th::get()
    return instance;
 }
 uint64_t UnsignedDoubleConverter::Fraction128th::toExternal(std::string value, unsigned int value_length) {
-   return 0; // TODO implement
+   return std::round( std::atof( value.c_str() ) * 128.0 );
 }
 std::string UnsignedDoubleConverter::Fraction128th::fromExternal(char *value, unsigned int value_length) {
    unsigned long int value_converted = std::stoull( value );

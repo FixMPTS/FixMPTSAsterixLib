@@ -137,8 +137,7 @@ std::shared_ptr<ItemConverterBase> Fraction128th::get() {
    return instance;
 }
 uint64_t Fraction128th::toExternal(std::string value, unsigned int value_length) {
-   float lsb = 1.0 / 128.0;
-   return std::llround( std::atof( value.c_str() ) / lsb );
+   return std::llround( std::atof( value.c_str() ) * 128.0 );
 }
 
 std::string Fraction128th::fromExternal(char *value, unsigned int value_length) {
@@ -159,7 +158,7 @@ std::shared_ptr<ItemConverterBase> Fraction256th::get() {
    return instance;
 }
 uint64_t Fraction256th::toExternal(std::string value, unsigned int value_length) {
-   return 0; // TODO implement
+   return std::llround( std::atof( value.c_str() ) * 256.0 );
 }
 std::string Fraction256th::fromExternal(char *value, unsigned int value_length) {
    unsigned long int value_converted = std::stoull( value );
@@ -177,7 +176,7 @@ std::shared_ptr<ItemConverterBase> Fraction10ToPower5::get() {
    return instance;
 }
 uint64_t Fraction10ToPower5::toExternal(std::string value, unsigned int value_length) {
-   return 0; // TODO implement
+   return std::llround( std::atof( value.c_str() ) / pow( 10, -5 ) );
 }
 std::string Fraction10ToPower5::fromExternal(char *value, unsigned int value_length) {
    long int value_converted = std::stoll( value );
