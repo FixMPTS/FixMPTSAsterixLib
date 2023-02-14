@@ -30,6 +30,7 @@
 #include "TestAsterixCAT01Decoding.h"
 #include "TestAsterixCAT02Decoding.h"
 #include "TestAsterixCAT10Decoding.h"
+#include "TestAsterixCAT10Encoding.h"
 #include "TestAsterixCAT11Decoding.h"
 #include "TestAsterixCAT19Decoding.h"
 #include "TestAsterixCAT20Decoding.h"
@@ -67,6 +68,7 @@ CPPUNIT_TEST_SUITE_REGISTRATION( TestAsterixCAT01Encoding );
 CPPUNIT_TEST_SUITE_REGISTRATION( TestAsterixCAT02Decoding );
 CPPUNIT_TEST_SUITE_REGISTRATION( TestAsterixCAT02Encoding );
 CPPUNIT_TEST_SUITE_REGISTRATION( TestAsterixCAT10Decoding );
+CPPUNIT_TEST_SUITE_REGISTRATION( TestAsterixCAT10Encoding );
 CPPUNIT_TEST_SUITE_REGISTRATION( TestAsterixCAT11Decoding );
 CPPUNIT_TEST_SUITE_REGISTRATION( TestAsterixCAT19Decoding );
 CPPUNIT_TEST_SUITE_REGISTRATION( TestAsterixCAT20Decoding );
