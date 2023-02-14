@@ -56,7 +56,7 @@ void AsterixSubitemCompound::decode(std::deque<char>& input_buffer, unsigned bit
    }
 }
 
-std::vector<char> AsterixSubitemCompound::encode(){
+std::vector<char> AsterixSubitemCompound::encode(std::string value) {
    return std::vector<char>( );
 }
 

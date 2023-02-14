@@ -127,4 +127,12 @@ public:
    NetworkError(std::string originator, std::string msg);
 };
 
+/**
+ * General encoding error
+ */
+class EncodingError: std::runtime_error {
+public:
+   EncodingError(std::string originator, std::string msg);
+};
+
 #endif /* EXCEPTIONS_H_ */

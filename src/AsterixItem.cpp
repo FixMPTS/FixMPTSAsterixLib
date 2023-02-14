@@ -26,8 +26,8 @@
 
 #include "AsterixItem.h"
 
-AsterixItem::AsterixItem( std::string name ) :
-   name( name ), length( 0 ) {
+AsterixItem::AsterixItem(std::string name, int l) :
+   name( name ), length( l ) {
 }
 
 AsterixItem::~AsterixItem() {
@@ -40,6 +40,10 @@ std::deque<char> AsterixItem::readItem( std::deque<char>& buffer ) {
 
 std::string AsterixItem::getName() {
    return name;
+}
+
+void AsterixItem::setItemLength(int l) {
+   length = l;
 }
 
 int AsterixItem::getItemLength() {

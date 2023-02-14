@@ -63,7 +63,7 @@ unsigned int SensorServiceRecordType::PlotCount::getCounter() {
 /////////////////////////////    SensorServiceRecordType    ////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 SensorServiceRecordType::SensorServiceRecordType() :
-   sac( 0 ), sic( 0 ), message_type(), sector_number(), tod(), antenna_speed(), plot_count() {
+   sac( 0 ), sic( 0 ), message_type(), sector_number(), tod( 0 ), antenna_speed(), plot_count() {
 }
 
 SensorServiceRecordType::~SensorServiceRecordType() {

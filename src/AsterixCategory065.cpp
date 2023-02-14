@@ -33,6 +33,7 @@
 #include "AsterixSubitemUnsigned.h"
 #include "AsterixSubitemBitNamed.h"
 #include "Cat065ItemNames.h"
+#include "Exceptions.h"
 
 // Converter
 #include "CommonConverter.h"
@@ -89,11 +90,11 @@ void AsterixCategory065::setUAP() {
 
 void AsterixCategory065::setSubitems() {
 
-   subitem_map_t sensor_identification;
-   sensor_identification.push_back(
+   subitem_map_t data_Source_identifier;
+   data_Source_identifier.push_back(
       subitem_t( Cat065ItemNames::I065_010_SAC,
          std::make_shared<AsterixSubitemUnsigned>( 8, CommonConverter::NoneConverter::get() ) ) );
-   sensor_identification.push_back(
+   data_Source_identifier.push_back(
       subitem_t( Cat065ItemNames::I065_010_SIC,
          std::make_shared<AsterixSubitemUnsigned>( 8, CommonConverter::NoneConverter::get() ) ) );
 
@@ -165,7 +166,7 @@ void AsterixCategory065::setSubitems() {
          std::make_shared<AsterixSubitemUnsigned>( 16, CommonConverter::NoneConverter::get() ) ) );
 
    // Add all items
-   subitems.insert( subitem_map_item_t( 1, sensor_identification ) );
+   subitems.insert( subitem_map_item_t( 1, data_Source_identifier ) );
    subitems.insert( subitem_map_item_t( 2, message_type ) );
    subitems.insert( subitem_map_item_t( 3, service_identification ) );
    subitems.insert( subitem_map_item_t( 4, time_of_mesage ) );
@@ -175,6 +176,104 @@ void AsterixCategory065::setSubitems() {
    subitems.insert( subitem_map_item_t( 13, reserved_expansion ) );
 }
 
+std::vector<char> AsterixCategory065::getEncodedMessage(SensorServiceRecordType record,
+   std::map<std::string, bool> items_to_be_served) {
+
+   // activate all mandatory items for the corresponding message type
+   CAT_065_MESSAGE_TYPE type = SDPS_STATUS; // default type
+   if( isItemPresent( Cat065ItemNames::I065_000_TYP ) ) {
+      type = (CAT_065_MESSAGE_TYPE) std::atoi( unrolled_values[Cat065ItemNames::I065_000_TYP].c_str() );
+   }
+   items_to_be_served[Cat065ItemNames::I065_000] = true;
+   items_to_be_served[Cat065ItemNames::I065_010] = true;
+   items_to_be_served[Cat065ItemNames::I065_015] = true;
+   items_to_be_served[Cat065ItemNames::I065_030] = true;
+   switch( type ){
+      case SDPS_STATUS:
+         items_to_be_served[Cat065ItemNames::I065_020] = false; // Never present in this type of message
+         items_to_be_served[Cat065ItemNames::I065_040] = true;
+         items_to_be_served[Cat065ItemNames::I065_050] = false; // Never present
+      break;
+      case END_OF_BATCH:
+         items_to_be_served[Cat065ItemNames::I065_020] = true;
+         items_to_be_served[Cat065ItemNames::I065_040] = false;
+         items_to_be_served[Cat065ItemNames::I065_050] = false; // Never present
+         break;
+      case SERVICE_STATUS:
+         items_to_be_served[Cat065ItemNames::I065_020] = false; // Never present in this type of message
+         items_to_be_served[Cat065ItemNames::I065_040] = false; // Never present
+         items_to_be_served[Cat065ItemNames::I065_050] = true;
+         break;
+      default:
+         throw EncodingError( "AsterixCategory065::getEncodedMessage",
+            "Unsupported message type " + std::to_string( (int) type ) );
+   }
+
+   // set items to be encoded from the input if not set already
+   if( !isItemPresent( Cat065ItemNames::I065_030_TOD ) ) {
+      setTod( record.getTimeOfDay() );
+   }
+   return encode( fpsec_item_name_map, items_to_be_served );
+}
+
 void AsterixCategory065::fillRecord(std::shared_ptr<ReportRecordType> record) {
 }
 
+void AsterixCategory065::setMessageType(unsigned short type) {
+   unrolled_values[Cat065ItemNames::I065_000_TYP] = std::to_string( type );
+}
+
+void AsterixCategory065::setDataSourceId(unsigned short sac, unsigned short sic) {
+   unrolled_values[Cat065ItemNames::I065_010_SAC] = std::to_string( sac );
+   unrolled_values[Cat065ItemNames::I065_010_SIC] = std::to_string( sic );
+}
+
+void AsterixCategory065::setServiceIdentification(unsigned int id) {
+   unrolled_values[Cat065ItemNames::I065_015_SID] = std::to_string( id );
+}
+
+void AsterixCategory065::setBatchNumber(unsigned short nr) {
+   unrolled_values[Cat065ItemNames::I065_020_BTN] = std::to_string( nr );
+}
+
+void AsterixCategory065::setTod(double time_of_day) {
+   unrolled_values[Cat065ItemNames::I065_030_TOD] = std::to_string( time_of_day );
+}
+
+void AsterixCategory065::setSDPSConfiguration(SDPS_CONFIGURATION config, unsigned short value) {
+   std::string converted_value = std::to_string( value );
+   switch( config ){
+      case NOGO:
+         unrolled_values[Cat065ItemNames::I065_040_NOGO] = converted_value;
+         break;
+      case OVL:
+         unrolled_values[Cat065ItemNames::I065_040_OVL] = converted_value;
+         break;
+      case TSV:
+         unrolled_values[Cat065ItemNames::I065_040_TSV] = converted_value;
+         break;
+      case PSS:
+         unrolled_values[Cat065ItemNames::I065_040_PSS] = converted_value;
+         break;
+      case STTN:
+         unrolled_values[Cat065ItemNames::I065_040_STTN] = converted_value;
+         break;
+   }
+}
+
+void AsterixCategory065::setReport(int report) {
+   unrolled_values[Cat065ItemNames::I065_050_REPORT] = std::to_string( report );
+}
+
+void AsterixCategory065::setReLatLng(double lat, double lng) {
+   unrolled_values[Cat065ItemNames::I065_RE_SRP_LAT] = std::to_string( lat );
+   unrolled_values[Cat065ItemNames::I065_RE_SRP_LNG] = std::to_string( lng );
+}
+
+void AsterixCategory065::setSrp(int srp) {
+   unrolled_values[Cat065ItemNames::I065_RE_SRP] = std::to_string( srp );
+}
+
+void AsterixCategory065::setArl(int arl) {
+   unrolled_values[Cat065ItemNames::I065_RE_ARL] = std::to_string( arl );
+}

@@ -69,7 +69,7 @@ public:
     * @return the raw bytes representing this item
     * @throws Not yet decided
     */
-   virtual std::vector<char> encode() override;
+   virtual std::vector<char> encode(std::string value) override;
 
    /**
     * Get the string representation of the decoded value in the correct resolution and unit.

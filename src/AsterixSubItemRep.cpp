@@ -78,7 +78,7 @@ void AsterixSubItemRep::decode( std::deque<char>& input_buffer, unsigned bit_pos
    }
 }
 
-std::vector<char> AsterixSubItemRep::encode() {
+std::vector<char> AsterixSubItemRep::encode(std::string value) {
    return {'N','o','t',' ', 'I','m','p','l','e','m','n','t','e','d'};
 }
 

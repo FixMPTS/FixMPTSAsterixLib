@@ -56,6 +56,12 @@ private:
    bool isEncodingFinished( unsigned int number_encoded_bits, unsigned int item_size_bytes,
       unsigned int buffer_size );
 
+   /**
+    * TODO
+    */
+   void encodeSubItem(unsigned int subitem_pos, const std::vector<char> &encoded_sub_item,
+      const subitem_t &subitem, std::vector<char> &encoded_item);
+
 protected:
    //Asterix category of the message
    int cat;
@@ -264,6 +270,12 @@ public:
     * @throws None
     */
    std::string getFspecString();
+
+   /**
+    * TODO
+    */
+   virtual std::vector<char> encode(std::map<unsigned, std::string, cmpByFRN> fpsec_item_name_map,
+      std::map<std::string, bool> items_to_be_served);
 };
 
 #endif /* ASTERIXCATEGORY_H_ */

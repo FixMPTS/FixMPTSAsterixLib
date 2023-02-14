@@ -31,8 +31,7 @@
 #include <iomanip>
 
 AsterixItemFixedLength::AsterixItemFixedLength( std::string name, int l ) :
-   AsterixItem::AsterixItem( name ) {
-   length = l;
+   AsterixItem::AsterixItem( name, l ) {
 }
 
 AsterixItemFixedLength::~AsterixItemFixedLength() {
@@ -41,7 +40,7 @@ AsterixItemFixedLength::~AsterixItemFixedLength() {
 std::deque<char> AsterixItemFixedLength::readItem( std::deque<char>& buffer ) {
    std::deque<char> return_buffer;
 
-   for (int i = 0; i < length; i++) { //read length bytes
+   for( int i = 0; i < getItemLength(); i++ ) { //read length bytes
       // Keep order of bytes
       return_buffer.push_back( buffer.front() );
       buffer.pop_front();

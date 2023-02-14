@@ -255,18 +255,17 @@ void AsterixCategory::decode() {
                unrolled_values[sub_item_name] = sub_item->getValue();
 
             } else {
-               if( isEncodingFinished( number_encoded_bits, original_size_bytes,
-                  item_content.size() ) ) {
+               if( isEncodingFinished( number_encoded_bits, original_size_bytes, item_content.size() ) ) {
                   break;
                }
-               sub_item->decode( item_content,
-                  (number_encoded_bits - (unsigned) sub_item->getLength()) );
+               sub_item->decode( item_content, (number_encoded_bits - (unsigned) sub_item->getLength()) );
 
                // Store the decoded value
                unrolled_values[sub_item_name] = sub_item->getValue();
             }
          }
-      } catch (std::out_of_range &e) { // No sub item definition for the uap entry
+      } catch( std::out_of_range &e ) {
+         // No sub item definition for the uap entry
       }
    }
 }
@@ -373,7 +372,7 @@ void AsterixCategory::getHeader( std::vector<unsigned char>& header, unsigned le
 
       // each fspec has space for seven bits plus one FX bit
       if( bit % 7 == 0 && bit > 0 ) {
-         // In case of an FX bit we need to remove the curent item and add it to the new fpsec byte
+         // In case of an FX bit we need to remove the current item and add it to the new fpsec byte
          partial_fspec -= current_fspec_bit_backup;
          partial_fspec = partial_fspec << 1; // make space for the FX bit
 
@@ -407,4 +406,108 @@ void AsterixCategory::getHeader( std::vector<unsigned char>& header, unsigned le
 
    // add the fspec
    header.insert( header.end(), tmp_header.begin(), tmp_header.end() );
+}
+
+void AsterixCategory::encodeSubItem(unsigned int subitem_pos, const std::vector<char> &encoded_sub_item,
+   const subitem_t &subitem, std::vector<char> &encoded_item) {
+
+   unsigned short byte_number = subitem_pos / 8;
+   for( unsigned char subitem_byte : encoded_sub_item ) {
+      //unsigned short byte_number = subitem_pos / 8;
+      unsigned short in_byte_pos = subitem_pos % 8;
+      unsigned short byte_remainder = (/*8 -*/in_byte_pos);
+      unsigned short bits_of_item_in_byte =
+         ((byte_remainder + subitem.second->getLength()) > 8) ? 8 - byte_remainder : subitem.second->getLength();
+      unsigned short mask = 0xff;
+      mask >>= byte_remainder;
+      unsigned char current_byte = encoded_item.at( byte_number );
+      current_byte >>= (8 - byte_remainder - bits_of_item_in_byte);
+      current_byte |= (subitem_byte & mask);
+      current_byte <<= (8 - byte_remainder - bits_of_item_in_byte);
+      encoded_item[byte_number] = current_byte;
+      byte_number++;
+
+      subitem_pos = 0;
+   }
+}
+
+std::vector<char> AsterixCategory::encode(std::map<unsigned, std::string, cmpByFRN> fpsec_item_name_map,
+   std::map<std::string, bool> items_to_be_served) {
+   std::vector<char> message = std::vector<char>();
+
+   for( auto item : fpsec_item_name_map ) {
+      // Reset the FSPEC for this item
+      fspec[item.first - 1] = false;
+
+      if( items_to_be_served.find( item.second ) != items_to_be_served.end()
+         && items_to_be_served.at( item.second ) ) {
+         unsigned short item_lengt = uap[item.first]->getItemLength() > 0 ? uap[item.first]->getItemLength() : 1;
+         std::vector<char> encoded_item = std::vector<char>( item_lengt, 0 );
+         unsigned int subitem_pos = 0;
+         std::cout << "Item: " << item.second << " length: " << item_lengt << std::endl;
+
+         if( std::dynamic_pointer_cast<AsterixItemRepetetive>( uap.at( item.first ) ) != nullptr ) {
+            short count = 0;
+            std::vector<char> encoded_sub_item = std::vector<char>( item_lengt, 0 );
+            encoded_item.clear();
+            bool end_reached = false;
+            while( !end_reached ) {
+               for( auto subitem : subitems.at( item.first ) ) {
+                  std::string key = subitem.first + "." + std::to_string( count );
+                  if( !isItemPresent( key ) ) {
+                     end_reached = true;
+                     encoded_sub_item.resize( encoded_sub_item.size() - item_lengt, 0 );
+                     break;
+                  }
+                  std::vector<char> tmp_item = subitem.second->encode( unrolled_values.at( key ) );
+                  encodeSubItem( subitem_pos, tmp_item, subitem, encoded_sub_item );
+                  //encoded_sub_item.insert( encoded_sub_item.end(), tmp_item.begin(), tmp_item.end() );
+                  subitem_pos += subitem.second->getLength();
+               }
+               if( !end_reached ) {
+                  count++;
+                  //subitem_pos = 0;
+                  encoded_sub_item.resize( encoded_sub_item.size() + item_lengt, 0 );
+               }
+            }
+            encoded_item.push_back( count );
+            encoded_item.insert( encoded_item.end(), encoded_sub_item.begin(), encoded_sub_item.end() );
+         } else {
+            for( auto subitem : subitems.at( item.first ) ) {
+               if( !isItemPresent( subitem.first ) ) {
+                  subitem_pos += subitem.second->getLength();
+                  continue;
+               }
+
+               if( std::dynamic_pointer_cast<AsterixItemVariableLength>( uap.at( item.first ) ) != nullptr ) {
+                  if( ((subitem_pos + 2) / 8) >= encoded_item.size() ) { // + 1 FX +1 count from 0
+                     encoded_item.resize( encoded_item.size() + 1, 0 );
+                     subitem_pos++; //FX
+                  }
+               }
+
+               std::vector<char> encoded_sub_item = subitem.second->encode( unrolled_values.at( subitem.first ) );
+               encodeSubItem( subitem_pos, encoded_sub_item, subitem, encoded_item );
+               subitem_pos += subitem.second->getLength();
+            }
+         }
+
+         if( !encoded_item.empty() ) {
+            fspec[item.first - 1] = true;
+
+            if( std::dynamic_pointer_cast<AsterixItemVariableLength>( uap.at( item.first ) ) != nullptr ) {
+               // Set FX bits
+               for( unsigned short i = 0; i < encoded_item.size(); i++ ) {
+                  if( i < encoded_item.size() - 1 ) {
+                     std::bitset<8> byte_item( encoded_item.at( i ) );
+                     byte_item[0] = 1;
+                     encoded_item[i] = char( byte_item.to_ulong() );
+                  }
+               }
+            message.insert( message.end(), encoded_item.begin(), encoded_item.end() );
+   // add header and FSPEC
+   std::vector<unsigned char> header;
+   getHeader( header, message.size() );
+   message.insert( message.begin(), header.begin(), header.end() );
+   return message;
 }

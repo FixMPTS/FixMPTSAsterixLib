@@ -51,8 +51,8 @@ private:
 
    // Just for convenience
    std::map<unsigned, std::string, cmpByFRN> fpsec_item_name_map =
-      { { 0, "I002/010" }, { 1, "I002/000" }, { 2, "I002/020" }, { 3, "I002/030" }, { 4, "I002/041" }, { 5, "I002/050" },
-         { 6, "I002/060" }, { 7, "I002/070" }, { 8, "I002/100" }, { 9, "I002/090" }, { 10, "I002/080" } };
+      { { 1, "I002/010" }, { 2, "I002/000" }, { 3, "I002/020" }, { 4, "I002/030" }, { 5, "I002/041" }, { 6, "I002/050" },
+         { 7, "I002/060" }, { 8, "I002/070" }, { 9, "I002/100" }, { 10, "I002/090" }, { 11, "I002/080" } };
 
 public:
    virtual ~AsterixCategory002();
@@ -77,7 +77,7 @@ public:
     * @param items_to_be_served list of booleans indicating which values shall be served
     * @return the binary representation of the message
     */
-   std::vector<unsigned char> getEncodedMessage(SensorServiceRecordType record,
+   std::vector<char> getEncodedMessage(SensorServiceRecordType record,
       std::map<std::string, bool> items_to_be_served);
 
    /**
@@ -85,7 +85,7 @@ public:
     */
    void setDataSource(unsigned short sac, unsigned short sic);
    void setMessageType(SensorServiceRecordType::MESSAGETYPE type);
-   void setSectorNumber(unsigned short number);
+   void setSectorNumber(float number);
    void setTimeOfDay(double time);
    void setAntennaRotationPeriod(double period);
    void setDynamicWindow(double rho_start, double rho_end, double theta_start, double theta_end);
@@ -96,7 +96,7 @@ public:
     * TODO
     */
    void resetPlotCount();
-   void addPlotCount(bool antenna1, unsigned short identifier, unsigned short counter);
+   void addPlotCount(bool antenna, unsigned short identifier, unsigned short counter);
 };
 
 #endif /* ASTERIXCATEGORY002_H_ */

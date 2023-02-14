@@ -31,7 +31,7 @@
 #include <bitset>
 
 AsterixItemCompound::AsterixItemCompound( std::string name, AsterixItemCompound::subUap_T sub_uap ) :
-   AsterixItem( name ) {
+   AsterixItem( name, -1 ) {
    subitem_uap = sub_uap;
 }
 

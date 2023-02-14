@@ -35,7 +35,7 @@
 class AsterixItem {
 private:
 
-protected:
+private:
    //Full name of the item
    std::string name;
 
@@ -48,10 +48,11 @@ public:
     * Initialise the new Asterix item object with the given name
     *
     * @param name The name of the Asterix item
+    * @param l length of the item or -1 if it has no fixed length
     * @return None
     * @throw None
     */
-   AsterixItem( std::string name );
+   AsterixItem(std::string name, int l);
    virtual ~AsterixItem();
 
    /**
@@ -70,6 +71,10 @@ public:
     */
    std::string getName();
 
+   /**
+    *
+    */
+   void setItemLength(int l);
    /*
     * @param None
     * @return the length of this item

@@ -68,6 +68,15 @@ public:
     * @throw None
     */
    virtual void decode( std::deque<char>& input_buffer, unsigned bit_position = 0 ) override;
+
+   /**
+    * Encode the value of this item and return the bits representing this item as byte.
+    *
+    * @param value the value to be encoded
+    * @return encoded the bits representing this item
+    * @throw None
+    */
+   virtual std::vector<char> encode(std::string value) override;
 };
 
 #endif /* ASTERIXSUBITEMBITNAMED_H_ */

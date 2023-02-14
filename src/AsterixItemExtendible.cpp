@@ -33,7 +33,7 @@ AsterixItemExtendible::~AsterixItemExtendible() {
 }
 
 AsterixItemExtendible::AsterixItemExtendible( std::string name, unsigned length ) :
-   AsterixItem( name ) {
+   AsterixItem( name, length ) {
    repeated_length = length;
 }
 

@@ -29,6 +29,7 @@
 
 #include <bitset>
 #include <cmath>
+#include <iostream>
 
 AsterixSubitemNumber::AsterixSubitemNumber( int length,
    std::shared_ptr<ItemConverterBase> converter) :
@@ -89,7 +90,6 @@ long AsterixSubitemNumber::getRawValue(std::vector<bool> result) {
    for( unsigned short i = 0; i < result.size(); i++ ) {
       raw_value = (raw_value << 1) + (result.at( i ) ? 1 : 0);
    }
-
    return raw_value;
 }
 
@@ -97,6 +97,17 @@ std::string AsterixSubitemNumber::getConvertedValue( char* value, unsigned int v
    return converter->fromExternal( value, (int) std::ceil( length / 8.0 ) );
 }
 
-std::vector<char> AsterixSubitemNumber::encode() {
-   return AsterixSubitemBase::encode();
+std::vector<char> AsterixSubitemNumber::encode(std::string value) {
+   uint64_t raw_value = converter->toExternal( value, length );
+   unsigned short num_bytes = length / 8;
+   if( (length % 8) != 0 ) {
+      num_bytes++;
+   }
+   //      num_bytes = num_bytes > 0 ? num_bytes : 1;
+   std::vector<char> item = std::vector<char>( num_bytes, 0 );
+   for( int i = num_bytes; i > 0; i-- ) {
+      unsigned char byte_value = ((raw_value >> ((num_bytes - i) * 8)) & 0xFF);
+      item[i - 1] = byte_value;
+   }
+   return item;
 }

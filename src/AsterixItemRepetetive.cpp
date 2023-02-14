@@ -28,7 +28,7 @@
 #include "BinaryHelper.h"
 
 AsterixItemRepetetive::AsterixItemRepetetive( std::string name, unsigned length ) :
-   AsterixItem( name ) {
+   AsterixItem( name, length ) {
    item_length = length;
    repetition_factor = 0;
 }
@@ -38,7 +38,7 @@ AsterixItemRepetetive::~AsterixItemRepetetive(){
 
 std::deque<char> AsterixItemRepetetive::readItem( std::deque<char>& buffer ){
    std::deque<char> return_buffer;
-   if( buffer.size( ) < (unsigned int) ( 1 + length ) ) {
+   if( buffer.size() < (unsigned int) (1 + getItemLength()) ) {
       return return_buffer; // Item is too short
    }
 
@@ -48,7 +48,7 @@ std::deque<char> AsterixItemRepetetive::readItem( std::deque<char>& buffer ){
    return_buffer.push_back( buffer.front() );
    buffer.pop_front( );
 
-   length = 1 + (repetition_factor * item_length);
+   setItemLength( 1 + (repetition_factor * item_length) );
 
    // Read all bytes and store them in the output buffer
    for( unsigned int i = 0; i < ( repetition_factor * item_length ); i++){

@@ -32,7 +32,7 @@
 #include <vector>
 
 AsterixItemVariableLength::AsterixItemVariableLength( std::string name ) :
-   AsterixItem( name ) {
+   AsterixItem( name, -1 ) {
 }
 
 AsterixItemVariableLength::~AsterixItemVariableLength() {/*Nothing to do at the moment*/

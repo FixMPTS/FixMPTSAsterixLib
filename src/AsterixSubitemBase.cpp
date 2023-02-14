@@ -63,6 +63,6 @@ std::string AsterixSubitemBase::getValue() {
    return encoded_value;
 }
 
-std::vector<char> AsterixSubitemBase::encode() {
+std::vector<char> AsterixSubitemBase::encode(std::string value) {
    return std::vector<char>();
 }

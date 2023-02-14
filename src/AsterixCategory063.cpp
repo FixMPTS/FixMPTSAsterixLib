@@ -202,3 +202,114 @@ void AsterixCategory063::setSubitems() {
 void AsterixCategory063::fillRecord(std::shared_ptr<ReportRecordType> record) {
 }
 
+std::vector<char> AsterixCategory063::getEncodedMessage(SensorServiceRecordType record,
+   std::map<std::string, bool> items_to_be_served) {
+
+   // activate all mandatory items
+   items_to_be_served[Cat063ItemNames::I063_010] = true;
+   items_to_be_served[Cat063ItemNames::I063_030] = true;
+   items_to_be_served[Cat063ItemNames::I063_050] = true;
+
+   // set items to be encoded if not set already
+   if( !isItemPresent( Cat063ItemNames::I063_015_SID ) && record.isMessageTypePresent() ) {
+      setServiceId( record.getMessageType() );
+   }
+
+   if( !isItemPresent( Cat063ItemNames::I063_030_TOD ) ) {
+      setTod( record.getTimeOfDay() );
+   }
+
+   if( !isItemPresent( Cat063ItemNames::I063_050_SAC ) || !isItemPresent( Cat063ItemNames::I063_050_SIC ) ) {
+      setSensorId( std::get<0>( record.getSensorId() ), std::get<1>( record.getSensorId() ) );
+   }
+
+   return encode( fpsec_item_name_map, items_to_be_served );
+}
+
+void AsterixCategory063::setSourceId(unsigned short sac, unsigned short sic) {
+   unrolled_values[Cat063ItemNames::I063_010_SAC] = std::to_string( sac );
+   unrolled_values[Cat063ItemNames::I063_010_SIC] = std::to_string( sic );
+
+   // TODO set corresponding FSPEC bit too
+}
+
+void AsterixCategory063::setServiceId(unsigned short id) {
+   unrolled_values[Cat063ItemNames::I063_015_SID] = std::to_string( id );
+}
+
+void AsterixCategory063::setTod(double time_of_day) {
+   unrolled_values[Cat063ItemNames::I063_030_TOD] = std::to_string( time_of_day );
+}
+
+void AsterixCategory063::setSensorId(unsigned short sac, unsigned short sic) {
+   unrolled_values[Cat063ItemNames::I063_050_SAC] = std::to_string( sac );
+   unrolled_values[Cat063ItemNames::I063_050_SIC] = std::to_string( sic );
+}
+
+void AsterixCategory063::setSensorConfiguration(SENSOR_CONFIGURATION config, unsigned short value) {
+   std::string converted_value = std::to_string( value );
+   switch( config ){
+      case CON:
+         unrolled_values[Cat063ItemNames::I063_060_CON] = converted_value;
+         break;
+      case PSR:
+         unrolled_values[Cat063ItemNames::I063_060_PSR] = converted_value;
+         break;
+      case SSR:
+         unrolled_values[Cat063ItemNames::I063_060_SSR] = converted_value;
+         break;
+      case MDS:
+         unrolled_values[Cat063ItemNames::I063_060_MDS] = converted_value;
+         break;
+      case ADS:
+         unrolled_values[Cat063ItemNames::I063_060_ADS] = converted_value;
+         break;
+      case MLT:
+         unrolled_values[Cat063ItemNames::I063_060_MLT] = converted_value;
+         break;
+      case OPS:
+         unrolled_values[Cat063ItemNames::I063_060_OPS] = converted_value;
+         break;
+      case ODP:
+         unrolled_values[Cat063ItemNames::I063_060_ODP] = converted_value;
+         break;
+      case OXT:
+         unrolled_values[Cat063ItemNames::I063_060_OXT] = converted_value;
+         break;
+      case MSC:
+         unrolled_values[Cat063ItemNames::I063_060_MSC] = converted_value;
+         break;
+      case TSV:
+         unrolled_values[Cat063ItemNames::I063_060_TSV] = converted_value;
+         break;
+      case NPW:
+         unrolled_values[Cat063ItemNames::I063_060_NPW] = converted_value;
+         break;
+   }
+}
+
+void AsterixCategory063::setTimestampingBias(double value) {
+   unrolled_values[Cat063ItemNames::I063_070_TSB] = std::to_string( value );
+}
+
+void AsterixCategory063::setSSRRangeGainBias(double srg, double srb) {
+   unrolled_values[Cat063ItemNames::I063_080_SRG] = std::to_string( srg );
+   unrolled_values[Cat063ItemNames::I063_080_SRB] = std::to_string( srb );
+}
+
+void AsterixCategory063::setSSRAzimuthBias(double value) {
+   unrolled_values[Cat063ItemNames::I063_081_SAB] = std::to_string( value );
+}
+
+void AsterixCategory063::setPSRRangeGainBias(double prg, double prb) {
+   unrolled_values[Cat063ItemNames::I063_090_PRG] = std::to_string( prg );
+   unrolled_values[Cat063ItemNames::I063_090_PRB] = std::to_string( prb );
+}
+
+void AsterixCategory063::setPSRAzimuthBias(double value) {
+   unrolled_values[Cat063ItemNames::I063_091_PAB] = std::to_string( value );
+}
+
+void AsterixCategory063::setPSRElevationBias(double value) {
+   unrolled_values[Cat063ItemNames::I063_092_PEB] = std::to_string( value );
+}

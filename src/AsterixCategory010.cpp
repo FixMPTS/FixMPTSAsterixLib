@@ -124,7 +124,7 @@ void AsterixCategory010::setSubitems() {
       subitem_t( Cat010ItemNames::I010_020_GBS,
          std::make_shared<AsterixSubitemUnsigned>( 1, CommonConverter::NoneConverter::get() ) ) );
    target_report_descriptor.push_back(
-      subitem_t( Cat010ItemNames::I010_020_CBT,
+      subitem_t( Cat010ItemNames::I010_020_CRT,
          std::make_shared<AsterixSubitemUnsigned>( 1, CommonConverter::NoneConverter::get() ) ) );
    target_report_descriptor.push_back(
       subitem_t( Cat010ItemNames::I010_020_SIM,
@@ -136,7 +136,7 @@ void AsterixCategory010::setSubitems() {
       subitem_t( Cat010ItemNames::I010_020_RAB,
          std::make_shared<AsterixSubitemUnsigned>( 1, CommonConverter::NoneConverter::get() ) ) );
    target_report_descriptor.push_back(
-      subitem_t( Cat010ItemNames::I010_020_LOOP,
+      subitem_t( Cat010ItemNames::I010_020_LOP,
          std::make_shared<AsterixSubitemUnsigned>( 2, CommonConverter::NoneConverter::get() ) ) );
    target_report_descriptor.push_back(
       subitem_t( Cat010ItemNames::I010_020_TOT,
@@ -396,4 +396,377 @@ void AsterixCategory010::setSubitems() {
 void AsterixCategory010::fillRecord(std::shared_ptr<ReportRecordType> record) {
 }
 
+std::vector<char> AsterixCategory010::getEncodedMessage(TrackTypeIf track, ReportRecordType record,
+   std::map<std::string, bool> items_to_be_served) {
 
+   // activate encoding of mandatory items
+   items_to_be_served[Cat010ItemNames::I010_000] = true;
+   items_to_be_served[Cat010ItemNames::I010_010] = true;
+   items_to_be_served[Cat010ItemNames::I010_140] = true;
+   // Mandatory items depending on the message type
+   CAT_010_MESSAGE_TYPE type = TARGET_REPORT; // default type
+   if( isItemPresent( Cat010ItemNames::I010_000_TYP ) ) {
+      type = static_cast<CAT_010_MESSAGE_TYPE>( std::atoi( getValue( Cat010ItemNames::I010_000_TYP ).c_str() ) );
+   }
+
+   switch( type ){
+      case TARGET_REPORT:
+         items_to_be_served[Cat010ItemNames::I010_020] = true;
+         items_to_be_served[Cat010ItemNames::I010_550] = false; // Never present
+         break;
+      case PERIODIC_STATUS_MSG: // fall through because same as EVENT_TRIGGERED_STATUS_MSG
+      case EVENT_TRIGGERED_STATUS_MSG:
+         items_to_be_served[Cat010ItemNames::I010_550] = true;
+         // fall trough because disabled items are the same as in START_UPDATE_CYLE
+      case START_UPDATE_CYLE: //
+         items_to_be_served[Cat010ItemNames::I010_020] = false; // Never present
+         items_to_be_served[Cat010ItemNames::I010_040] = false;
+         items_to_be_served[Cat010ItemNames::I010_041] = false;
+         items_to_be_served[Cat010ItemNames::I010_042] = false;
+         items_to_be_served[Cat010ItemNames::I010_060] = false;
+         items_to_be_served[Cat010ItemNames::I010_090] = false;
+         items_to_be_served[Cat010ItemNames::I010_091] = false;
+         items_to_be_served[Cat010ItemNames::I010_131] = false;
+         items_to_be_served[Cat010ItemNames::I010_161] = false;
+         items_to_be_served[Cat010ItemNames::I010_170] = false;
+         items_to_be_served[Cat010ItemNames::I010_200] = false;
+         items_to_be_served[Cat010ItemNames::I010_202] = false;
+         items_to_be_served[Cat010ItemNames::I010_210] = false;
+         items_to_be_served[Cat010ItemNames::I010_220] = false;
+         items_to_be_served[Cat010ItemNames::I010_245] = false;
+         items_to_be_served[Cat010ItemNames::I010_250] = false;
+         items_to_be_served[Cat010ItemNames::I010_270] = false;
+         items_to_be_served[Cat010ItemNames::I010_280] = false;
+         items_to_be_served[Cat010ItemNames::I010_300] = false;
+         items_to_be_served[Cat010ItemNames::I010_310] = false;
+         items_to_be_served[Cat010ItemNames::I010_500] = false;
+         break;
+      default:
+         throw EncodingError( "AsterixCategory010::getEncodedMessage",
+            "Unsupported message type " + std::to_string( (int) type ) );
+         break;
+   }
+
+   // set items to be encoded from input type if not set already
+   if( !isItemPresent( Cat010ItemNames::I010_010_SAC ) || !isItemPresent( Cat010ItemNames::I010_010_SIC ) ) {
+      setDataSourceIdentifier( std::get<0>( record.getSourceID() ), std::get<1>( record.getSourceID() ) );
+   }
+   if( (!isItemPresent( Cat010ItemNames::I010_040_RHO ) || !isItemPresent( Cat010ItemNames::I010_040_THETA ))
+      && record.isRangeAzimuthPresent() ) {
+      setMeasuredPosition( std::get<0>( record.getRangeAzimuth() ), std::get<1>( record.getRangeAzimuth() ) );
+   }
+   if( (!isItemPresent( Cat010ItemNames::I010_041_LAT ) || !isItemPresent( Cat010ItemNames::I010_041_LNG ))
+      && record.isGeoPosPresent() ) {
+      setWGSPosition( std::get<0>( record.getGeoPos() ), std::get<1>( record.getGeoPos() ) );
+   }
+   if( !isItemPresent( Cat010ItemNames::I010_060_CODE ) && record.isMode3APresent() ) {
+      setMode3A( record.isMode3AValid(), record.isMode3AGarbled(), false, record.getMode3ACode() );
+   }
+   if( !isItemPresent( Cat010ItemNames::I010_140_TOD ) ) { // TOD is mandatory in the report
+      setTod( record.getDetectionTime() );
+   }
+
+   return encode( fpsec_item_name_map, items_to_be_served );
+}
+
+void AsterixCategory010::setDataSourceIdentifier(unsigned short sac, unsigned short sic) {
+   unrolled_values[Cat010ItemNames::I010_010_SAC] = std::to_string( sac );
+   unrolled_values[Cat010ItemNames::I010_010_SIC] = std::to_string( sic );
+}
+
+void AsterixCategory010::setMessageType(unsigned short type) {
+   unrolled_values[Cat010ItemNames::I010_000_TYP] = std::to_string( type );
+}
+
+void AsterixCategory010::setTod(double tod) {
+   unrolled_values[Cat010ItemNames::I010_140_TOD] = std::to_string( tod );
+}
+
+void AsterixCategory010::setTargetReportDescriptor(TARGET_REPPORT_DESCRIPTOR item, unsigned short value) {
+   std::string final_value = std::to_string( value );
+   switch( item ){
+      case TYPE:
+         unrolled_values[Cat010ItemNames::I010_020_TYP] = final_value;
+         break;
+      case DCR:
+         unrolled_values[Cat010ItemNames::I010_020_DCR] = final_value;
+         break;
+      case CHN:
+         unrolled_values[Cat010ItemNames::I010_020_CHN] = final_value;
+         break;
+      case GBS:
+         unrolled_values[Cat010ItemNames::I010_020_GBS] = final_value;
+         break;
+      case CRT:
+         unrolled_values[Cat010ItemNames::I010_020_CRT] = final_value;
+         break;
+      case SIM:
+         unrolled_values[Cat010ItemNames::I010_020_SIM] = final_value;
+         break;
+      case TST:
+         unrolled_values[Cat010ItemNames::I010_020_TST] = final_value;
+         break;
+      case RAB:
+         unrolled_values[Cat010ItemNames::I010_020_RAB] = final_value;
+         break;
+      case LOP:
+         unrolled_values[Cat010ItemNames::I010_020_LOP] = final_value;
+         break;
+      case TOT:
+         unrolled_values[Cat010ItemNames::I010_020_TOT] = final_value;
+         break;
+      case SPI:
+         unrolled_values[Cat010ItemNames::I010_020_SPI] = final_value;
+         break;
+      default:
+         throw EncodingError( "AsterixCategory010::getEncodedMessage",
+            "Unsupported target report descriptor type " + std::to_string( (int) item ) );
+   }
+}
+
+void AsterixCategory010::setMeasuredPosition(double rho, double theta) {
+   unrolled_values[Cat010ItemNames::I010_040_RHO] = std::to_string( rho );
+   unrolled_values[Cat010ItemNames::I010_040_THETA] = std::to_string( theta );
+}
+
+void AsterixCategory010::setWGSPosition(double lat, double lng) {
+   unrolled_values[Cat010ItemNames::I010_041_LAT] = std::to_string( lat );
+   unrolled_values[Cat010ItemNames::I010_041_LNG] = std::to_string( lng );
+}
+
+void AsterixCategory010::setCartesianPosition(double x, double y) {
+   unrolled_values[Cat010ItemNames::I010_042_X] = std::to_string( x );
+   unrolled_values[Cat010ItemNames::I010_042_Y] = std::to_string( y );
+}
+
+void AsterixCategory010::setMode3A(bool v, bool g, bool l, int code) {
+   unrolled_values[Cat010ItemNames::I010_060_V] = std::to_string( v );
+   unrolled_values[Cat010ItemNames::I010_060_G] = std::to_string( g );
+   unrolled_values[Cat010ItemNames::I010_060_L] = std::to_string( l );
+   unrolled_values[Cat010ItemNames::I010_060_CODE] = std::to_string( code );
+}
+
+void AsterixCategory010::setFlightLevel(bool v, bool g, float level) {
+   unrolled_values[Cat010ItemNames::I010_090_V] = std::to_string( v );
+   unrolled_values[Cat010ItemNames::I010_090_G] = std::to_string( g );
+   unrolled_values[Cat010ItemNames::I010_090_FL] = std::to_string( level );
+}
+
+void AsterixCategory010::setMeasuredHeight(float height) {
+   unrolled_values[Cat010ItemNames::I010_091_ALT] = std::to_string( height );
+}
+
+void AsterixCategory010::setPRAmplitude(int amplitude) {
+   unrolled_values[Cat010ItemNames::I010_131_AMP] = std::to_string( amplitude );
+}
+
+void AsterixCategory010::setToD(double tod) {
+   unrolled_values[Cat010ItemNames::I010_140_TOD] = std::to_string( tod );
+}
+
+void AsterixCategory010::setTrackNumber(unsigned int nr) {
+   unrolled_values[Cat010ItemNames::I010_161_TRK] = std::to_string( nr );
+}
+
+void AsterixCategory010::setTrackStatus(TRACK_STATUS status, unsigned short value) {
+   switch( status ){
+      case TRACK_STATUS::CNF:
+         unrolled_values[Cat010ItemNames::I010_170_CNF] = std::to_string( value );
+         break;
+      case TRACK_STATUS::CST:
+         unrolled_values[Cat010ItemNames::I010_170_CST] = std::to_string( value );
+         break;
+      case TRACK_STATUS::DOU:
+         unrolled_values[Cat010ItemNames::I010_170_DOU] = std::to_string( value );
+         break;
+      case TRACK_STATUS::GHO:
+         unrolled_values[Cat010ItemNames::I010_170_GHO] = std::to_string( value );
+         break;
+      case TRACK_STATUS::MAH:
+         unrolled_values[Cat010ItemNames::I010_170_MAH] = std::to_string( value );
+         break;
+      case TRACK_STATUS::MRS:
+         unrolled_values[Cat010ItemNames::I010_170_MRS] = std::to_string( value );
+         break;
+      case TRACK_STATUS::STH:
+         unrolled_values[Cat010ItemNames::I010_170_STH] = std::to_string( value );
+         break;
+      case TRACK_STATUS::TCC:
+         unrolled_values[Cat010ItemNames::I010_170_TCC] = std::to_string( value );
+         break;
+      case TRACK_STATUS::TOM:
+         unrolled_values[Cat010ItemNames::I010_170_TOM] = std::to_string( value );
+         break;
+      case TRACK_STATUS::TRE:
+         unrolled_values[Cat010ItemNames::I010_170_TRE] = std::to_string( value );
+         break;
+   }
+}
+
+void AsterixCategory010::setCaculatedVelocityPolar(double speed, double angle) {
+   unrolled_values[Cat010ItemNames::I010_200_GSP] = std::to_string( speed );
+   unrolled_values[Cat010ItemNames::I010_200_TA] = std::to_string( angle );
+}
+
+void AsterixCategory010::setCalculatedVelocityCartesian(double vx, double vy) {
+   unrolled_values[Cat010ItemNames::I010_202_VX] = std::to_string( vx );
+   unrolled_values[Cat010ItemNames::I010_202_VY] = std::to_string( vy );
+}
+
+void AsterixCategory010::setCalculatedAcceleration(double ax, double ay) {
+   unrolled_values[Cat010ItemNames::I010_210_AX] = std::to_string( ax );
+   unrolled_values[Cat010ItemNames::I010_210_AY] = std::to_string( ay );
+}
+
+void AsterixCategory010::setTargetAddress(unsigned long addr) {
+   unrolled_values[Cat010ItemNames::I010_220_ADDR] = std::to_string( addr );
+}
+
+void AsterixCategory010::setTargetIdentification(short sti, char id[8]) {
+   unrolled_values[Cat010ItemNames::I010_245_STI] = std::to_string( sti );
+   unrolled_values[Cat010ItemNames::I010_245_ID] = id;
+}
+
+void AsterixCategory010::addModeSMBData(unsigned long mbd, short bds1, short bds2) {
+   // get last index
+   unsigned short index = 0;
+   for( ;; index++ ) {
+      std::string key = Cat010ItemNames::I010_250_DATA + "." + std::to_string( index );
+      if( !isItemPresent( key ) ) {
+         break; // First index not in use found
+      }
+   }
+   std::string str_index = "." + std::to_string( index );
+   unrolled_values[Cat010ItemNames::I010_250_DATA + str_index] = std::to_string( mbd );
+   unrolled_values[Cat010ItemNames::I010_250_BDS1 + str_index] = std::to_string( bds1 );
+   unrolled_values[Cat010ItemNames::I010_250_BDS2 + str_index] = std::to_string( bds2 );
+}
+
+void AsterixCategory010::removeModeSMBData(unsigned long mbd) {
+   unsigned short index = 0;
+   bool found = false;
+   for( ;; index++ ) {
+      std::string key = Cat010ItemNames::I010_250_DATA + "." + std::to_string( index );
+      if( !isItemPresent( key ) ) {
+         break; //End found
+      } else if( getValue( key ) == std::to_string( mbd ) ) {
+         found = true;
+         std::string str_index = "." + std::to_string( index );
+         unrolled_values.erase( Cat010ItemNames::I010_250_DATA + str_index );
+         unrolled_values.erase( Cat010ItemNames::I010_250_BDS1 + str_index );
+         unrolled_values.erase( Cat010ItemNames::I010_250_BDS2 + str_index );
+      } else if( found ) {
+         // set index -1
+         std::string str_index = "." + std::to_string( index );
+         std::string str_prev_index = "." + std::to_string( index - 1 );
+         unrolled_values[Cat010ItemNames::I010_250_DATA + str_prev_index] = unrolled_values.at(
+            Cat010ItemNames::I010_250_DATA + str_index );
+         unrolled_values[Cat010ItemNames::I010_250_BDS1 + str_prev_index] = unrolled_values.at(
+            Cat010ItemNames::I010_250_BDS1 + str_index );
+         unrolled_values[Cat010ItemNames::I010_250_BDS2 + str_prev_index] = unrolled_values.at(
+            Cat010ItemNames::I010_250_BDS2 + str_index );
+         unrolled_values.erase( Cat010ItemNames::I010_250_DATA + str_index );
+         unrolled_values.erase( Cat010ItemNames::I010_250_BDS1 + str_index );
+         unrolled_values.erase( Cat010ItemNames::I010_250_BDS2 + str_index );
+      }
+   }
+}
+
+void AsterixCategory010::clearModeSMBData() {
+   unsigned short index = 0;
+   for( ;; index++ ) {
+      std::string key = Cat010ItemNames::I010_250_DATA + "." + std::to_string( index );
+      if( !isItemPresent( key ) ) {
+         break; //End found
+      } else {
+         std::string str_index = "." + std::to_string( index );
+         unrolled_values.erase( Cat010ItemNames::I010_250_DATA + str_index );
+         unrolled_values.erase( Cat010ItemNames::I010_250_BDS1 + str_index );
+         unrolled_values.erase( Cat010ItemNames::I010_250_BDS2 + str_index );
+      }
+   }
+}
+
+void AsterixCategory010::setTargetSizeOrientation(short length, double orientation, short width) {
+   unrolled_values[Cat010ItemNames::I010_270_L] = std::to_string( length );
+   unrolled_values[Cat010ItemNames::I010_270_O] = std::to_string( orientation );
+   unrolled_values[Cat010ItemNames::I010_270_W] = std::to_string( width );
+}
+
+void AsterixCategory010::addPresence(double drho, double dtheta) {
+   // get last index
+   unsigned short index = 0;
+   for( ;; index++ ) { // TODO put loop in static method
+      std::string key = Cat010ItemNames::I010_280_DRHO + "." + std::to_string( index );
+      if( !isItemPresent( key ) ) {
+         break; // First index not in use found
+      }
+   }
+   std::string str_index = "." + std::to_string( index );
+   unrolled_values[Cat010ItemNames::I010_280_DRHO + str_index] = std::to_string( drho );
+   unrolled_values[Cat010ItemNames::I010_280_DTHETA + str_index] = std::to_string( dtheta );
+}
+
+void AsterixCategory010::removePresence(double drho, double dtheta) {
+   unsigned short index = 0;
+   bool found = false;
+   for( ;; index++ ) {
+      std::string key = Cat010ItemNames::I010_280_DRHO + "." + std::to_string( index );
+      if( !isItemPresent( key ) ) {
+         break; //End found
+      } else if( getValue( key ) == std::to_string( drho )
+         && getValue( Cat010ItemNames::I010_280_DTHETA + "." + std::to_string( index ) ) == std::to_string( dtheta ) ) {
+         found = true;
+         std::string str_index = "." + std::to_string( index );
+         unrolled_values.erase( Cat010ItemNames::I010_280_DRHO + str_index );
+         unrolled_values.erase( Cat010ItemNames::I010_280_DTHETA + str_index );
+      } else if( found ) {
+         // set index -1
+         std::string str_index = "." + std::to_string( index );
+         std::string str_prev_index = "." + std::to_string( index - 1 );
+         unrolled_values[Cat010ItemNames::I010_280_DRHO + str_prev_index] = unrolled_values.at(
+            Cat010ItemNames::I010_280_DRHO + str_index );
+         unrolled_values[Cat010ItemNames::I010_280_DTHETA + str_prev_index] = unrolled_values.at(
+            Cat010ItemNames::I010_280_DTHETA + str_index );
+         unrolled_values.erase( Cat010ItemNames::I010_280_DRHO + str_index );
+         unrolled_values.erase( Cat010ItemNames::I010_280_DTHETA + str_index );
+      }
+   }
+}
+
+void AsterixCategory010::clearPresence() {
+   unsigned short index = 0;
+   for( ;; index++ ) {
+      std::string key = Cat010ItemNames::I010_280_DRHO + "." + std::to_string( index );
+      if( !isItemPresent( key ) ) {
+         break; //End found
+      } else {
+         std::string str_index = "." + std::to_string( index );
+         unrolled_values.erase( Cat010ItemNames::I010_280_DRHO + str_index );
+         unrolled_values.erase( Cat010ItemNames::I010_280_DTHETA + str_index );
+      }
+   }
+}
+
+void AsterixCategory010::setVehicleFleet(VEHICLE_FLEET_ID vfid) {
+   unrolled_values[Cat010ItemNames::I010_300_VFI] = std::to_string( (unsigned short) vfid );
+}
+
+void AsterixCategory010::setProgrammedMsg(bool trb, unsigned short msg) {
+   unrolled_values[Cat010ItemNames::I010_310_TRB] = std::to_string( trb );
+   unrolled_values[Cat010ItemNames::I010_310_MSG] = std::to_string( msg );
+}
+
+void AsterixCategory010::setStdDeviationPos(double dx, double dy, double dxz) {
+   unrolled_values[Cat010ItemNames::I010_500_DX] = std::to_string( dx );
+   unrolled_values[Cat010ItemNames::I010_500_DY] = std::to_string( dy );
+   unrolled_values[Cat010ItemNames::I010_500_DXY] = std::to_string( dxz );
+}
+
+void AsterixCategory010::setSystemStatus(short nogo, bool ovl, bool tsv, bool div, bool ttf) {
+   unrolled_values[Cat010ItemNames::I010_550_NOGO] = std::to_string( nogo );
+   unrolled_values[Cat010ItemNames::I010_550_OVL] = std::to_string( ovl );
+   unrolled_values[Cat010ItemNames::I010_550_TSV] = std::to_string( tsv );
+   unrolled_values[Cat010ItemNames::I010_550_DIV] = std::to_string( div );
+   unrolled_values[Cat010ItemNames::I010_550_TTF] = std::to_string( ttf );
+}

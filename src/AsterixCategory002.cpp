@@ -138,11 +138,11 @@ void AsterixCategory002::setSubitems() {
    subitem_map_t error;
    // Only 8 bit but spec calculates with 16 bit ???????
    error.push_back(
-      subitem_t( Cat002ItemNames::I002_090_AZM,
-         std::make_shared<AsterixSubitemUnsigned>( 8, UnsignedDoubleConverter::CircleSegment16Bit::get() ) ) );
-   error.push_back(
       subitem_t( Cat002ItemNames::I002_090_RNG,
          std::make_shared<AsterixSubitemUnsigned>( 8, DoubleConverter::Fraction128th::get() ) ) );
+   error.push_back(
+      subitem_t( Cat002ItemNames::I002_090_AZM,
+         std::make_shared<AsterixSubitemUnsigned>( 8, UnsignedDoubleConverter::CircleSegment16Bit::get() ) ) );
 
    // Dynamic Window
    subitem_map_t window;
@@ -192,34 +192,34 @@ void AsterixCategory002::setMessageType(SensorServiceRecordType::MESSAGETYPE typ
    unrolled_values[Cat002ItemNames::I002_000_TYP] = std::to_string( static_cast<unsigned int>( type ) );
 }
 
-void AsterixCategory002::setSectorNumber(unsigned short number) {
+void AsterixCategory002::setSectorNumber(float number) {
    unrolled_values[Cat002ItemNames::I002_020_SCT] = std::to_string( number );
 }
 
 void AsterixCategory002::setTimeOfDay(double time) {
-   float lsb = 1.0 / 128.0;
-   unrolled_values[Cat002ItemNames::I002_030_TOD] = std::to_string( time * lsb );
+   //float lsb = 1.0 / 128.0;
+   unrolled_values[Cat002ItemNames::I002_030_TOD] = std::to_string( time/* * lsb*/);
 }
 
 void AsterixCategory002::setAntennaRotationPeriod(double period) {
-   float lsb = 1.0 / 128.0;
-   unrolled_values[Cat002ItemNames::I002_041_ROT] = std::to_string( period * lsb );
+   //float lsb = 1.0 / 128.0;
+   unrolled_values[Cat002ItemNames::I002_041_ROT] = std::to_string( period/* * lsb*/);
 }
 
 void AsterixCategory002::setDynamicWindow(double rho_start, double rho_end, double theta_start, double theta_end) {
-   float rho_lsb = 1.0 / 128.0;
-   float theta_lsb = 0.0055;
-   unrolled_values[Cat002ItemNames::I002_100_RHS] = std::to_string( rho_start / rho_lsb );
-   unrolled_values[Cat002ItemNames::I002_100_RHE] = std::to_string( rho_end / rho_lsb );
-   unrolled_values[Cat002ItemNames::I002_100_THS] = std::to_string( theta_start / theta_lsb );
-   unrolled_values[Cat002ItemNames::I002_100_THE] = std::to_string( theta_end / theta_lsb );
+   //float rho_lsb = 1.0 / 128.0;
+   //float theta_lsb = 0.0055;
+   unrolled_values[Cat002ItemNames::I002_100_RHS] = std::to_string( rho_start /*/ rho_lsb*/);
+   unrolled_values[Cat002ItemNames::I002_100_RHE] = std::to_string( rho_end /*/ rho_lsb */);
+   unrolled_values[Cat002ItemNames::I002_100_THS] = std::to_string( theta_start /*/ theta_lsb */);
+   unrolled_values[Cat002ItemNames::I002_100_THE] = std::to_string( theta_end /*/ theta_lsb */);
 }
 
 void AsterixCategory002::setCollimationError(double range, double azimuth) {
-   float rho_lsb = 1.0 / 128.0;
-   float theta_lsb = 0.0055;
-   unrolled_values[Cat002ItemNames::I002_090_RNG] = std::to_string( range / rho_lsb );
-   unrolled_values[Cat002ItemNames::I002_090_AZM] = std::to_string( azimuth / theta_lsb );
+   //float rho_lsb = 1.0 / 128.0;
+   //float theta_lsb = 0.0055;
+   unrolled_values[Cat002ItemNames::I002_090_RNG] = std::to_string( range /*/ rho_lsb */);
+   unrolled_values[Cat002ItemNames::I002_090_AZM] = std::to_string( azimuth /*/ theta_lsb */);
 }
 
 void AsterixCategory002::setWarningError(unsigned int value) {
@@ -230,13 +230,57 @@ void AsterixCategory002::resetPlotCount() {
    // TODO not implemented yet
 }
 
-void AsterixCategory002::addPlotCount(bool antenna1, unsigned short identifier, unsigned short counter) {
-   // TODO not implemented yet
+void AsterixCategory002::addPlotCount(bool antenna, unsigned short identifier, unsigned short counter) {
+   // get last index
+   unsigned short index = 0;
+   for( ;; index++ ) {
+      std::string key = Cat002ItemNames::I002_070_A + "." + std::to_string( index );
+      if( !isItemPresent( key ) ) {
+         break; // First index not in use found
+      }
+   }
+   std::string str_index = "." + std::to_string( index );
+   unrolled_values[Cat002ItemNames::I002_070_A + str_index] = std::to_string( antenna );
+   unrolled_values[Cat002ItemNames::I002_070_ID + str_index] = std::to_string( identifier );
+   unrolled_values[Cat002ItemNames::I002_070_CNT + str_index] = std::to_string( counter );
 }
 
-std::vector<unsigned char> AsterixCategory002::getEncodedMessage(SensorServiceRecordType record,
+std::vector<char> AsterixCategory002::getEncodedMessage(SensorServiceRecordType record,
    std::map<std::string, bool> items_to_be_served) {
-   std::vector<unsigned char> message;
+
+   // activate all mandatory items
+   items_to_be_served[Cat002ItemNames::I002_010] = true;
+   items_to_be_served[Cat002ItemNames::I002_000] = true;
+
+   // set items to be encoded if not set already
+   if( !isItemPresent( Cat002ItemNames::I002_010_SAC ) || !isItemPresent( Cat002ItemNames::I002_010_SIC ) ) {
+      setDataSource( std::get<0>( record.getSensorId() ), std::get<1>( record.getSensorId() ) );
+   }
+
+   if( !isItemPresent( Cat002ItemNames::I002_000_TYP ) && record.isMessageTypePresent() ) {
+      setMessageType( static_cast<SensorServiceRecordType::MESSAGETYPE>( record.getMessageType() ) );
+   }
+
+   if( !isItemPresent( Cat002ItemNames::I002_020_SCT ) && record.isSectorNumberPresent() ) {
+      setSectorNumber( static_cast<unsigned short>( record.getSectorNumber() ) );
+   }
+
+   if( !isItemPresent( Cat002ItemNames::I002_030_TOD ) ) {
+      setTimeOfDay( record.getTimeOfDay() );
+   }
+
+   if( !isItemPresent( Cat002ItemNames::I002_041_ROT ) && record.isAntennaSpeedPresent() ) {
+      setAntennaRotationPeriod( record.getAntennaSpeed() );
+   }
+
+   if( !isItemPresent( Cat002ItemNames::I002_070_A + ".0" ) ) {
+      for( auto plot_count : record.getPlotCount() ) {
+         addPlotCount( plot_count.getAntenna(), plot_count.getIdent(), plot_count.getCounter() );
+      }
+   }
+
+   return encode( fpsec_item_name_map, items_to_be_served );
+   /*std::vector<unsigned char> message;
    std::vector<unsigned char> header;
 
    // The track UAP is in use here
@@ -430,5 +474,5 @@ std::vector<unsigned char> AsterixCategory002::getEncodedMessage(SensorServiceRe
    // add header to message
    getHeader( header, message.size() );
    message.insert( message.begin(), header.begin(), header.end() );
-   return message;
+    return message;*/
 }

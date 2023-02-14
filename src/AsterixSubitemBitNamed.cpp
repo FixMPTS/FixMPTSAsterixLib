@@ -88,3 +88,15 @@ void AsterixSubitemBitNamed::decode( std::deque<char>& input_buffer, unsigned bi
 
    encoded_value = std::to_string( bit_value );
 }
+
+std::vector<char> AsterixSubitemBitNamed::encode(std::string value) {
+   uint64_t raw_value = converter->toExternal( value, length );
+   unsigned short num_bytes = length / 8;
+   num_bytes = num_bytes > 0 ? num_bytes : 1;
+   std::vector<char> item = std::vector<char>( num_bytes, 0 );
+   for( int i = num_bytes; i > 0; i-- ) {
+      unsigned char byte_value = ((raw_value >> ((num_bytes - i) * 8)) & 0xFF);
+      item[i - 1] = byte_value;
+   }
+   return item;
+}

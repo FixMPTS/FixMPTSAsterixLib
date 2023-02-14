@@ -97,10 +97,11 @@ public:
    /**
     * Encode the value of this item and return the bits representing this item as byte.
     *
+    * @param value the value to be encoded
     * @return encoded the bits representing this item
     * @throw None
     */
-   virtual std::vector<char> encode();
+   virtual std::vector<char> encode(std::string value);
 
    /**
     * @return the encoded value as string

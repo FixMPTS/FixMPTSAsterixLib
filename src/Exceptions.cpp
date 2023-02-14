@@ -76,4 +76,8 @@ NetworkError::NetworkError(std::string originator, std::string msg) :
 
 }
 
+//////////
+EncodingError::EncodingError(std::string originator, std::string msg) :
+   std::runtime_error( std::string( originator + ": " + msg ) ) {
+}
 

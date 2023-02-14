@@ -41,11 +41,11 @@ public:
    inline static const std::string I010_020_DCR = "I010/020#DCR";
    inline static const std::string I010_020_CHN = "I010/020#CHN";
    inline static const std::string I010_020_GBS = "I010/020#GBS";
-   inline static const std::string I010_020_CBT = "I010/020#CBT";
+   inline static const std::string I010_020_CRT = "I010/020#CBR";
    inline static const std::string I010_020_SIM = "I010/020#SIM";
    inline static const std::string I010_020_TST = "I010/020#TST";
    inline static const std::string I010_020_RAB = "I010/020#RAB";
-   inline static const std::string I010_020_LOOP = "I010/020#LOOP";
+   inline static const std::string I010_020_LOP = "I010/020#LOP";
    inline static const std::string I010_020_TOT = "I010/020#TOT";
    inline static const std::string I010_020_SPI = "I010/020#SPI";
    inline static const std::string I010_140 = "I010/140";

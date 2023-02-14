@@ -72,7 +72,7 @@ public:
     * @return the bytes comprising this item
     * @throw Not yet decided
     */
-   virtual std::vector<char> encode() override;
+   virtual std::vector<char> encode(std::string value) override;
 
    /**
     * Get the encoded value in string representation.
