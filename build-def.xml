@@ -6,23 +6,23 @@
    <!-- Definitions for ant contrib and cpptask -->
    <taskdef resource="net/sf/antcontrib/antcontrib.properties">
       <classpath>
-         <pathelement location="/usr/share/java/lib/ant-contrib-0.3.jar" />
+         <pathelement location="/usr/share/java/ant-contrib/ant-contrib.jar" />
       </classpath>
    </taskdef>
 
    <taskdef resource="cpptasks.tasks">
       <classpath>
-         <pathelement location="/usr/share/java/lib/cpptasks.jar" />
+         <pathelement location="/usr/share/java/ant/cpptasks.jar" />
       </classpath>
    </taskdef>
 
    <typedef resource="cpptasks.types">
       <classpath>
-         <pathelement location="/usr/share/java/lib/cpptasks.jar" />
+         <pathelement location="/usr/share/java/ant/cpptasks.jar" />
       </classpath>
    </typedef>
 
-   <taskdef resource="net/sf/antcontrib/antlib.xml" />
+   <taskdef classpath="/usr/share/java/ant/cpptasks.jar" resource="net/sf/antcontrib/antlib.xml" />
 
    <!-- Global compiler definition. TODO maybe write to separate xml file -->
    <compiler name="gcc" id="compilegcc">
@@ -33,7 +33,7 @@
       <compilerarg value="-lstdc++" />
       <compilerarg value="-m64" />
       <compilerarg value="-D_FORTIFY_SOURCE=2"/>
-      <!--  Enforce override kayword -->
+      <!--  Enforce override keyword -->
       <compilerarg value="-Wsuggest-override"/>
       <compilerarg value="-Werror=suggest-override"/>
       <!-- Enforce warning free build -->
