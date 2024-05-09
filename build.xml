@@ -4,10 +4,12 @@
 	<property file="build.properties" />
 	<import file="build-def.xml" />
 
-        <echo message="Create required directories if not alread existing" />
-        <mkdir dir="lib/objects" />
-        <mkdir dir="lib/lib" />
-        <mkdir dir="lib/rpm/SOURCES" />
+        <echo message="Create required directories if not already existing" />
+        <mkdir dir="build" />
+        <mkdir dir="build/objects" />
+        <mkdir dir="build/lib" />
+        <mkdir dir="build/rpm/SOURCES" />
+        <mkdir dir="build/rpm/SPECS" />
 	
         <!-- Definitions of the default target all -->
 	<target name="all" depends="rpm,rpm.devel">
