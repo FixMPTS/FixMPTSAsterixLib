@@ -78,6 +78,9 @@ public:
    double const DETECTION_TYPE_MAX_AGE = 63.75; // in seconds
 
    AsterixCategory062();
+   AsterixCategory062(int length);
+   AsterixCategory062(int length, std::deque<char> &m_queue);
+
    virtual ~AsterixCategory062();
 
    /**
