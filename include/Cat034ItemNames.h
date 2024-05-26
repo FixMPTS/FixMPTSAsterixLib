@@ -35,6 +35,7 @@ public:
    inline static const std::string I034_050_COM = "I034/050#COM";
    inline static const std::string I034_050_SPARE1 = "I034/050#SPARE1";
    inline static const std::string I034_050_SPARE2 = "I034/050#SPARE2";
+   inline static const std::string I034_050_SPARE3 = "I034/050#SPARE3";
    inline static const std::string I034_050_COM_NOG = "I034/050#COM#NOG";
    inline static const std::string I034_050_COM_RDPC = "I034/050#COM#RDPC";
    inline static const std::string I034_050_COM_RDPR = "I034/050#COM#RDPR";
@@ -73,6 +74,7 @@ public:
    inline static const std::string I034_060_COM_SPARE2 = "I034/060#COM#SPARE2";
    inline static const std::string I034_060_SPARE1 = "I034/060#SPARE1";
    inline static const std::string I034_060_SPARE2 = "I034/060#SPARE2";
+   inline static const std::string I034_060_SPARE3 = "I034/060#SPARE3";
    inline static const std::string I034_060_PSR = "I034/060#PSR";
    inline static const std::string I034_060_SSR = "I034/060#SSR";
    inline static const std::string I034_060_MDS = "I034/060#MDS";

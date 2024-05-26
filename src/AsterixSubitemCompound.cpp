@@ -63,7 +63,7 @@ void AsterixSubitemCompound::decode(std::deque<char>& input_buffer, unsigned bit
       unrolled_values.insert( std::make_pair( item.first, value ) );
 
       bit_position += item.second->getLength();
-      bit_position = bit_position % 8; // Ensure offset stayes within 8 bit boundary
+      bit_position = bit_position % 8; // Ensure offset stays within 8 bit boundary
    }
 }
 
