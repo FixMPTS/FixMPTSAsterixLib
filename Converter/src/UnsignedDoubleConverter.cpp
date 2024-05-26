@@ -160,6 +160,12 @@ std::string UnsignedDoubleConverter::airspeed14Bit( char* value, unsigned int va
    }
 }
 
+std::string UnsignedDoubleConverter::speedMach(char *value, unsigned int value_length,
+   double &dest_buffer) {
+   unsigned long int value_converted = std::stoull( value );
+   return std::to_string( (value_converted * 0.008) );
+}
+
 // Misc converter
 std::string UnsignedDoubleConverter::fact10( char* value, unsigned int value_length,
    double& dest_buffer ) {

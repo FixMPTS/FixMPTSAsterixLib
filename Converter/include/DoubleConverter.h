@@ -93,6 +93,16 @@ public:
    static std::string fraction64th( char* value, unsigned int value_length, double& dest_buffer );
 
    /**
+    * Convert the input value to the output being 1/100 of the input.
+    *
+    * @param value The value which should be converted
+    * @param dest_buffer Not needed and only present for distinguishing purposes during generic call
+    * @return double representation of the input value as 1/100th
+    * @throw None
+    */
+   static std::string fraction100th(char *value, unsigned int value_length, double &dest_buffer);
+
+   /**
     * Convert the input value to the output being 1/128 nautical mile of the input.
     *
     * @param value The value which should be converted
@@ -202,13 +212,24 @@ public:
    /**
     * Convert value altitude with a resolution of 0.012 kt/s
     *
-    * @param value The value to be converted to the correct flight level with 25 ft resolution
+    * @param value The value to be converted to the ground vector acceleration
     * @param dest_buffer Not needed and only present for distinguishing purposes during generic call
     * @return The converted altitude
     * @throw None
     */
    static std::string groundVectorAcceleration(char *value, unsigned int value_length,
       double& dest_buffer );
+
+   /**
+    * Convert value with a resolution of 0.22 kt. Usied for the gorundspeed items
+    *
+    * @param value The value to be converted to the ground speed with resolution 0.22 kt
+    * @param dest_buffer Not needed and only present for distinguishing purposes during generic call
+    * @return The converted altitude
+    * @throw None
+    */
+   static std::string groundSpeedKt(char *value, unsigned int value_length,
+      double &dest_buffer);
 
    /**
     * Convert value altitude with a resolution of 6.25 ft

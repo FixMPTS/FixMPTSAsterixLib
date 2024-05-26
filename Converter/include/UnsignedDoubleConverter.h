@@ -245,6 +245,17 @@ public:
    static std::string airspeed14Bit( char* value, unsigned int value_length, double& dest_buffer );
 
    /**
+    * Convert MACH speed with a resolution of 0.008
+    *
+    * @param value The value to be converted to mach
+    * @param dest_buffer Not needed and only present for distinguishing purposes during generic call
+    * @return The converted 14 bit input
+    * @throw None
+    */
+   static std::string speedMach(char *value, unsigned int value_length,
+      double &dest_buffer);
+
+   /**
     * Covert the input value by multiplying it by ten
     *
     * @param value the value to be converted

@@ -43,3 +43,8 @@ std::string IntegerConverter::alt25ft( char* value, unsigned int value_length ) 
    return std::to_string( (int) (value_converted * 25) );
 }
 
+std::string IntegerConverter::alt10ft(char *value, unsigned int value_length) {
+   unsigned long int value_converted = std::stoull( value );
+   return std::to_string( (int) (value_converted * 10) );
+}
+
