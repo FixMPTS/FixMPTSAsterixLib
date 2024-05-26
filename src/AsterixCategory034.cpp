@@ -84,8 +84,11 @@ void AsterixCategory034::setUAP() {
          std::make_shared<AsterixItemFixedLength>( Cat034ItemNames::I034_050_SSR, 1 ) ) );
    item_050_sub_uap.insert(
       AsterixItemCompound::SubUAP_Item_T( 6,
-         std::make_shared<AsterixItemFixedLength>( Cat034ItemNames::I034_050_MDS, 1 ) ) );
-   // Item 7 is spare and 8 is the FX bit
+         std::make_shared<AsterixItemFixedLength>( Cat034ItemNames::I034_050_MDS, 2 ) ) );
+   item_050_sub_uap.insert(
+      AsterixItemCompound::SubUAP_Item_T( 7,
+         std::make_shared<AsterixItemFixedLength>( Cat034ItemNames::I034_050_SPARE3, 0 ) ) );
+   // Item 8 is the FX bit
 
    AsterixItemCompound::subUap_T item_060_sub_uap;
    item_060_sub_uap.insert(
@@ -106,6 +109,9 @@ void AsterixCategory034::setUAP() {
    item_060_sub_uap.insert(
       AsterixItemCompound::SubUAP_Item_T( 6,
          std::make_shared<AsterixItemFixedLength>( Cat034ItemNames::I034_060_MDS, 1 ) ) );
+   item_060_sub_uap.insert(
+      AsterixItemCompound::SubUAP_Item_T( 7,
+         std::make_shared<AsterixItemFixedLength>( Cat034ItemNames::I034_060_SPARE3, 0 ) ) );
 
    uap.clear();
    uap.insert( UAP_Item_T( 1, std::make_shared<AsterixItemFixedLength>( Cat034ItemNames::I034_010, 2 ) ) );
@@ -223,7 +229,7 @@ void AsterixCategory034::setSubitems() {
                { { 0, "Connected" }, { 1, "Disconnected" } } ) ) ) );
    sub_sub_item_050_psr.push_back(
       subitem_t( Cat034ItemNames::I034_050_PSR_SPARE,
-         std::make_shared<AsterixSubitemUnsigned>( 1, CommonConverter::NoneConverter ) ) );
+         std::make_shared<AsterixSubitemUnsigned>( 3, CommonConverter::NoneConverter ) ) );
    sys_config_state.push_back(
       subitem_t( Cat034ItemNames::I034_050_PSR,
          std::make_shared<AsterixSubitemCompound>( 8, CommonConverter::NoneConverterBuffer,
@@ -252,7 +258,7 @@ void AsterixCategory034::setSubitems() {
                { { 0, "Connected" }, { 1, "Disconnected" } } ) ) ) );
    sub_sub_item_050_ssr.push_back(
       subitem_t( Cat034ItemNames::I034_050_SSR_SPARE,
-         std::make_shared<AsterixSubitemUnsigned>( 1, CommonConverter::NoneConverter ) ) );
+         std::make_shared<AsterixSubitemUnsigned>( 3, CommonConverter::NoneConverter ) ) );
    sys_config_state.push_back(
       subitem_t( Cat034ItemNames::I034_050_SSR,
          std::make_shared<AsterixSubitemCompound>( 8, CommonConverter::NoneConverterBuffer,
@@ -327,7 +333,7 @@ void AsterixCategory034::setSubitems() {
          std::make_shared<AsterixSubitemCompound>( 8, CommonConverter::NoneConverterBuffer,
             sub_sub_item_060_com ) ) );
 
-   // Add the spare items needed to ensure the ordeing
+   // Add the spare items needed to ensure the ordering
    system_processing_mode.push_back(
       subitem_t( Cat034ItemNames::I034_060_SP1,
          std::make_shared<AsterixSubitemCompound>( 0, CommonConverter::NoneConverter ) ) );
@@ -341,18 +347,18 @@ void AsterixCategory034::setSubitems() {
          std::make_shared<AsterixSubitemBitNamed>( 1, CommonConverter::NoneConverter,
             AsterixSubitemBitNamed::value_names_t(
                { { 0, "Linear" }, { 1, "Circular" } } ) ) ) );
-   system_processing_mode.push_back(
+   sub_sub_item_060_psr.push_back(
       subitem_t( Cat034ItemNames::I034_060_PSR_PRED,
          std::make_shared<AsterixSubitemUnsigned>( 3, CommonConverter::NoneConverter ) ) );
-   system_processing_mode.push_back(
+   sub_sub_item_060_psr.push_back(
       subitem_t( Cat034ItemNames::I034_060_PSR_PSTC,
          std::make_shared<AsterixSubitemUnsigned>( 2, CommonConverter::NoneConverter ) ) );
-   system_processing_mode.push_back(
+   sub_sub_item_060_psr.push_back(
       subitem_t( Cat034ItemNames::I034_060_PSR_PSPARE,
          std::make_shared<AsterixSubitemUnsigned>( 2, CommonConverter::NoneConverter ) ) );
    system_processing_mode.push_back(
       subitem_t( Cat034ItemNames::I034_060_PSR,
-         std::make_shared<AsterixSubItemRep>( 8, CommonConverter::NoneConverterBuffer,
+         std::make_shared<AsterixSubitemCompound>( 8, CommonConverter::NoneConverterBuffer,
             sub_sub_item_060_psr ) ) );
 
    subitem_map_t sub_sub_item_060_ssr;
@@ -364,7 +370,7 @@ void AsterixCategory034::setSubitems() {
          std::make_shared<AsterixSubitemUnsigned>( 5, CommonConverter::NoneConverter ) ) );
    system_processing_mode.push_back(
       subitem_t( Cat034ItemNames::I034_060_SSR,
-         std::make_shared<AsterixSubItemRep>( 8, CommonConverter::NoneConverterBuffer,
+         std::make_shared<AsterixSubitemCompound>( 8, CommonConverter::NoneConverterBuffer,
             sub_sub_item_060_ssr ) ) );
 
    subitem_map_t sub_sub_item_060_mds;
@@ -381,7 +387,7 @@ void AsterixCategory034::setSubitems() {
          std::make_shared<AsterixSubitemUnsigned>( 4, CommonConverter::NoneConverter ) ) );
    system_processing_mode.push_back(
       subitem_t( Cat034ItemNames::I034_060_MDS,
-         std::make_shared<AsterixSubItemRep>( 8, CommonConverter::NoneConverterBuffer,
+         std::make_shared<AsterixSubitemCompound>( 8, CommonConverter::NoneConverterBuffer,
             sub_sub_item_060_mds ) ) );
 
    subitem_map_t message_count;
