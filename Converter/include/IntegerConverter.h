@@ -62,6 +62,16 @@ public:
     */
    static std::string alt25ft( char* value, unsigned int value_length );
 
+   /**
+    * Convert the value to altitude with a 10ft resolution
+    *
+    * @param value The value to be converted to the correct flight level with 10 ft resolution
+    * @param dest_buffer Not needed and only present for distinguishing purposes during generic call
+    * @return The converted FL
+    * @throw None
+    */
+   static std::string alt10ft(char *value, unsigned int value_length);
+
 };
 
 #endif /* INTEGERCONVERTER_H_ */

@@ -344,10 +344,10 @@ void AsterixCategory048::setSubitems() {
    // Calculated Position in Cartesian Coordinates
    subitem_map_t cartesion_position;
    cartesion_position.push_back(
-      subitem_t( Cat048ItemNames::I048_042_Y,
+      subitem_t( Cat048ItemNames::I048_042_X,
          std::make_shared<AsterixSubitemUnsigned>( 16, DoubleConverter::fraction128th ) ) );
    cartesion_position.push_back(
-      subitem_t( Cat048ItemNames::I048_042_X,
+      subitem_t( Cat048ItemNames::I048_042_Y,
          std::make_shared<AsterixSubitemUnsigned>( 16, DoubleConverter::fraction128th ) ) );
 
    // Calculated Polar Position

@@ -66,6 +66,14 @@ std::string DoubleConverter::fraction64th( char* value, unsigned int value_lengt
    return std::to_string( value_converted / 64 );
 }
 
+std::string DoubleConverter::fraction100th(char *value, unsigned int value_length,
+   double &dest_buffer) {
+   long int value_converted = std::stoll( value );
+
+   // Apply the LSB
+   return std::to_string( value_converted / 100.0 );
+}
+
 std::string DoubleConverter::fraction128th( char* value, unsigned int value_length,
    double& dest_buffer ) {
    long int value_converted = std::stoll( value );
@@ -146,6 +154,12 @@ std::string DoubleConverter::groundVectorAcceleration(char *value, unsigned int 
    double& dest_buffer ) {
    unsigned long int value_converted = std::stoull( value );
    return std::to_string( value_converted * 0.012 );
+}
+
+std::string DoubleConverter::groundSpeedKt(char *value, unsigned int value_length,
+   double &dest_buffer) {
+   unsigned long int value_converted = std::stoull( value );
+   return std::to_string( value_converted * 0.22 );
 }
 
 std::string DoubleConverter::geoAltitudeFt( char* value, unsigned int value_length,
