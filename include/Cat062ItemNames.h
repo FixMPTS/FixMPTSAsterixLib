@@ -151,10 +151,10 @@ public:
    inline static const std::string I062_080_SPI = "I062/080#SPI";
    inline static const std::string I062_080_MRH = "I062/080#MRH";
    inline static const std::string I062_080_SRC = "I062/080#SRC";
-   inline static const std::string I062_080_CNF = "I062/040#CNF";
+   inline static const std::string I062_080_CNF = "I062/080#CNF";
    inline static const std::string I062_080_SIM = "I062/080#SIM";
-   inline static const std::string I062_080_TSE = "I062/040#TSE";
-   inline static const std::string I062_080_TSB = "I062/040#TSB";
+   inline static const std::string I062_080_TSE = "I062/080#TSE";
+   inline static const std::string I062_080_TSB = "I062/080#TSB";
    inline static const std::string I062_080_FPC = "I062/080#FPC";
    inline static const std::string I062_080_AFF = "I062/080#AFF";
    inline static const std::string I062_080_STP = "I062/080#STP";
