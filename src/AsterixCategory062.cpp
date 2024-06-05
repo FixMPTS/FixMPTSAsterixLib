@@ -711,7 +711,7 @@ void AsterixCategory062::setSubitems() {
          std::make_shared<AsterixSubitemUnsigned>( 6, CommonConverter::NoneConverter ) ) );
    subitem_380_tar.push_back(
       subitem_t( Cat062ItemNames::I062_380_TAR_RT,
-         std::make_shared<AsterixSubitemUnsigned>( 8, DoubleConverter::fraction4th ) ) );
+         std::make_shared<AsterixSubitemUnsigned>( 7, DoubleConverter::fraction4th ) ) );
    subitem_380_tar.push_back(
       subitem_t( Cat062ItemNames::I062_380_TAR_SPARE2,
          std::make_shared<AsterixSubitemUnsigned>( 1, CommonConverter::NoneConverter ) ) );
@@ -778,7 +778,7 @@ void AsterixCategory062::setSubitems() {
          std::make_shared<AsterixSubitemUnsigned>( 4, CommonConverter::NoneConverter ) ) );
    subitem_380_bps.push_back(
       subitem_t( Cat062ItemNames::I062_380_BPS_BPS,
-         std::make_shared<AsterixSubitemUnsigned>( 4, UnsignedDoubleConverter::fraction10th ) ) );
+         std::make_shared<AsterixSubitemUnsigned>( 12, UnsignedDoubleConverter::fraction10th ) ) );
 
    // Add all 380 items
    aircraft_derived_data.push_back(
@@ -1046,8 +1046,25 @@ void AsterixCategory062::setSubitems() {
             AsterixSubitemBitNamed::value_names_t(
                { { 0, "0 Default" }, { 1, "1 Duplicate FP man corr" } } ) ) ) );
    track_status.push_back(
-      subitem_t( Cat062ItemNames::I062_080_SPARE,
-         std::make_shared<AsterixSubitemUnsigned>( 4, CommonConverter::NoneConverter ) ) );
+      subitem_t( Cat062ItemNames::I062_080_SFC,
+         std::make_shared<AsterixSubitemBitNamed>( 1, CommonConverter::NoneConverter,
+            AsterixSubitemBitNamed::value_names_t(
+               { { 0, "0 Default" }, { 1, "1 Surface target" } } ) ) ) );
+   track_status.push_back(
+      subitem_t( Cat062ItemNames::I062_080_IDD,
+         std::make_shared<AsterixSubitemBitNamed>( 1, CommonConverter::NoneConverter,
+            AsterixSubitemBitNamed::value_names_t(
+               { { 0, "0 Default" }, { 1, "1 Duplicate Flight-ID" } } ) ) ) );
+   track_status.push_back(
+      subitem_t( Cat062ItemNames::I062_080_IEC,
+         std::make_shared<AsterixSubitemBitNamed>( 1, CommonConverter::NoneConverter,
+            AsterixSubitemBitNamed::value_names_t(
+               { { 0, "0 Default" }, { 1, "1 Inconsistent Emergency code" } } ) ) ) );
+   track_status.push_back(
+      subitem_t( Cat062ItemNames::I062_080_MLAT,
+         std::make_shared<AsterixSubitemBitNamed>( 1, CommonConverter::NoneConverter,
+            AsterixSubitemBitNamed::value_names_t(
+               { { 0, "0 Default" }, { 1, "1 MLAT Age > threshold" } } ) ) ) );
 
    subitem_map_t track_update_ages;
    track_update_ages.push_back(

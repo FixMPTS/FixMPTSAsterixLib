@@ -178,7 +178,10 @@ public:
    inline static const std::string I062_080_DUPT = "I062/080#DUPT";
    inline static const std::string I062_080_DUPF = "I062/080#DUPF";
    inline static const std::string I062_080_DUPM = "I062/080#DUPM";
-   inline static const std::string I062_080_SPARE = "I062/080#SPARE";
+   inline static const std::string I062_080_SFC = "I062/080#SFC";
+   inline static const std::string I062_080_IDD = "I062/080#IDD";
+   inline static const std::string I062_080_IEC = "I062/080#IEC";
+   inline static const std::string I062_080_MLAT = "I062/080#MLAT";
    inline static const std::string I062_080_AGE = "I062/080#AGE";
    inline static const std::string I062_290 = "I062/290";
    inline static const std::string I062_290_TRK = "I062/290#TRK";
