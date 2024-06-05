@@ -822,7 +822,7 @@ void AsterixCategory062::setSubitems() {
             subitem_380_sab ) ) );
    aircraft_derived_data.push_back(
       subitem_t( Cat062ItemNames::I062_380_ACS,
-         std::make_shared<AsterixSubitemUnsigned>( 54, CommonConverter::NoneConverter ) ) );
+         std::make_shared<AsterixSubitemUnsigned>( 56, CommonConverter::NoneConverter ) ) );
    aircraft_derived_data.push_back(
       subitem_t( Cat062ItemNames::I062_380_BVR,
          std::make_shared<AsterixSubitemUnsigned>( 16, DoubleConverter::verticalRate ) ) );
@@ -847,7 +847,7 @@ void AsterixCategory062::setSubitems() {
          std::make_shared<AsterixSubitemUnsigned>( 8, CommonConverter::NoneConverter ) ) );
    aircraft_derived_data.push_back(
       subitem_t( Cat062ItemNames::I062_380_MET,
-         std::make_shared<AsterixSubitemCompound>( 16, CommonConverter::NoneConverterBuffer,
+         std::make_shared<AsterixSubitemCompound>( 64, CommonConverter::NoneConverterBuffer,
             subitem_380_met ) ) );
    aircraft_derived_data.push_back(
       subitem_t( Cat062ItemNames::I062_380_EMC,
@@ -1234,7 +1234,7 @@ void AsterixCategory062::setSubitems() {
                { { 0, "0 No QNH" }, { 1, "1 QNH" } } ) ) ) );
    calculated_baro_alt.push_back(
       subitem_t( Cat062ItemNames::I062_135_ALT,
-         std::make_shared<AsterixSubitemUnsigned>( 16, DoubleConverter::geoAltitudeFt ) ) );
+         std::make_shared<AsterixSubitemUnsigned>( 15, DoubleConverter::geoAltitudeFt ) ) );
    subitem_map_t calc_rate_cb;
    calc_rate_cb.push_back(
       subitem_t( Cat062ItemNames::I062_220_RATE,
@@ -1387,7 +1387,7 @@ void AsterixCategory062::setSubitems() {
             subitem_390_ifi ) ) );
    flight_plan_data.push_back(
       subitem_t( Cat062ItemNames::I062_390_FCT,
-         std::make_shared<AsterixSubitemCompound>( 32, CommonConverter::NoneConverterBuffer,
+         std::make_shared<AsterixSubitemCompound>( 8, CommonConverter::NoneConverterBuffer,
             subitem_390_fct ) ) );
    flight_plan_data.push_back(
       subitem_t( Cat062ItemNames::I062_390_TAC,
@@ -1403,11 +1403,11 @@ void AsterixCategory062::setSubitems() {
          std::make_shared<AsterixSubitemUnsigned>( 32, StringConverter::toASCII ) ) );
    flight_plan_data.push_back(
       subitem_t( Cat062ItemNames::I062_390_RDS,
-         std::make_shared<AsterixSubitemCompound>( 32, CommonConverter::NoneConverterBuffer,
+         std::make_shared<AsterixSubitemCompound>( 24, CommonConverter::NoneConverterBuffer,
             subitem_390_rds ) ) );
    flight_plan_data.push_back(
       subitem_t( Cat062ItemNames::I062_390_CFL,
-         std::make_shared<AsterixSubitemUnsigned>( 8, UnsignedDoubleConverter::fraction4th ) ) );
+         std::make_shared<AsterixSubitemUnsigned>( 16, UnsignedDoubleConverter::fraction4th ) ) );
    flight_plan_data.push_back(
       subitem_t( Cat062ItemNames::I062_390_CTL,
          std::make_shared<AsterixSubitemCompound>( 16, CommonConverter::NoneConverterBuffer,
@@ -1418,7 +1418,7 @@ void AsterixCategory062::setSubitems() {
             subitem_390_tod ) ) );
    flight_plan_data.push_back(
       subitem_t( Cat062ItemNames::I062_390_AST,
-         std::make_shared<AsterixSubitemUnsigned>( 32, StringConverter::toASCII ) ) );
+         std::make_shared<AsterixSubitemUnsigned>( 48, StringConverter::toASCII ) ) );
    flight_plan_data.push_back(
       subitem_t( Cat062ItemNames::I062_390_STS,
          std::make_shared<AsterixSubitemCompound>( 8, CommonConverter::NoneConverterBuffer,
@@ -1567,7 +1567,7 @@ void AsterixCategory062::setSubitems() {
    subitem_map_t mode_5;
    mode_5.push_back(
       subitem_t( Cat062ItemNames::I062_110_SUM,
-         std::make_shared<AsterixSubitemCompound>( 16, CommonConverter::NoneConverterBuffer, subitem_110_sum ) ) );
+         std::make_shared<AsterixSubitemCompound>( 8, CommonConverter::NoneConverterBuffer, subitem_110_sum ) ) );
    mode_5.push_back(
       subitem_t( Cat062ItemNames::I062_110_PMN,
          std::make_shared<AsterixSubitemCompound>( 32, CommonConverter::NoneConverterBuffer, subitem_110_pmn ) ) );
@@ -1665,7 +1665,7 @@ void AsterixCategory062::setSubitems() {
    subitem_map_t estimated_acc;
    estimated_acc.push_back(
       subitem_t( Cat062ItemNames::I062_500_APC,
-         std::make_shared<AsterixSubitemCompound>( 16, CommonConverter::NoneConverterBuffer, subitem_500_apc ) ) );
+         std::make_shared<AsterixSubitemCompound>( 32, CommonConverter::NoneConverterBuffer, subitem_500_apc ) ) );
    estimated_acc.push_back(
       subitem_t( Cat062ItemNames::I062_500_COV,
          std::make_shared<AsterixSubitemUnsigned>( 16, DoubleConverter::fractionHalf ) ) );
