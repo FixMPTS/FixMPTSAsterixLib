@@ -473,18 +473,18 @@ void AsterixCategory062::setSubitems() {
    subitem_map_t calc_track_pos_wgs;
    calc_track_pos_wgs.push_back(
       subitem_t( Cat062ItemNames::I062_105_LAT,
-         std::make_shared<AsterixSubitemUnsigned>( 32, DoubleConverter::WGS84resolution25Bit ) ) );
+         std::make_shared<AsterixSubitemSigned>( 32, DoubleConverter::WGS84resolution25Bit ) ) );
    calc_track_pos_wgs.push_back(
       subitem_t( Cat062ItemNames::I062_105_LNG,
-         std::make_shared<AsterixSubitemUnsigned>( 32, DoubleConverter::WGS84resolution25Bit ) ) );
+         std::make_shared<AsterixSubitemSigned>( 32, DoubleConverter::WGS84resolution25Bit ) ) );
 
    subitem_map_t cartesion_position;
    cartesion_position.push_back(
       subitem_t( Cat062ItemNames::I062_100_X,
-         std::make_shared<AsterixSubitemUnsigned>( 24, DoubleConverter::fractionHalf ) ) );
+         std::make_shared<AsterixSubitemSigned>( 24, DoubleConverter::fractionHalf ) ) );
    cartesion_position.push_back(
       subitem_t( Cat062ItemNames::I062_100_Y,
-         std::make_shared<AsterixSubitemUnsigned>( 24, DoubleConverter::fractionHalf ) ) );
+         std::make_shared<AsterixSubitemSigned>( 24, DoubleConverter::fractionHalf ) ) );
 
    subitem_map_t calc_track_vel_cartesian;
    calc_track_vel_cartesian.push_back(
@@ -497,10 +497,10 @@ void AsterixCategory062::setSubitems() {
    subitem_map_t calculated_acceleration;
    calculated_acceleration.push_back(
       subitem_t( Cat062ItemNames::I062_210_AX,
-         std::make_shared<AsterixSubitemUnsigned>( 8, DoubleConverter::fraction4th ) ) );
+         std::make_shared<AsterixSubitemSigned>( 8, DoubleConverter::fraction4th ) ) );
    calculated_acceleration.push_back(
       subitem_t( Cat062ItemNames::I062_210_AX,
-         std::make_shared<AsterixSubitemUnsigned>( 8, DoubleConverter::fraction4th ) ) );
+         std::make_shared<AsterixSubitemSigned>( 8, DoubleConverter::fraction4th ) ) );
 
    subitem_map_t track_m3a;
    track_m3a.push_back(
@@ -544,7 +544,7 @@ void AsterixCategory062::setSubitems() {
                { { 0, "Unknown" }, { 1, "Aircraft Altitude" }, { 2, "FCU selected alt" }, { 1, "FMS selected" } } ) ) ) );
    subitem_380_sal.push_back(
       subitem_t( Cat062ItemNames::I062_380_SAL_ALT,
-         std::make_shared<AsterixSubitemUnsigned>( 13, IntegerConverter::alt25ft ) ) );
+         std::make_shared<AsterixSubitemSigned>( 13, IntegerConverter::alt25ft ) ) );
 
    subitem_map_t subitem_380_fss;
    subitem_380_fss.push_back(
@@ -564,7 +564,7 @@ void AsterixCategory062::setSubitems() {
                { { 0, "Not active" }, { 1, "Active" } } ) ) ) );
    subitem_380_fss.push_back(
       subitem_t( Cat062ItemNames::I062_380_FSS_ALT,
-         std::make_shared<AsterixSubitemUnsigned>( 13, IntegerConverter::alt25ft ) ) );
+         std::make_shared<AsterixSubitemSigned>( 13, IntegerConverter::alt25ft ) ) );
 
    subitem_map_t subitem_380_tis;
    subitem_380_tis.push_back(
@@ -597,13 +597,13 @@ void AsterixCategory062::setSubitems() {
          std::make_shared<AsterixSubitemUnsigned>( 6, CommonConverter::NoneConverter ) ) );
    subitem_380_tid.push_back(
       subitem_t( Cat062ItemNames::I062_380_TID_ALT,
-         std::make_shared<AsterixSubitemUnsigned>( 16, IntegerConverter::alt10ft ) ) );
+         std::make_shared<AsterixSubitemSigned>( 16, IntegerConverter::alt10ft ) ) );
    subitem_380_tid.push_back(
       subitem_t( Cat062ItemNames::I062_380_TID_LAT,
-         std::make_shared<AsterixSubitemUnsigned>( 24, DoubleConverter::WGS84resolution23Bit ) ) );
+         std::make_shared<AsterixSubitemSigned>( 24, DoubleConverter::WGS84resolution23Bit ) ) );
    subitem_380_tid.push_back(
       subitem_t( Cat062ItemNames::I062_380_TID_LNG,
-         std::make_shared<AsterixSubitemUnsigned>( 24, DoubleConverter::WGS84resolution23Bit ) ) );
+         std::make_shared<AsterixSubitemSigned>( 24, DoubleConverter::WGS84resolution23Bit ) ) );
    subitem_380_tid.push_back(
       subitem_t( Cat062ItemNames::I062_380_TID_PT,
          std::make_shared<AsterixSubitemBitNamed>( 4, CommonConverter::NoneConverter,
@@ -748,7 +748,7 @@ void AsterixCategory062::setSubitems() {
          std::make_shared<AsterixSubitemUnsigned>( 16, CommonConverter::NoneConverter ) ) );
    subitem_380_met.push_back(
       subitem_t( Cat062ItemNames::I062_380_MET_TMPD,
-         std::make_shared<AsterixSubitemUnsigned>( 16, DoubleConverter::fraction4th ) ) );
+         std::make_shared<AsterixSubitemSigned>( 16, DoubleConverter::fraction4th ) ) );
    subitem_380_met.push_back(
       subitem_t( Cat062ItemNames::I062_380_MET_TUR,
          std::make_shared<AsterixSubitemUnsigned>( 8, CommonConverter::NoneConverter ) ) );
@@ -756,10 +756,10 @@ void AsterixCategory062::setSubitems() {
    subitem_map_t subitem_380_pos;
    subitem_380_pos.push_back(
       subitem_t( Cat062ItemNames::I062_380_POS_LAT,
-         std::make_shared<AsterixSubitemUnsigned>( 24, DoubleConverter::WGS84resolution23Bit ) ) );
+         std::make_shared<AsterixSubitemSigned>( 24, DoubleConverter::WGS84resolution23Bit ) ) );
    subitem_380_pos.push_back(
       subitem_t( Cat062ItemNames::I062_380_POS_LNG,
-         std::make_shared<AsterixSubitemUnsigned>( 24, DoubleConverter::WGS84resolution23Bit ) ) );
+         std::make_shared<AsterixSubitemSigned>( 24, DoubleConverter::WGS84resolution23Bit ) ) );
 
    subitem_map_t subitem_380_mb;
    subitem_380_mb.push_back(
@@ -825,13 +825,13 @@ void AsterixCategory062::setSubitems() {
          std::make_shared<AsterixSubitemUnsigned>( 56, CommonConverter::NoneConverter ) ) );
    aircraft_derived_data.push_back(
       subitem_t( Cat062ItemNames::I062_380_BVR,
-         std::make_shared<AsterixSubitemUnsigned>( 16, DoubleConverter::verticalRate ) ) );
+         std::make_shared<AsterixSubitemSigned>( 16, DoubleConverter::verticalRate ) ) );
    aircraft_derived_data.push_back(
       subitem_t( Cat062ItemNames::I062_380_GVR,
-         std::make_shared<AsterixSubitemUnsigned>( 16, DoubleConverter::verticalRate ) ) );
+         std::make_shared<AsterixSubitemSigned>( 16, DoubleConverter::verticalRate ) ) );
    aircraft_derived_data.push_back(
       subitem_t( Cat062ItemNames::I062_380_RAN,
-         std::make_shared<AsterixSubitemUnsigned>( 16, DoubleConverter::fraction100th ) ) );
+         std::make_shared<AsterixSubitemSigned>( 16, DoubleConverter::fraction100th ) ) );
    aircraft_derived_data.push_back(
       subitem_t( Cat062ItemNames::I062_380_TAR,
          std::make_shared<AsterixSubitemCompound>( 16, CommonConverter::NoneConverterBuffer,
@@ -841,7 +841,7 @@ void AsterixCategory062::setSubitems() {
          std::make_shared<AsterixSubitemUnsigned>( 16, UnsignedDoubleConverter::direction16Bit ) ) );
    aircraft_derived_data.push_back(
       subitem_t( Cat062ItemNames::I062_380_GSP,
-         std::make_shared<AsterixSubitemUnsigned>( 16, UnsignedDoubleConverter::direction16Bit ) ) );
+         std::make_shared<AsterixSubitemSigned>( 16, DoubleConverter::groundSpeedKt ) ) );
    aircraft_derived_data.push_back(
       subitem_t( Cat062ItemNames::I062_380_VUN,
          std::make_shared<AsterixSubitemUnsigned>( 8, CommonConverter::NoneConverter ) ) );
@@ -1221,11 +1221,11 @@ void AsterixCategory062::setSubitems() {
    subitem_map_t meas_flighht_level;
    meas_flighht_level.push_back(
       subitem_t( Cat062ItemNames::I062_136_ALT,
-         std::make_shared<AsterixSubitemUnsigned>( 16, DoubleConverter::geoAltitudeFt ) ) );
+         std::make_shared<AsterixSubitemSigned>( 16, DoubleConverter::geoAltitudeFt ) ) );
    subitem_map_t calculated_geo_alt;
    calculated_geo_alt.push_back(
       subitem_t( Cat062ItemNames::I062_130_ALT,
-         std::make_shared<AsterixSubitemUnsigned>( 16, DoubleConverter::geoAltitudeFt ) ) );
+         std::make_shared<AsterixSubitemSigned>( 16, DoubleConverter::geoAltitudeFt ) ) );
    subitem_map_t calculated_baro_alt;
    calculated_baro_alt.push_back(
       subitem_t( Cat062ItemNames::I062_135_QNH,
@@ -1234,11 +1234,11 @@ void AsterixCategory062::setSubitems() {
                { { 0, "0 No QNH" }, { 1, "1 QNH" } } ) ) ) );
    calculated_baro_alt.push_back(
       subitem_t( Cat062ItemNames::I062_135_ALT,
-         std::make_shared<AsterixSubitemUnsigned>( 15, DoubleConverter::geoAltitudeFt ) ) );
+         std::make_shared<AsterixSubitemSigned>( 15, DoubleConverter::geoAltitudeFt ) ) );
    subitem_map_t calc_rate_cb;
    calc_rate_cb.push_back(
       subitem_t( Cat062ItemNames::I062_220_RATE,
-         std::make_shared<AsterixSubitemUnsigned>( 16, DoubleConverter::geoAltitudeFt ) ) );
+         std::make_shared<AsterixSubitemSigned>( 16, DoubleConverter::geoAltitudeFt ) ) );
 
    subitem_map_t subitem_390_tag;
    subitem_390_tag.push_back(
@@ -1632,34 +1632,34 @@ void AsterixCategory062::setSubitems() {
    subitem_map_t subitem_500_apc;
    subitem_500_apc.push_back(
       subitem_t( Cat062ItemNames::I062_500_APC_X,
-         std::make_shared<AsterixSubitemUnsigned>( 16, DoubleConverter::fractionHalf ) ) );
+         std::make_shared<AsterixSubitemSigned>( 16, DoubleConverter::fractionHalf ) ) );
    subitem_500_apc.push_back(
       subitem_t( Cat062ItemNames::I062_500_APC_Y,
-         std::make_shared<AsterixSubitemUnsigned>( 16, DoubleConverter::fractionHalf ) ) );
+         std::make_shared<AsterixSubitemSigned>( 16, DoubleConverter::fractionHalf ) ) );
 
    subitem_map_t subitem_500_apw;
    subitem_500_apw.push_back(
       subitem_t( Cat062ItemNames::I062_500_APW_LAT,
-         std::make_shared<AsterixSubitemUnsigned>( 16, DoubleConverter::WGS84resolution25Bit ) ) );
+         std::make_shared<AsterixSubitemSigned>( 16, DoubleConverter::WGS84resolution25Bit ) ) );
    subitem_500_apw.push_back(
       subitem_t( Cat062ItemNames::I062_500_APW_LAT,
-         std::make_shared<AsterixSubitemUnsigned>( 16, DoubleConverter::WGS84resolution25Bit ) ) );
+         std::make_shared<AsterixSubitemSigned>( 16, DoubleConverter::WGS84resolution25Bit ) ) );
 
    subitem_map_t subitem_500_atv;
    subitem_500_atv.push_back(
       subitem_t( Cat062ItemNames::I062_500_ATV_X,
-         std::make_shared<AsterixSubitemUnsigned>( 8, DoubleConverter::WGS84AltQuarter ) ) );
+         std::make_shared<AsterixSubitemSigned>( 8, DoubleConverter::WGS84AltQuarter ) ) );
    subitem_500_atv.push_back(
       subitem_t( Cat062ItemNames::I062_500_ATV_Y,
-         std::make_shared<AsterixSubitemUnsigned>( 8, DoubleConverter::WGS84AltQuarter ) ) );
+         std::make_shared<AsterixSubitemSigned>( 8, DoubleConverter::WGS84AltQuarter ) ) );
 
    subitem_map_t subitem_500_aa;
    subitem_500_aa.push_back(
       subitem_t( Cat062ItemNames::I062_500_AA_X,
-         std::make_shared<AsterixSubitemUnsigned>( 8, DoubleConverter::WGS84AltQuarter ) ) );
+         std::make_shared<AsterixSubitemSigned>( 8, DoubleConverter::WGS84AltQuarter ) ) );
    subitem_500_aa.push_back(
       subitem_t( Cat062ItemNames::I062_500_AA_Y,
-         std::make_shared<AsterixSubitemUnsigned>( 8, DoubleConverter::WGS84AltQuarter ) ) );
+         std::make_shared<AsterixSubitemSigned>( 8, DoubleConverter::WGS84AltQuarter ) ) );
 
    // Add all subitems to I062#500
    subitem_map_t estimated_acc;
@@ -1668,16 +1668,16 @@ void AsterixCategory062::setSubitems() {
          std::make_shared<AsterixSubitemCompound>( 32, CommonConverter::NoneConverterBuffer, subitem_500_apc ) ) );
    estimated_acc.push_back(
       subitem_t( Cat062ItemNames::I062_500_COV,
-         std::make_shared<AsterixSubitemUnsigned>( 16, DoubleConverter::fractionHalf ) ) );
+         std::make_shared<AsterixSubitemSigned>( 16, DoubleConverter::fractionHalf ) ) );
    estimated_acc.push_back(
       subitem_t( Cat062ItemNames::I062_500_APW,
          std::make_shared<AsterixSubitemCompound>( 32, CommonConverter::NoneConverterBuffer, subitem_500_apw ) ) );
    estimated_acc.push_back(
       subitem_t( Cat062ItemNames::I062_500_AGA,
-         std::make_shared<AsterixSubitemUnsigned>( 8, DoubleConverter::geoAltitudeFt ) ) );
+         std::make_shared<AsterixSubitemSigned>( 8, DoubleConverter::geoAltitudeFt ) ) );
    estimated_acc.push_back(
       subitem_t( Cat062ItemNames::I062_500_ABA,
-         std::make_shared<AsterixSubitemUnsigned>( 8, DoubleConverter::WGS84AltQuarter ) ) );
+         std::make_shared<AsterixSubitemSigned>( 8, DoubleConverter::WGS84AltQuarter ) ) );
    estimated_acc.push_back(
       subitem_t( Cat062ItemNames::I062_500_ATV,
          std::make_shared<AsterixSubitemCompound>( 16, CommonConverter::NoneConverterBuffer, subitem_500_atv ) ) );
@@ -1686,7 +1686,7 @@ void AsterixCategory062::setSubitems() {
          std::make_shared<AsterixSubitemCompound>( 16, CommonConverter::NoneConverterBuffer, subitem_500_aa ) ) );
    estimated_acc.push_back(
       subitem_t( Cat062ItemNames::I062_500_ARC,
-         std::make_shared<AsterixSubitemUnsigned>( 8, DoubleConverter::geoAltitudeFt ) ) );
+         std::make_shared<AsterixSubitemSigned>( 8, DoubleConverter::geoAltitudeFt ) ) );
 
    subitem_map_t subitem_340_sid;
    subitem_340_sid.push_back(
@@ -1713,7 +1713,7 @@ void AsterixCategory062::setSubitems() {
          std::make_shared<AsterixSubitemUnsigned>( 1, CommonConverter::NoneConverter ) ) ); // garbled flag
    subitem_340_mdc.push_back(
       subitem_t( Cat062ItemNames::I062_340_MDC_CODE,
-         std::make_shared<AsterixSubitemUnsigned>( 14, IntegerConverter::alt25ft ) ) );
+         std::make_shared<AsterixSubitemSigned>( 14, IntegerConverter::alt25ft ) ) );
 
    //Mode 3A Code
    subitem_map_t subitem_340_mda;
@@ -1769,7 +1769,7 @@ void AsterixCategory062::setSubitems() {
          std::make_shared<AsterixSubitemCompound>( 32, CommonConverter::NoneConverterBuffer, subitem_340_pos ) ) );
    measured_info.push_back(
       subitem_t( Cat062ItemNames::I062_340_HEI,
-         std::make_shared<AsterixSubitemUnsigned>( 16, IntegerConverter::alt25ft ) ) );
+         std::make_shared<AsterixSubitemSigned>( 16, IntegerConverter::alt25ft ) ) );
    measured_info.push_back(
       subitem_t( Cat062ItemNames::I062_340_MDC,
          std::make_shared<AsterixSubitemCompound>( 16, CommonConverter::NoneConverterBuffer, subitem_340_mdc ) ) );
