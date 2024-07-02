@@ -97,7 +97,7 @@ std::string DoubleConverter::fraction10ToPower5( char* value, unsigned int value
 
 std::string DoubleConverter::fraction10ToPower6( char* value, unsigned int value_length,
    double& dest_buffer ) {
-   unsigned long int value_converted = std::stoull( value );
+   unsigned long int value_converted = std::stoll( value );
    return std::to_string( value_converted * pow( 10, -6 ) );
 }
 
