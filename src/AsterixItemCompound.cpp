@@ -33,6 +33,7 @@
 AsterixItemCompound::AsterixItemCompound( std::string name, AsterixItemCompound::subUap_T sub_uap ) :
    AsterixItem( name ) {
    subitem_uap = sub_uap;
+   sub_fspec = std::vector<bool>( subitem_uap.size(), false );
 }
 
 AsterixItemCompound::~AsterixItemCompound() {
@@ -61,7 +62,10 @@ std::deque<char> AsterixItemCompound::readItem( std::deque<char>& buffer ) {
       //append fpsec to existing fspec definition
       for( unsigned int i = f_byte.size() - 1; i > 0; i-- ) { //Respect the endianes
          //FRN counting starts at 1
-         sub_fspec.push_back( f_byte[i] == 1 ? true : false );
+         sub_fspec.at( current_position ) = (f_byte[i] == 1 ? true : false);
+         if( current_position >= sub_fspec.size() - 1 ) {
+            break;
+         }
          current_position++;
       }
    }
@@ -75,8 +79,7 @@ std::deque<char> AsterixItemCompound::readItem( std::deque<char>& buffer ) {
       unsigned int current_frn = i + 1;
 
       // Delegate reading to repetitive item
-      if( std::dynamic_pointer_cast<AsterixItemRepetetive>( subitem_uap.at( current_frn ) )
-         != nullptr
+      if( std::dynamic_pointer_cast<AsterixItemRepetetive>( subitem_uap.at( current_frn ) ) != nullptr
          || std::dynamic_pointer_cast<AsterixItemVariableLengthFlex>(
             subitem_uap.at( current_frn ) ) != nullptr ) {
 
