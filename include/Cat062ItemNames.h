@@ -97,6 +97,7 @@ public:
    inline static const std::string I062_380_COM = "I062/380#COM";
    inline static const std::string I062_380_COM_COM = "I062/380#COM#COM";
    inline static const std::string I062_380_COM_STAT = "I062/380#COM#STAT";
+   inline static const std::string I062_380_COM_SPARE = "I062/380#COM#SPARE";
    inline static const std::string I062_380_COM_SSC = "I062/380#COM#SSC";
    inline static const std::string I062_380_COM_ARC = "I062/380#COM#ARC";
    inline static const std::string I062_380_COM_AIC = "I062/380#COM#AIC";

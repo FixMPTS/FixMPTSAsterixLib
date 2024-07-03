@@ -646,6 +646,9 @@ void AsterixCategory062::setSubitems() {
                { { 0, "0 No alert no SPI airborne" }, { 1, "1 No allert no Spi on ground" }, { 2, "2 Alert no SPI airborne" },
                   { 3, "3 Alert no SPI on ground" }, { 4, "4 Alert SPI" }, { 5, "5 No Alert SPI" } } ) ) ) );
    subitem_380_com.push_back(
+      subitem_t( Cat062ItemNames::I062_380_COM_SPARE,
+         std::make_shared<AsterixSubitemUnsigned>( 2, CommonConverter::NoneConverter ) ) );
+   subitem_380_com.push_back(
       subitem_t( Cat062ItemNames::I062_380_COM_SSC,
          std::make_shared<AsterixSubitemBitNamed>( 1, CommonConverter::NoneConverter,
             AsterixSubitemBitNamed::value_names_t(
