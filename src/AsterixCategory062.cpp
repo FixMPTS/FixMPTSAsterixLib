@@ -993,11 +993,6 @@ void AsterixCategory062::setSubitems() {
             AsterixSubitemBitNamed::value_names_t(
                { { 0, "0 Default" }, { 1, "1 Mode S supported" } } ) ) ) );
    track_status.push_back(
-      subitem_t( Cat062ItemNames::I062_080_SIM,
-         std::make_shared<AsterixSubitemBitNamed>( 1, CommonConverter::NoneConverter,
-            AsterixSubitemBitNamed::value_names_t(
-               { { 0, "0 Actual track" }, { 1, "1 simulated track" } } ) ) ) );
-   track_status.push_back(
       subitem_t( Cat062ItemNames::I062_080_ADS,
          std::make_shared<AsterixSubitemBitNamed>( 1, CommonConverter::NoneConverter,
             AsterixSubitemBitNamed::value_names_t(
